@@ -2,45 +2,26 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-// Route::group(['middleware' => 'guest'], function () {
-//     Route::get('/', 'LoginController@showlogin')->name('login');
-//     Route::post('/login', 'LoginController@login')->name('postlogin');
-
-//     Route::get('/register', 'LoginController@register')->name('register');
-//     Route::post('/register', 'LoginController@postregister')->name('postregister');
-// });
-
-Route::get('/', 'AuthController@index')->name('login');
-Route::post('/login', 'AuthController@login')->name('postlogin');
-
-
-Route::get('/', function () {
-    return view('auth.login');
+Route::group(['middleware' => 'guest'], function () {
+    Route::get('/', 'AuthController@index')->name('login');
+    Route::post('/login', 'AuthController@login')->name('postlogin');
 });
 
-Route::get('/dashboard', 'Dashboard@index')->name('Dashboard');
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/dashboard', 'Dashboard@index')->name('Dashboard');
+    Route::get('/logout', 'AuthController@logout')->name('logout');
 
-Route::get('/member', 'MemberCG@index')->name('Member');
 
-Route::get('/curriculum', 'Curriculum@index')->name('Curriculum');
+    Route::get('/cg', 'MemberCG@index')->name('Member');
+    Route::get('/cg/cgJson', 'MemberCG@cgJson')->name('Member.get');
+    Route::post('/cg-post', 'MemberCG@store')->name('Member.post');
+    Route::post('/cg-edit', 'MemberCG@edit')->name('Member.edit');
+    Route::post('/cg-delete', 'MemberCG@delete')->name('Member.delete');
 
-Route::get('/competencies-directory', 'CompetenciesDirectory@index')->name('CompetenciesDirectory');
-
-Route::get('/competencies-group', 'CompetenciesGroup@index')->name('CompetenciesGroup');
-
-Route::get('/achievement-competencies', 'AchievementCompetencies@index')->name('AchievementCompetencies');
-
-Route::get('/tagging', 'Tagging@index')->name('tagging');
-
-Route::get('/ceme', 'Ceme@index')->name('ceme');
+    Route::get('/curriculum', 'Curriculum@index')->name('Curriculum');
+    Route::get('/competencies-directory', 'CompetenciesDirectory@index')->name('CompetenciesDirectory');
+    Route::get('/competencies-group', 'CompetenciesGroup@index')->name('CompetenciesGroup');
+    Route::get('/achievement-competencies', 'AchievementCompetencies@index')->name('AchievementCompetencies');
+    Route::get('/tagging', 'Tagging@index')->name('tagging');
+    Route::get('/ceme', 'Ceme@index')->name('ceme');
+});

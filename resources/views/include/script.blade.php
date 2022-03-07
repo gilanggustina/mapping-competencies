@@ -1,3 +1,5 @@
+<script src="{{ asset('assets/js/jquery.js') }}"></script>
+
 <script src="{{ asset('assets/vendors/js/vendor.bundle.base.js') }}"></script>
 <script src="{{ asset('assets/vendors/chart.js/Chart.min.js') }}"></script>
 <script src="{{ asset('assets/vendors/datatables.net/jquery.dataTables.js') }}"></script>
@@ -13,5 +15,5 @@
 <!-- endinject -->
 
 <!-- Custom js for this page Dashboard -->
-<script src="{{ asset('assets/js/dashboard.js') }}"></script>
+{{-- <script src="{{ asset('assets/js/dashboard.js') }}"></script> --}}
 <script src="{{ asset('assets/js/Chart.roundedBarCharts.js') }}"></script>

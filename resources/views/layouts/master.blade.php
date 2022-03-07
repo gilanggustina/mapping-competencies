@@ -10,8 +10,10 @@
   <meta name="keywords" content=" ">
   <meta name="author" content="Rezki Ramadhan">
   <title>@yield('title')</title>
+  <link rel="shortcut icon" type="image/x-icon" href="{{ asset('theme/images/ico/favicon.ico')}}">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   @include('include.style')
+  @stack('style')
 </head>
 
 <body>

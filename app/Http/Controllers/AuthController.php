@@ -15,22 +15,21 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+
         $request->validate([
             'nik' => 'required',
             'password' => 'required'
         ]);
-
         if (Auth::attempt($request->only('nik', 'password'))) {
             return redirect('dashboard');
         }
-        return redirect('/')->with('failed', 'nik atau Password salah!');
+        return redirect('/')->with('failed', 'NIK atau Password salah!');
     }
 
     public function Register(Request $request)
     {
         return view('auth/register');
     }
-
 
     public function postregister(Request $request)
     {
