@@ -17,7 +17,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="table-responsive">
-                            <table class="display expandable-table" id="table-cg" style="width:100%">
+                            <table class="display expandable-table table-striped table-hover" id="table-cg" style="width:100%">
                                 <thead>
                                     <!-- <tr>
                                         <th>No Training Module#</th>
@@ -30,9 +30,10 @@
                                     </tr> -->
                                     <tr>
                                         <th>No#</th>
+                                        <th>NIK</th>
                                         <th>Nama Karyawan</th>
-                                        <th>Tgl Masuk<br>
-                                            <small>(Berdasarkan job level terakhir)</small>
+                                        <th>Tgl Masuk
+                                            {{-- <small>(Berdasarkan job level terakhir)</small> --}}
                                         </th>
                                         <th>Department</th>
                                         <th>Jabatan</th>
@@ -52,7 +53,7 @@
 
 {{-- Modal --}}
 <div class="modal fade" id="modal-tambah" tabindex="-1" role="dialog" aria-labelledby="modal-tambahLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <form action="" method="POST" enctype="multipart/form-data">
             @csrf
@@ -64,32 +65,52 @@
         </div>
         <div class="modal-body">
             <div class="row">
-                <div class="col-12 mb-2">
-                    <label>Nama Karyawan</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" name="judul_berita" placeholder="Nama Berita">
+                <div class="col-md-6">
+                    <div class="form-input">
+                        <label>NIK</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="nik" placeholder="10119912">
+                        </div>
+                    </div>
+                    <div class="form-input">
+                        <label>Nama Karyawan</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="judul_berita" placeholder="Nama Berita">
+                        </div>
+                    </div>
+                    <div class="form-input">
+                        <label>Peran Pengguna</label>
+                        <div class="input-group">
+                            <select class="form-control">
+                                <option value="3">Admin</option>
+                                <option value="2">CG Leader</option>
+                                <option value="1">Pengguna</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-input">
+                        <label>Email</label>
+                        <div class="input-group">
+                            <input type="text" name="email" class="form-control" placeholder="URL Berita">
+                        </div>
+                    </div>
+                    <div class="form-input">
+                        <label>Tgl Masuk</label>
+                        <div class="input-group">
+                            <input type="date" id="birthday" name="tgl_masuk" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-input">
+                        <label>Upload Gambar Berita</label>
+                        <input type="file" name="gambar" id="file-uploader" class="form-control d-none" placeholder="Upload berkas">
+                        <div class="input-group">
+                            <input type="text" id="file-uploader" class="form-control bg-white" placeholder="Upload berkas" readonly>
+                            <button class="btn btn-outline-primary waves-effect" type="button" onclick="$('#file-uploader').click()">Browse File</button>
+                        </div>
                     </div>
                 </div>
-                <div class="col-12 mb-2">
-                    <label>Tanggal</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control flat-picker shadow-none bg-white pe-0" name="tanggal" placeholder="Tanggal Berita">
-                        <span class="input-group-text"><i data-feather="calendar"></i></span>
-                    </div>
-                </div>
-                <div class="col-12 mb-2">
-                    <label>Link Berita</label>
-                    <div class="input-group">
-                        <input type="text" name="link" class="form-control" placeholder="URL Berita">
-                    </div>
-                </div>
-                <div class="col-12 mb-2">
-                    <label>Upload Gambar Berita</label>
-                    <input type="file" name="gambar" id="file-uploader" class="form-control d-none" placeholder="Upload berkas">
-                    <div class="input-group">
-                        <input type="text" id="file-uploader" class="form-control bg-white" placeholder="Upload berkas" readonly>
-                        <button class="btn btn-outline-primary waves-effect" type="button" onclick="$('#file-uploader').click()">Browse File</button>
-                    </div>
+                <div class="col-md-6">
+
                 </div>
             </div>
         </div>
@@ -146,6 +167,9 @@
             },
             columns: [
                 {
+                data: 'DT_RowIndex', name: 'DT_RowIndex'
+                },
+                {
                     data: 'nik'
                 },
                 {
@@ -155,10 +179,10 @@
                     data: 'tgl_masuk'
                 },
                 {
-                    data: 'id_department'
+                    data: 'nama_department'
                 },
                 {
-                    data: 'id_level'
+                    data: 'nama_job_title'
                 },
                 {
                     data: 'action'

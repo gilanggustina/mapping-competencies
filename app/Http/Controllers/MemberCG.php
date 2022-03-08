@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Datatables;
 use App\User;
+use App\Department;
 
 class MemberCG extends Controller
 {
@@ -16,12 +17,14 @@ class MemberCG extends Controller
 
     public function cgJson()
     {
-        $data = User::latest()->get();
+        $data = User::leftJoin('department as dp', 'users.id_department', '=', 'dp.id_department')
+            ->leftJoin('job_title as jt', 'users.id_job_title', '=', 'jt.id_job_title')
+            ->get(['users.*', 'dp.nama_department', 'jt.nama_job_title']);
         return Datatables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
-                $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editItem">Edit</a>';
-                $btn = $btn . '<a href="javascript:void(0)" data-toggle="tooltip" data-toggle="modal" data-target="#modal-hapus"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-sm delete-button">Delete</a>';
+                $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editItem"><i class="fa fa-pencil" aria-hidden="true"></i></a>';
+                $btn = $btn . '<a href="javascript:void(0)" data-toggle="tooltip" data-toggle="modal" data-target="#modal-hapus"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-sm delete-button"><i class="fa fa-trash-o" aria-hidden="true"></i></a>';
                 return $btn;
             })
             ->addIndexColumn()

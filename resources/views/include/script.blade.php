@@ -15,5 +15,6 @@
 <!-- endinject -->
 
 <!-- Custom js for this page Dashboard -->
-{{-- <script src="{{ asset('assets/js/dashboard.js') }}"></script> --}}
+<script src="{{ asset('assets/js/dashboard.js') }}"></script>
 <script src="{{ asset('assets/js/Chart.roundedBarCharts.js') }}"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
