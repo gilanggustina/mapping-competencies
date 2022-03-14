@@ -72,7 +72,7 @@
                                     @csrf
                                     <div class="form-group">
                                         <label class="form-label" for="login-email">NIK</label>
-                                        <input class="form-control" id="login-nik" type="text" name="nik" placeholder="nik@example.com" aria-describedby="login-email" autofocus="" tabindex="1" />
+                                        <input class="form-control" id="login-nik" type="text" name="nik" placeholder="10119912" aria-describedby="login-email" autofocus="" tabindex="1" />
                                     </div>
                                     <div class="form-group mt-2">
                                         <div class="d-flex justify-content-between">

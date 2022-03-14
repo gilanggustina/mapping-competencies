@@ -118,7 +118,7 @@ h4 {
         <div class="card card-tale">
           <div class="card-body">
             <p class="mb-4">CG Name</p>
-            <p class="fs-30 mb-2">{{ Auth::user()->id_cg }}</p>
+            <p class="fs-30 mb-2">{{ $data['nama_cg'] }}</p>
             {{-- <p>10.00% (30 days)</p> --}}
           </div>
         </div>
@@ -127,7 +127,7 @@ h4 {
         <div class="card card-dark-blue">
           <div class="card-body">
             <p class="mb-4">Jumlah Anggota</p>
-            <p class="fs-30 mb-2">{{ Auth::user()->id_cg }}</p>
+            <p class="fs-30 mb-2">{{ $jumlah[0]->cg }}</p>
             {{-- <p>22.00% (30 days)</p> --}}
           </div>
         </div>
@@ -137,8 +137,8 @@ h4 {
       <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
         <div class="card card-light-blue">
           <div class="card-body">
-            <p class="mb-4">Mulltiskill</p>
-            <p class="fs-30 mb-2">0</p>
+            <p class="mb-4">Dapartment</p>
+            <p class="fs-30 mb-2">{{  $data['nama_department'] }}</p>
             {{-- <p>2.00% (30 days)</p> --}}
           </div>
         </div>
@@ -184,18 +184,10 @@ h4 {
     </div>
   </div> --}}
  
-  <div class="col-12 col-sm-8 col-md-6 col-lg-4 grid-margin stretch-card">
-    <div class="text-center card-box">
-      <div class="member-card pt-2 pb-2">
-          <div class="thumb-lg member-thumb mx-auto"><img src="https://bootdey.com/img/Content/avatar/avatar2.png" class="rounded-circle img-thumbnail" alt="profile-image"></div>
-          <div class="">
-              <h4></h4>
-              <p class="text-muted">@Founder <span>| </span><span><a href="#" class="text-pink">websitename.com</a></span></p>
-          </div>
-          <button type="button" class="btn btn-primary mt-3 btn-rounded waves-effect w-md waves-light">Detail</button>
-      </div>
-    </div>
+  <div class="col-12 col-sm-8 col-md-6 col-lg-4 grid-margin stretch-card profile-card">
+    
   </div>
+
 
   </div>  
 </div>
@@ -404,39 +396,42 @@ h4 {
     </div>
   </div>
 </div>
-<!-- <div class="row">
-  <div class="col-md-12 grid-margin stretch-card">
-    <div class="card">
-      <div class="card-body">
-        <p class="card-title">Advanced Table</p>
-        <div class="row">
-          <div class="col-12">
-            <div class="table-responsive">
-              <table id="example" class="display expandable-table" style="width:100%">
-                <thead>
-                  <tr>
-                    <th>Quote#</th>
-                    <th>Product</th>
-                    <th>Business type</th>
-                    <th>Policy holder</th>
-                    <th>Premium</th>
-                    <th>Status</th>
-                    <th>Updated at</th>
-                    <th></th>
-                  </tr>
-                </thead>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-  </div>
-</div> -->
 <!-- END: Content-->
 @endsection
 @push('script')
-
+<script>
+$(document).ready(function() {
+  var role = '{{ Auth::user()->peran_pengguna}}';
+  profilecard();
+})
+function profilecard(){
+  var gambar = '{{ asset("assets/images/faces/face0.png") }}';
+  $.ajax({
+      type: "GET",
+      url: "{{ route('Dashboard.card-profile') }}",
+      success: function(res) {
+        console.log(res.data );
+        $.each(res.data, function(i){
+          var htmlcard =
+            '<div class="text-center card-box mr-3">'+
+            '<div class="member-card pt-2 pb-2">'+
+                '<div class="thumb-lg member-thumb mx-auto"><img src="' + gambar + '" class="rounded-circle img-thumbnail" alt="profile-image"></div>'+
+                '<div class="">'+
+                    '<h4>'+ res.data[i].nama_pengguna +'</h4>'+
+                    '<p class="text-muted">' + res.data[i].nama_department + '</span></p>'+
+                '</div>'+
+                '<button type="button" class="btn btn-primary mt-3 btn-rounded waves-effect w-md waves-light">Detail</button>'+
+            '</div>'+
+          '</div>';
+          $('.profile-card').append(htmlcard);
+        })
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(xhr);
+        alert(xhr.status);
+        alert(thrownError);
+      }
+  })
+}
+</script>
 @endpush

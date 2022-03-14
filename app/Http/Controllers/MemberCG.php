@@ -6,7 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Datatables;
 use App\User;
+use App\Divisi;
+use App\Jabatan;
+use App\CG;
+use App\Level;
+use App\SubDepartment;
 use App\Department;
+use Illuminate\Support\Facades\Auth;
 
 class MemberCG extends Controller
 {
@@ -23,8 +29,9 @@ class MemberCG extends Controller
         return Datatables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
-                $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editItem"><i class="fa fa-pencil" aria-hidden="true"></i></a>';
-                $btn = $btn . '<a href="javascript:void(0)" data-toggle="tooltip" data-toggle="modal" data-target="#modal-hapus"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-sm delete-button"><i class="fa fa-trash-o" aria-hidden="true"></i></a>';
+                $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary mr-1 Edit-button"><i class="icon-align-left menu-icon"></i></a>';
+                $btn = $btn . '<a href="javascript:void(0)" data-toggle="tooltip" data-toggle="modal" data-target="#modal-hapus"  data-id="' . $row->id . '" class="btn btn-danger mr-1 delete-button"><i class="icon-trash"></i></a>';
+                $btn = $btn . '<a href="javascript:void(0)" data-toggle="tooltip" data-toggle="modal" data-target="#modal-detail"  data-id="' . $row->id . '" data-original-title="Detail" class="btn btn-info detail-button"><i class="icon-eye"></i></a>';
                 return $btn;
             })
             ->addIndexColumn()
@@ -35,15 +42,33 @@ class MemberCG extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'nik' => 'required',
+            'password' => 'required',
+            'peran_pengguna' => 'required',
+            'tgl_masuk' => 'required',
             'nama_pengguna' => 'required',
             'email' => 'email|required',
-            'tgl_masuk' => 'required',
+            'divisi' => 'required',
+            'job_title' => 'required',
+            'level' => 'required',
+            'department' => 'required',
+            'sub_department' => 'required',
+            'cg' => 'required',
             'gambar' => 'required|image|mimes:jpg,png,jpeg|max:5000',
         ]);
         $data = [
-            'nama_pengguna' => $request->nama_pengguna,
-            'judul_berita' => $request->judul_berita,
+            'nik' => $request->nik,
+            'password' => $request->password,
+            'peran_pengguna' => $request->peran_pengguna,
             'tgl_masuk' => date('Y-m-d', strtotime($request->tanggal)),
+            'nama_pengguna' => $request->nama_pengguna,
+            'email' => $request->email,
+            'id_divisi' => $request->divisi,
+            'id_job_title' => $request->job_title,
+            'id_level' => $request->level,
+            'id_department' => $request->department,
+            'id_sub_department' => $request->sub_department,
+            'id_cg' => $request->cg,
         ];
         if ($request->hasFile('gambar')) {
             $file = $request->file('gambar');
@@ -54,13 +79,13 @@ class MemberCG extends Controller
         } else {
             $data['gambar'] = 'no_image.jpg';
         }
-        $berita = ManajemenBerita::create($data);
-        return redirect()->route('manajemen-berita')->with('success', 'Berhasil menambah Berita!');
+        User::create($data);
+        return redirect()->route('Member')->with('success', 'Berhasil menambah Berita!');
     }
 
     public function edit(Request $request)
     {
-        $berita = ManajemenBerita::where('id', $request->id)->first();
+        $berita = User::where('id', $request->id)->first();
         return response()->json([
             'status' => true,
             'data' => $berita,
@@ -82,7 +107,7 @@ class MemberCG extends Controller
             'tanggal' => $request->tanggal,
             'link' => $request->link,
         ];
-        $berita = ManajemenBerita::find($id);
+        $berita = User::find($id);
         if ($request->hasFile('gambar')) {
             $request->validate([
                 'gambar' => 'required|image|mimes:jpg,png,jpeg|max:5000',
@@ -104,7 +129,7 @@ class MemberCG extends Controller
     }
     public function delete($id)
     {
-        $berita = ManajemenBerita::find($id);
+        $berita = User::find($id);
         $image_path = 'assets/img/' . $berita->gambar;
         if (file_exists($image_path)) {
             @unlink($image_path);
@@ -113,5 +138,56 @@ class MemberCG extends Controller
         return redirect()
             ->route('manajemen-berita')
             ->with('success', 'Berhasil menghapus Berita!');
+    }
+
+    public function getDivisi()
+    {
+        $provinsi = Divisi::all();
+        return response()->json([
+            'data' => $provinsi,
+            'status' => 200,
+            'success' => true,
+        ]);
+    }
+
+
+    public function getLevel()
+    {
+        $provinsi = Level::all();
+        return response()->json([
+            'data' => $provinsi,
+            'status' => 200,
+            'success' => true,
+        ]);
+    }
+
+    public function getDepartment()
+    {
+        $provinsi = Department::all();
+        return response()->json([
+            'data' => $provinsi,
+            'status' => 200,
+            'success' => true,
+        ]);
+    }
+
+    public function getSubDepartment()
+    {
+        $provinsi = SubDepartment::all();
+        return response()->json([
+            'data' => $provinsi,
+            'status' => 200,
+            'success' => true,
+        ]);
+    }
+
+    public function getLigaCG()
+    {
+        $provinsi = CG::all();
+        return response()->json([
+            'data' => $provinsi,
+            'status' => 200,
+            'success' => true,
+        ]);
     }
 }
