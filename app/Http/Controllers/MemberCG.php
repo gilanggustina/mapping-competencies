@@ -29,9 +29,9 @@ class MemberCG extends Controller
         return Datatables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
-                $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary mr-1 Edit-button"><i class="icon-align-left menu-icon"></i></a>';
-                $btn = $btn . '<a href="javascript:void(0)" data-toggle="tooltip" data-toggle="modal" data-target="#modal-hapus"  data-id="' . $row->id . '" class="btn btn-danger mr-1 delete-button"><i class="icon-trash"></i></a>';
-                $btn = $btn . '<a href="javascript:void(0)" data-toggle="tooltip" data-toggle="modal" data-target="#modal-detail"  data-id="' . $row->id . '" data-original-title="Detail" class="btn btn-info detail-button"><i class="icon-eye"></i></a>';
+            $btn = '<button data-id="' . $row->id . '" class="btn btn-inverse-success btn-icon mr-1" data-toggle="modal" data-target="#modal-tambah"><i class="icon-file menu-icon"></i></button>';
+            $btn = $btn . '<button data-id="' . $row->id . '" class="btn btn-inverse-danger btn-icon mr-1" data-toggle="modal" data-target="#modal-hapus"><i class="icon-trash"></i></button>';
+            $btn = $btn . '<button type="button" class="btn btn-inverse-info btn-icon" data-toggle="modal" data-target="#modal-detail"><i class="ti-eye"></i></button>';
                 return $btn;
             })
             ->addIndexColumn()
@@ -79,7 +79,8 @@ class MemberCG extends Controller
         } else {
             $data['gambar'] = 'no_image.jpg';
         }
-        User::create($data);
+        $data = User::create($data);
+        $data->save();
         return redirect()->route('Member')->with('success', 'Berhasil menambah Berita!');
     }
 
@@ -154,6 +155,16 @@ class MemberCG extends Controller
     public function getLevel()
     {
         $provinsi = Level::all();
+        return response()->json([
+            'data' => $provinsi,
+            'status' => 200,
+            'success' => true,
+        ]);
+    }
+
+    public function getJabatan()
+    {
+        $provinsi = Jabatan::all();
         return response()->json([
             'data' => $provinsi,
             'status' => 200,

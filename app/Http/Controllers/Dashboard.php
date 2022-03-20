@@ -40,8 +40,7 @@ class Dashboard extends Controller
         $profile = User::leftJoin('department as dp', 'users.id_department', '=', 'dp.id_department')
             ->leftJoin('job_title as jt', 'users.id_job_title', '=', 'jt.id_job_title')
             ->where('id_cg', $cg)
-            ->get(['users.*', 'dp.*', 'jt.*']);
-
+        ->get(['users.*', 'dp.*', 'jt.*']);
         return response()->json([
             'data' => $profile,
             'status' => 200,

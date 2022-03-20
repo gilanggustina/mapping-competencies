@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Competencies Directory')
+@section('title', 'White Tag')
 
 @section('content')
  
@@ -8,7 +8,7 @@
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <p class="card-title">Competencies Directory</p>
+                <p class="card-title">White Tag</p>
                 <div class="row">
                     <div class="col-md mb-2">
                         <a class="btn btn-success float-right" href="javascript:void(0)" id="createNewItem" data-toggle="modal" data-target="#modal-tambah"><i class="icon-plus"></i> Tambah Competencies Directory</a>

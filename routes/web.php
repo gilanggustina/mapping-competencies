@@ -25,11 +25,20 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/get-subdept', 'MemberCG@getSubDepartment')->name('get.sub.department');
     Route::get('/get-cg', 'MemberCG@getLigaCG')->name('get.cg');
 
+    Route::get('cr/get-skill', 'Curriculum@getSkill')->name('get.skill');
+    Route::get('cr/get-jabatan', 'Curriculum@getJabatan')->name('get.cr.jabatan');
+
 
     Route::get('/curriculum', 'Curriculum@index')->name('Curriculum');
+    Route::post('/curriculum-post', 'Curriculum@store')->name('Curriculum.post');
+    Route::post('/curriculum-edit/{id}', 'Curriculum@edit')->name('Curriculum.edit');
+    Route::post('/curriculum-delete/{id}', 'Curriculum@delete')->name('Curriculum.delete');
+
     Route::get('/competencies-directory', 'CompetenciesDirectory@index')->name('CompetenciesDirectory');
     Route::get('/competencies-group', 'CompetenciesGroup@index')->name('CompetenciesGroup');
     Route::get('/achievement-competencies', 'AchievementCompetencies@index')->name('AchievementCompetencies');
     Route::get('/tagging', 'Tagging@index')->name('tagging');
     Route::get('/ceme', 'Ceme@index')->name('ceme');
+
+    Route::get('/white-tag', 'WhiteTag@index')->name('WhiteTag');
 });
