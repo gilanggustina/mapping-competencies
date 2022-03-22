@@ -27,6 +27,7 @@
                                         <th>Training Module Group</th>
                                         <th>Training Module Description</th>
                                         <th>Job Title CG</th> --}}
+                                        <th></th> 
                                         <th>Action</th>
                                     </tr> 
                                 </thead>
@@ -36,44 +37,6 @@
                                         {{-- <td>General Knowledge & Skills</td> --}}
                                         <td>Company Strategy</td>
                                         {{-- <td>Berisi penjelasan mengenai Sejarah Berdiri Perusahaan, Product Knowledge, Visi, Misi, Strategi & Core Value Perusahaan (3 Sun Credo)</td> --}}
-                                        {{-- <td>
-                                            <ul style="list-style-type:disc">
-                                                <li>HRD Supervisor</li>
-                                                <li>R&LD Staff</li>
-                                                <li>HRD Admin</li>
-                                                <li>Payroll & Secretary</li>
-                                              </ul>
-                                        </td> --}}
-                                        <td>
-                                            <a href="javascript:void(0)" data-toggle="tooltip"   data-original-title="Edit" class="edit btn btn-sm btn-primary mr-1 Edit-button"><i class="icon-align-left menu-icon"></i></a>
-                                            <a href="javascript:void(0)" data-toggle="tooltip" data-toggle="modal" data-target="#modal-hapus"   class="btn btn-sm btn-danger mr-1 delete-button"><i class="icon-trash"></i></a>
-                                            <a href="javascript:void(0)" data-toggle="tooltip" data-toggle="modal" data-target="#modal-detail"   data-original-title="Detail" class="btn btn-sm btn-info detail-button"><i class="icon-eye"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>002/KMI/HRD-RT/SAL/002</td>
-                                        {{-- <td>General Knowledge & Skills</td> --}}
-                                        <td>Orientation Department</td>
-                                        {{-- <td>Berisi penjelasan mengenai tugas dan tanggung jawab dari masing-masing departemen dan struktur organisasi perusahaan</td> --}}
-                                        {{-- <td>
-                                            <ul style="list-style-type:disc">
-                                                <li>HRD Supervisor</li>
-                                                <li>R&LD Staff</li>
-                                                <li>HRD Admin</li>
-                                                <li>Payroll & Secretary</li>
-                                              </ul>
-                                        </td> --}}
-                                        <td>
-                                            <a href="javascript:void(0)" data-toggle="tooltip"   data-original-title="Edit" class="edit btn btn-sm btn-primary mr-1 Edit-button"><i class="icon-align-left menu-icon"></i></a>
-                                            <a href="javascript:void(0)" data-toggle="tooltip" data-toggle="modal" data-target="#modal-hapus"   class="btn btn-sm btn-danger mr-1 delete-button"><i class="icon-trash"></i></a>
-                                            <a href="javascript:void(0)" data-toggle="tooltip" data-toggle="modal" data-target="#modal-detail"   data-original-title="Detail" class="btn btn-sm btn-info detail-button"><i class="icon-eye"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>003/KMI/HRD-RT/SAL/003</td>
-                                        {{-- <td>General Knowledge & Skills</td> --}}
-                                        <td>KALBE Business Ethic</td>
-                                        {{-- <td>Berisi tentang tata kelola etika bisnis di KALBE Group</td> --}}
                                         {{-- <td>
                                             <ul style="list-style-type:disc">
                                                 <li>HRD Supervisor</li>

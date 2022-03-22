@@ -57,23 +57,28 @@
               </div>
           </li> -->
           <li class="nav-item">
-              <a class="nav-link" href="{{ route('WhiteTag') }}">
-                  <i class="icon-head menu-icon"></i>
-                  {{-- Competencies --}}
-                  <span class="menu-title">White Tag Achievement </span>
+              <a class="nav-link" data-toggle="collapse" href="#whitetag" aria-expanded="false" aria-controls="whitetag">
+                  <i class="ti-medall-alt menu-icon"></i>
+                  <span class="menu-title">White Tag</span>
                   <i class="menu-arrow"></i>
               </a>
+              <div class="collapse" id="whitetag">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('WhiteTag') }}"> White Tag Functional </a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('WhiteTag') }}"> White Tag General </a></li>
+                </ul>
+            </div>
           </li>
           <li class="nav-item">
-              <a class="nav-link" data-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">
-                  <i class="icon-ban menu-icon"></i>
+              <a class="nav-link" data-toggle="collapse" href="#taglist" aria-expanded="false" aria-controls="tagging">
+                  <i class="icon-tag menu-icon"></i>
                   <span class="menu-title">Tagging List</span>
                   <i class="menu-arrow"></i>
               </a>
-              <div class="collapse" id="error">
+              <div class="collapse" id="taglist">
                   <ul class="nav flex-column sub-menu">
-                      <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html"> List Data </a></li>
-                      <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> Tangging Card </a></li>
+                      <li class="nav-item"> <a class="nav-link" href="{{ route('TagList') }}"> List Data </a></li>
+                      <li class="nav-item"> <a class="nav-link" href="{{ route('TagCard') }}"> Tangging Card </a></li>
                   </ul>
               </div>
           </li>

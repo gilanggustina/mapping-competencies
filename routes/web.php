@@ -37,7 +37,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/competencies-directory', 'CompetenciesDirectory@index')->name('CompetenciesDirectory');
     Route::get('/competencies-group', 'CompetenciesGroup@index')->name('CompetenciesGroup');
     Route::get('/achievement-competencies', 'AchievementCompetencies@index')->name('AchievementCompetencies');
-    Route::get('/tagging', 'Tagging@index')->name('tagging');
+    Route::get('/tagging-list', 'Tagging@index')->name('TagList');
+    Route::get('/tagging-card', 'Tagging@index')->name('TagCard');
     Route::get('/ceme', 'Ceme@index')->name('ceme');
 
     Route::get('/white-tag', 'WhiteTag@index')->name('WhiteTag');
