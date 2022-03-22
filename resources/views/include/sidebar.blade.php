@@ -22,7 +22,7 @@
           </li>
           <li class="nav-item">
               <a class="nav-link" href="{{ route('CompetenciesDirectory') }}">
-                  <i class="icon-contract menu-icon"></i>
+                  <i class="icon-book menu-icon"></i>
                   <span class="menu-title">Competencies Directory</span>
               </a>
           </li>
@@ -58,7 +58,7 @@
           </li> -->
           <li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="#whitetag" aria-expanded="false" aria-controls="whitetag">
-                  <i class="ti-medall-alt menu-icon"></i>
+                  <i class="icon-flag menu-icon"></i>
                   <span class="menu-title">White Tag</span>
                   <i class="menu-arrow"></i>
               </a>
@@ -84,16 +84,16 @@
           </li>
           <li class="nav-item">
               <a class="nav-link" href="{{ route('ceme') }}">
-                  <i class="icon-paper menu-icon"></i>
+                  <i class="icon-bar-graph menu-icon"></i>
                   <span class="menu-title">CEME</span>
               </a>
           </li>
-          <li class="nav-item">
+          {{-- <li class="nav-item">
               <a class="nav-link" href="pages/documentation/documentation.html">
                   <i class="icon-paper menu-icon"></i>
                   <span class="menu-title">Internal Trainer Report</span>
               </a>
-          </li>
+          </li> --}}
       </ul>
   </nav>
   <!-- END: Main Menu-->

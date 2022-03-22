@@ -65,7 +65,7 @@
                         <!-- Login-->
                         <div class="d-flex col-lg-4 align-items-center auth-bg px-2 p-lg-5">
                             <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
-                                <h2 class="card-title font-weight-bold mb-1">Welcome to Mapping Competencies 👋</h2>
+                                <h2 class="card-title font-weight-bold mb-1">Welcome to Mapping Competencies 👋😊</h2>
                                 <p class="card-text mb-2">Silahkan login untuk memulai</p>
                                 @include('include.alert')
                                 <form class="auth-login-form mt-2" action="{{ route('postlogin') }}" method="POST">
@@ -91,7 +91,7 @@
                                     </div>
                                     <button class="btn btn-primary btn-block mt-1" tabindex="4">Masuk</button>
                                 </form>
-                                <p class="text-center mt-2"><span>New on our platform?</span><a href=""><span>&nbsp;Create an account</span></a></p>
+                                <p class="text-center mt-2"><span>Belum punya akun?</span><a href=""><span>&nbsp;Yuk buat dulu</span></a></p>
                             </div>
                         </div>
                         <!-- /Login-->
