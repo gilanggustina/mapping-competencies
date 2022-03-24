@@ -2,8 +2,52 @@
 
 @section('title', 'Competencies Directory')
 
+@push('style')
+<style>
+
+    .accordion {
+        width: 100%;
+    }
+
+    .img-accordion {
+        width: 100%;
+    }
+
+    .card-header {
+        padding: 1.2rem !important;
+        border-radius: 40px !important;
+    }
+</style>
+@endpush
 @section('content')
- 
+ <div class="row">
+    <div class="col-md-6 grid-margin stretch-card mb-0">
+    <div id="accordion" class="accordion ">
+        <div class="card">
+            <div class="card-header card-title" data-toggle="collapse" href="#collapseOne">
+            Key Point General
+            </div>
+            <div id="collapseOne" class="card-body collapse show" data-parent="#accordion" aria-expanded="true">
+                <img src="{{ asset('assets/images/general.png') }}" alt="General" class="img-accordion mt-4">
+                {{-- <img src="{{ asset('assets/images/functional.png') }}" alt="General" class="img-accordion"> --}}
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="col-md-6 grid-margin stretch-card mb-0 pl-0">
+        <div id="accordion" class="accordion">
+            <div class="card">
+                <div class="card-header card-title" data-toggle="collapse" href="#collapseOne">
+                Key Point Functional
+                </div>
+                <div id="collapseOne" class="card-body collapse show" data-parent="#accordion" aria-expanded="true">
+                    <img src="{{ asset('assets/images/functional.png') }}" alt="General" class="img-accordion mt-4">
+                    {{-- <img src="{{ asset('assets/images/functional.png') }}" alt="General" class="img-accordion"> --}}
+                </div>
+            </div>
+        </div>
+        </div>
+ </div>
 <div class="row">
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
@@ -11,39 +55,24 @@
                 <p class="card-title">Competencies Directory</p>
                 <div class="row">
                     <div class="col-md mb-2">
-                        <a class="btn btn-success float-right" href="javascript:void(0)" id="createNewItem" data-toggle="modal" data-target="#modal-tambah"><i class="icon-plus"></i> Tambah Competencies Directory</a>
+                        <a class="btn btn-success float-right" href="javascript:void(0)" id="createNewItem" data-toggle="modal" data-target="#modal-tambah"><i class="icon-plus"></i> Add Competencies Directory</a>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12">
                         <div class="table-responsive">
-                            <table class="display expandable-table table-striped table-hover" id="table-cg" style="width:100%">
+                            <table class="display expandable-table table-striped table-hover table-sm" id="table-cg" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>No Training Module#</th>
-                                        {{-- <th>Skill Category</th> --}}
                                         <th>Training Module</th>
-                                        {{-- <th>Level</th>
-                                        <th>Training Module Group</th>
-                                        <th>Training Module Description</th>
-                                        <th>Job Title CG</th> --}}
                                         <th>Action</th>
                                     </tr> 
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td>001/KMI/HRD-RT/SAL/001</td>
-                                        {{-- <td>General Knowledge & Skills</td> --}}
                                         <td>Company Strategy</td>
-                                        {{-- <td>Berisi penjelasan mengenai Sejarah Berdiri Perusahaan, Product Knowledge, Visi, Misi, Strategi & Core Value Perusahaan (3 Sun Credo)</td> --}}
-                                        {{-- <td>
-                                            <ul style="list-style-type:disc">
-                                                <li>HRD Supervisor</li>
-                                                <li>R&LD Staff</li>
-                                                <li>HRD Admin</li>
-                                                <li>Payroll & Secretary</li>
-                                              </ul>
-                                        </td> --}}
                                         <td>
                                             <button data-toggle="modal" data-target="#modal-tambah" class="btn btn-inverse-success btn-icon mr-1"><i class="icon-file menu-icon"></i></button>
                                             <button data-toggle="modal" data-target="#modal-hapus"   class="btn btn-inverse-danger btn-icon mr-1"><i class="icon-trash"></i></button>
@@ -52,9 +81,7 @@
                                     </tr>
                                     <tr>
                                         <td>002/KMI/HRD-RT/SAL/002</td>
-                                        {{-- <td>General Knowledge & Skills</td> --}}
                                         <td>Orientation Department</td>
-                                        {{-- <td>Berisi penjelasan mengenai tugas dan tanggung jawab dari masing-masing departemen dan struktur organisasi perusahaan</td> --}}
                                         {{-- <td>
                                             <ul style="list-style-type:disc">
                                                 <li>HRD Supervisor</li>
@@ -111,123 +138,17 @@
             <form action="" method="POST" enctype="multipart/form-data">
                 @csrf
         <div class="modal-body">
-            <div class="form-row">
-                <div class="col-md-3 mb-3">
-                    <label>NIK</label>
-                    <input type="text" class="form-control form-control-sm" name="nik" placeholder="10119912">
-                </div>
-                <div class="col-md-3 mb-3">
-                    <label>Password</label>
-                    <input type="password" class="form-control form-control-sm" name="password" placeholder="Masukan Password">
-                </div>
-                <div class="col-md-3 mb-3">
-                    <label>Peran Pengguna</label>
-                    <select class="form-control form-control-sm" name="peran_pengguna">
-                        <option value="3">Admin</option>
-                        <option value="2">CG Leader</option>
-                        <option value="1">Pengguna</option>
-                    </select>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <label>Tanggal Masuk</label>
-                    <input type="date" id="birthday" name="tgl_masuk" class="form-control form-control-sm">
+            <div class="row">
+                <div class="col-6"></div>
+                <div class="col-6">
+                    <div class="form-group col-sm">
+                        <label for="yearduration">Year Duration</label>
+                        <select id="year_duration" class="form-control form-control-sm" name="year_duration">
+                            <option value="">Pilih Year Duration</option>
+                        </select>
+                    </div>
                 </div>
             </div>
-            <div class="form-row">
-                <div class="col-md-6 mb-3">
-                    <label>Nama Karyawan</label>
-                    <input type="text" class="form-control form-control-sm" name="nama_pengguna" placeholder="Nama Karyawan">
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label>Email</label>
-                    <input type="text" name="email" class="form-control form-control-sm" placeholder="nama@gmail.com">
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="col-md-4 mb-3">
-                    <label>Divisi</label>
-                    <select class="form-control form-control-sm" name="divisi">
-                        <option value="">Pilih</option>
-                    </select>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label>Jabatan</label>
-                    <select class="form-control form-control-sm" name="job_title">
-                        <option value="">Pilih</option>
-                    </select>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label>Level</label>
-                    <select class="form-control form-control-sm" name="level">
-                        <option value="">Pilih</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="col-md-4 mb-3">
-                    <label>Department</label>
-                    <select class="form-control form-control-sm" name="department">
-                        <option value="">Pilih</option>
-                    </select>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label>Sub Department</label>
-                    <select class="form-control form-control-sm" name="sub_department">
-                        <option value="">Pilih</option>
-                    </select>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label>Liga CG</label>
-                    <select class="form-control form-control-sm" name="cg">
-                        <option value="">Pilih</option>
-                    </select>
-                </div>
-            </div>
-            {{-- <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        
-                    </div>
-                    <div class="form-group">
-                        <label>Nama Karyawan</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control form-control-sm" name="judul_berita" placeholder="Nama Berita">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Peran Pengguna</label>
-                        <div class="input-group">
-                            <select class="form-control form-control-sm">
-                                <option value="3">Admin</option>
-                                <option value="2">CG Leader</option>
-                                <option value="1">Pengguna</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Email</label>
-                        <div class="input-group">
-                            <input type="text" name="email" class="form-control form-control-sm" placeholder="URL Berita">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Tgl Masuk</label>
-                        <div class="input-group">
-                            <input type="date" id="birthday" name="tgl_masuk" class="form-control form-control-sm">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Upload Gambar Berita</label>
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="gambar" id="customFile">
-                            <label class="custom-file-label" onclick="$('#file-uploader').click()" for="customFile">Choose file</label>
-                          </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-
-                </div>
-            </div> --}}
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

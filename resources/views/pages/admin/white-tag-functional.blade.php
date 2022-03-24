@@ -1,14 +1,68 @@
 @extends('layouts.master')
 
-@section('title', 'Tagging List')
+@section('title', 'White Tag Functional')
+@push('style')
+<style>
+     
+.panel-title a:after {
+    font-family:Fontawesome;
+    content:'\f077';
+    float:right;
+    font-size:10px;
+    font-weight:300;
+}
+.panel-title a.collapsed:after {
+    font-family:Fontawesome;
+    content:'\f078';
+}
+.accordion {
+        width: 100%;
+    }
 
+    .card-header {
+        padding: 1.2rem !important;
+        border-radius: 40px !important;
+    }
+
+</style>
+@endpush
 @section('content')
- 
 <div class="row">
-    {{-- <div class="col-md-12 grid-margin stretch-card">
+    <div class="col-md-7 grid-margin stretch-card mb-0">
+    <div id="accordion" class="accordion">
+        <div class="card">
+            <div class="card-header card-title" data-toggle="collapse" href="#collapseOne">
+            Key Point Functional
+            </div>
+            <div id="collapseOne" class="card-body collapse show" data-parent="#accordion" aria-expanded="true">
+                <img src="{{ asset('assets/images/functional.png') }}" alt="Functional" class="mt-2" style="width:100%;display: block;margin-left: auto;margin-right: auto; ">
+                {{-- <img src="{{ asset('assets/images/functional.png') }}" alt="General" class="img-accordion"> --}}
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="col-md-5 grid-margin stretch-card mb-0 pl-0">
+        <div id="accordion-func" class="accordion">
+        <div class="card">
+            <div class="card-header card-title" data-toggle="collapse" href="#graphFunc">
+                Graphic White Tag Functional
+                </div>
+                <div id="graphFunc" class="card-body collapse show" data-parent="#accordion-func" aria-expanded="true">
+                    <canvas id="barChart" class="mb-2"></canvas>
+                </div>
+
+          {{-- <div class="card-body">
+            <h4 class="card-title">Graphic White Tag Functional</h4>
+          </div> --}}
+        </div>
+        </div>
+      </div>
+</div>
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <p class="card-title">Tagging List</p>
+                <p class="card-title">White Tag</p>
                 <div class="row">
                     <div class="col-12">
                         <div class="table-responsive">
@@ -42,9 +96,9 @@
                 </div>
             </div>
         </div>
-    </div> --}}
+    </div>
 
-    <div class="col-md-12 grid-margin stretch-card">
+    {{-- <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
                 <p class="card-title">Tagging List</p>
@@ -88,7 +142,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 </div>
 
 {{-- Modal --}}
@@ -208,5 +262,63 @@
 
 @endsection
 @push('script')
+<script>
+    $(function() {
+    'use strict';
+  var data = {
+    labels: ["2013", "2014", "2014", "2015", "2016", "2017"],
+    datasets: [{
+      label: '# of Votes',
+      data: [10, 19, 3, 5, 2, 3],
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(255, 159, 64, 0.2)'
+      ],
+      borderColor: [
+        'rgba(255,99,132,1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)'
+      ],
+      borderWidth: 1,
+      fill: false
+    }]
+  };
 
+  var options = {
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    },
+    legend: {
+      display: false
+    },
+    elements: {
+      point: {
+        radius: 0
+      }
+    }
+
+  };
+  
+  if ($("#barChart").length) {
+    var barChartCanvas = $("#barChart").get(0).getContext("2d");
+    // This will get the first returned node in the jQuery collection.
+    var barChart = new Chart(barChartCanvas, {
+      type: 'bar',
+      data: data,
+      options: options
+    });
+  }
+})
+</script>
 @endpush

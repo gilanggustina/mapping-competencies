@@ -10,4 +10,9 @@ class WhiteTag extends Controller
     {
         return view('pages.admin.white-tag');
     }
+
+    public function functional(Request $request)
+    {
+        return view('pages.admin.white-tag-functional');
+    }
 }

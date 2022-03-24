@@ -1,54 +1,92 @@
 @extends('layouts.master')
 
-@section('title', 'White Tag')
+@section('title', 'White Tag General')
+@push('style')
+<style>
+     
+.panel-title a:after {
+    font-family:Fontawesome;
+    content:'\f077';
+    float:right;
+    font-size:10px;
+    font-weight:300;
+}
+.panel-title a.collapsed:after {
+    font-family:Fontawesome;
+    content:'\f078';
+}
+.accordion {
+        width: 100%;
+    }
 
+    .card-header {
+        padding: 1.2rem !important;
+        border-radius: 40px !important;
+    }
+
+</style>
+@endpush
 @section('content')
- 
+<div class="row">
+    <div class="col-md-7 grid-margin stretch-card mb-0">
+    <div id="accordion" class="accordion">
+        <div class="card">
+            <div class="card-header card-title" data-toggle="collapse" href="#collapseOne">
+            Key Point General
+            </div>
+            <div id="collapseOne" class="card-body collapse show" data-parent="#accordion" aria-expanded="true">
+                <img src="{{ asset('assets/images/general.png') }}" alt="General" class="mt-2 p-3" style="width:100%;display: block;margin-left: auto;margin-right: auto; ">
+                {{-- <img src="{{ asset('assets/images/General.png') }}" alt="General" class="img-accordion"> --}}
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="col-md-5 grid-margin stretch-card mb-0 pl-0">
+        <div id="accordion-gen" class="accordion">
+        <div class="card">
+            <div class="card-header card-title" data-toggle="collapse" href="#graphgen">
+                Graphic White Tag General
+                </div>
+                <div id="graphgen" class="card-body collapse show" data-parent="#accordion-gen" aria-expanded="true">
+                    <canvas id="barChart" class="mb-2"></canvas>
+                </div>
+
+          {{-- <div class="card-body">
+            <h4 class="card-title">Graphic White Tag General</h4>
+          </div> --}}
+        </div>
+        </div>
+      </div>
+</div>
 <div class="row">
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
                 <p class="card-title">White Tag</p>
                 <div class="row">
-                    <div class="col-md mb-2">
-                        <a class="btn btn-success float-right" href="javascript:void(0)" id="createNewItem" data-toggle="modal" data-target="#modal-tambah"><i class="icon-plus"></i> Tambah Competencies Directory</a>
-                    </div>
-                </div>
-                <div class="row">
                     <div class="col-12">
                         <div class="table-responsive">
                             <table class="display expandable-table table-striped table-hover" id="table-cg" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>No Training Module#</th>
-                                        {{-- <th>Skill Category</th> --}}
-                                        <th>Training Module</th>
-                                        {{-- <th>Level</th>
-                                        <th>Training Module Group</th>
-                                        <th>Training Module Description</th>
-                                        <th>Job Title CG</th> --}}
-                                        <th></th> 
+                                        <th>No</th>
+                                        <th>Nama Anggota</th>
+                                        <th>Job Title</th>
+                                        <th>Dept</th>
+                                        <th>Liga CG</th>
                                         <th>Action</th>
                                     </tr> 
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>001/KMI/HRD-RT/SAL/001</td>
-                                        {{-- <td>General Knowledge & Skills</td> --}}
-                                        <td>Company Strategy</td>
-                                        {{-- <td>Berisi penjelasan mengenai Sejarah Berdiri Perusahaan, Product Knowledge, Visi, Misi, Strategi & Core Value Perusahaan (3 Sun Credo)</td> --}}
-                                        {{-- <td>
-                                            <ul style="list-style-type:disc">
-                                                <li>HRD Supervisor</li>
-                                                <li>R&LD Staff</li>
-                                                <li>HRD Admin</li>
-                                                <li>Payroll & Secretary</li>
-                                              </ul>
-                                        </td> --}}
+                                        <td>1</td>
+                                        <td>Windy Kacaribu</td>
+                                        <td>R&LD Staff</td>
+                                        <td>Human Capital</td>
+                                        <td>SALT</td>
                                         <td>
-                                            <a href="javascript:void(0)" data-toggle="tooltip"   data-original-title="Edit" class="edit btn btn-sm btn-primary mr-1 Edit-button"><i class="icon-align-left menu-icon"></i></a>
-                                            <a href="javascript:void(0)" data-toggle="tooltip" data-toggle="modal" data-target="#modal-hapus"   class="btn btn-sm btn-danger mr-1 delete-button"><i class="icon-trash"></i></a>
-                                            <a href="javascript:void(0)" data-toggle="tooltip" data-toggle="modal" data-target="#modal-detail"   data-original-title="Detail" class="btn btn-sm btn-info detail-button"><i class="icon-eye"></i></a>
+                                            <button data-toggle="modal" data-target="#modal-tambah" class="btn btn-inverse-success btn-icon mr-1"><i class="icon-plus menu-icon"></i></button>
+                                            <button data-toggle="modal" data-target="#modal-detail"  class="btn btn-inverse-info btn-icon"><i class="icon-eye"></i></button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -59,6 +97,52 @@
             </div>
         </div>
     </div>
+
+    {{-- <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <p class="card-title">Tagging List</p>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table class="display expandable-table table-striped table-hover" id="table-cg" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Skill Category</th>
+                                        <th>Training Modules</th>
+                                        <th>Level</th>
+                                        <th>Training Modules Group</th>
+                                        <th>Actual</th>
+                                        <th>Target</th>
+                                        <th>Actual vs Target</th>
+                                        <th>Tagging Status</th>
+                                        <th>Action</th>
+                                    </tr> 
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            <button data-toggle="modal" data-target="#modal-detail"  class="btn btn-inverse-info btn-icon"><i class="icon-eye"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> --}}
 </div>
 
 {{-- Modal --}}
@@ -146,51 +230,6 @@
                     </select>
                 </div>
             </div>
-            {{-- <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        
-                    </div>
-                    <div class="form-group">
-                        <label>Nama Karyawan</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control form-control-sm" name="judul_berita" placeholder="Nama Berita">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Peran Pengguna</label>
-                        <div class="input-group">
-                            <select class="form-control form-control-sm">
-                                <option value="3">Admin</option>
-                                <option value="2">CG Leader</option>
-                                <option value="1">Pengguna</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Email</label>
-                        <div class="input-group">
-                            <input type="text" name="email" class="form-control form-control-sm" placeholder="URL Berita">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Tgl Masuk</label>
-                        <div class="input-group">
-                            <input type="date" id="birthday" name="tgl_masuk" class="form-control form-control-sm">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Upload Gambar Berita</label>
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="gambar" id="customFile">
-                            <label class="custom-file-label" onclick="$('#file-uploader').click()" for="customFile">Choose file</label>
-                          </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-
-                </div>
-            </div> --}}
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -223,5 +262,63 @@
 
 @endsection
 @push('script')
+<script>
+    $(function() {
+    'use strict';
+  var data = {
+    labels: ["2013", "2014", "2014", "2015", "2016", "2017"],
+    datasets: [{
+      label: '# of Votes',
+      data: [10, 19, 3, 5, 2, 3],
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(255, 159, 64, 0.2)'
+      ],
+      borderColor: [
+        'rgba(255,99,132,1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)'
+      ],
+      borderWidth: 1,
+      fill: false
+    }]
+  };
 
+  var options = {
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    },
+    legend: {
+      display: false
+    },
+    elements: {
+      point: {
+        radius: 0
+      }
+    }
+
+  };
+  
+  if ($("#barChart").length) {
+    var barChartCanvas = $("#barChart").get(0).getContext("2d");
+    // This will get the first returned node in the jQuery collection.
+    var barChart = new Chart(barChartCanvas, {
+      type: 'bar',
+      data: data,
+      options: options
+    });
+  }
+})
+</script>
 @endpush

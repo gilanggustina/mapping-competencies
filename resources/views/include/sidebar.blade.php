@@ -64,8 +64,8 @@
               </a>
               <div class="collapse" id="whitetag">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('WhiteTag') }}"> White Tag Functional </a></li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('WhiteTag') }}"> White Tag General </a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('WhiteTagFunc') }}"> White Tag Functional </a></li>
                 </ul>
             </div>
           </li>
