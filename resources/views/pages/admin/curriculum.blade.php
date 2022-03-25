@@ -2,6 +2,13 @@
 
 @section('title', 'Curriculum')
 
+@push('style')
+<style>
+    .swal2-popup {
+        font-size: 2rem;
+    }
+</style>
+@endpush
 @section('content')
  
 <div class="row">
@@ -21,7 +28,8 @@
                             <table class="display expandable-table table-striped table-hover" id="table-cg" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>No Training Module#</th>
+                                        <th>No.#</th>
+                                        <th>No Training Module</th>
                                         <th>Skill Category</th>
                                         <th>Training Module</th>
                                         <th>Level</th>
@@ -34,81 +42,20 @@
                                 <tbody>
                                     @foreach($data as $data)
                                         <tr id="row_{{$data->id}}">
+                                        <th scope="row" class="text-center">{{ $loop->iteration }}</th>
                                         <td>{{ $data->no_training_module  }}</td>
-                                        <td>{{ $data->id_skill_category }}</td>
+                                        <td>{{ $data->skill_category }}</td>
                                         <td>{{ $data->training_module }}</td>
                                         <td>{{ $data->level }}</td>
                                         <td>{{ $data->training_module_group }}</td>
                                         <td>{{ $data->training_module_desc }}</td>
-                                        <td>{{ $data->id_job_title }}</td>
-                                        <td><button data-id="{{ $data->id }}" onclick="editdata(event.target)" class="btn btn-inverse-success btn-icon delete-button mr-1 mr-1 Edit-button"><i class="icon-file menu-icon"></i></button>
+                                        <td>{{ $data->nama_job_title }}</td>
+                                        <td>
+                                            <button data-id="{{ $data->id }}" onclick="editdata(event.target)" class="btn btn-inverse-success btn-icon delete-button mr-1 mr-1 Edit-button"><i class="icon-file menu-icon"></i></button>
                                             <button data-id="{{ $data->id }}" class="btn btn-inverse-danger btn-icon mr-1" data-toggle="modal" data-target="#modal-cr-hapus" onclick="deletedata(event.target)"><i class="icon-trash"></i></button>
                                         </td>
                                         </tr>
                                     @endforeach
-                                    {{-- <tr>
-                                        <td>001/KMI/HRD-RT/SAL/001</td>
-                                        <td>General Knowledge & Skills</td>
-                                        <td>Company Strategy</td>
-                                        <td>B</td>
-                                        <td>New Employee Orientation</td>
-                                        <td>Berisi penjelasan mengenai Sejarah Berdiri Perusahaan, Product Knowledge, Visi, Misi, Strategi & Core Value Perusahaan (3 Sun Credo)</td>
-                                        <td>
-                                            <ul style="list-style-type:disc">
-                                                <li>HRD Supervisor</li>
-                                                <li>R&LD Staff</li>
-                                                <li>HRD Admin</li>
-                                                <li>Payroll & Secretary</li>
-                                              </ul>
-                                        </td>
-                                        <td>
-                                            <a href="javascript:void(0)" data-toggle="tooltip"   data-original-title="Edit" class="edit btn btn-sm btn-primary mr-1 Edit-button"><i class="icon-align-left menu-icon"></i></a>
-                                            <a href="javascript:void(0)" data-toggle="tooltip" data-toggle="modal" data-target="#modal-hapus"   class="btn btn-sm btn-danger mr-1 delete-button"><i class="icon-trash"></i></a>
-                                            <a href="javascript:void(0)" data-toggle="tooltip" data-toggle="modal" data-target="#modal-detail"   data-original-title="Detail" class="btn btn-sm btn-info detail-button"><i class="icon-eye"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>002/KMI/HRD-RT/SAL/002</td>
-                                        <td>General Knowledge & Skills</td>
-                                        <td>Orientation Department</td>
-                                        <td>B</td>
-                                        <td>New Employee Orientation</td>
-                                        <td>Berisi penjelasan mengenai tugas dan tanggung jawab dari masing-masing departemen dan struktur organisasi perusahaan</td>
-                                        <td>
-                                            <ul style="list-style-type:disc">
-                                                <li>HRD Supervisor</li>
-                                                <li>R&LD Staff</li>
-                                                <li>HRD Admin</li>
-                                                <li>Payroll & Secretary</li>
-                                              </ul>
-                                        </td>
-                                        <td>
-                                            <a href="javascript:void(0)" data-toggle="tooltip"   data-original-title="Edit" class="edit btn btn-sm btn-primary mr-1 Edit-button"><i class="icon-align-left menu-icon"></i></a>
-                                            <a href="javascript:void(0)" data-toggle="tooltip" data-toggle="modal" data-target="#modal-hapus"   class="btn btn-sm btn-danger mr-1 delete-button"><i class="icon-trash"></i></a>
-                                            <a href="javascript:void(0)" data-toggle="tooltip" data-toggle="modal" data-target="#modal-detail"   data-original-title="Detail" class="btn btn-sm btn-info detail-button"><i class="icon-eye"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>003/KMI/HRD-RT/SAL/003</td>
-                                        <td>General Knowledge & Skills</td>
-                                        <td>KALBE Business Ethic</td>
-                                        <td>B</td>
-                                        <td>New Employee Orientation</td>
-                                        <td>Berisi tentang tata kelola etika bisnis di KALBE Group</td>
-                                        <td>
-                                            <ul style="list-style-type:disc">
-                                                <li>HRD Supervisor</li>
-                                                <li>R&LD Staff</li>
-                                                <li>HRD Admin</li>
-                                                <li>Payroll & Secretary</li>
-                                              </ul>
-                                        </td>
-                                        <td>
-                                            <a href="javascript:void(0)" data-toggle="tooltip"   data-original-title="Edit" class="edit btn btn-sm btn-primary mr-1 Edit-button"><i class="icon-align-left menu-icon"></i></a>
-                                            <a href="javascript:void(0)" data-toggle="tooltip" data-toggle="modal" data-target="#modal-hapus"   class="btn btn-sm btn-danger mr-1 delete-button"><i class="icon-trash"></i></a>
-                                            <a href="javascript:void(0)" data-toggle="tooltip" data-toggle="modal" data-target="#modal-detail"   data-original-title="Detail" class="btn btn-sm btn-info detail-button"><i class="icon-eye"></i></a>
-                                        </td>
-                                    </tr> --}}
                                 </tbody>
                             </table>
                         </div>
@@ -134,21 +81,21 @@
         <div class="modal-body">
             <div class="form-group col-md">
                 <label for="noModule">No Training Module</label>
-                <input type="text" class="form-control" id="no-module" placeholder="004/KMI/HRD-RT/SAL/004" >
+                <input type="text" class="form-control" id="no_training_module" name="no_training_module" placeholder="004/KMI/HRD-RT/SAL/004" >
             </div>
             <div class="form-group col-md">
                 <label for="skillCategory">Skill Category</label>
-                <select id="skill_category" class="form-control form-control-sm" name="skill_category">
+                <select id="id_skill_category" class="form-control form-control-sm" name="id_skill_category">
                     <option value="">Pilih Skill Category</option>
                 </select>
             </div>
             <div class="form-group col-md">
-                <label for="noModule">Training Module</label>
-                <input type="text" class="form-control" id="no-module" placeholder="Masukan Training Module Name">
+                <label for="training_module">Training Module</label>
+                <input type="text" class="form-control" id="training_module" name="training_module" placeholder="Masukan Training Module Name">
             </div>
             <div class="form-group col-md">
                 <label for="noModule">Level</label>
-                <select class="form-control form-control-sm" name="department">
+                <select class="form-control form-control-sm" id="level" name="level">
                     <option value="">Pilih Level</option>
                     <option value="I">I</option>
                     <option value="A">A</option>
@@ -156,25 +103,28 @@
                 </select>
             </div>
             <div class="form-group col-md">
+                <label for="training_module_group">Training Module Group</label>
+                <input type="text" class="form-control" id="training_module_group" name="training_module_group" placeholder="New Employee Orientation, Ext" >
+            </div>
+            <div class="form-group col-md">
                 <label for="noModule">Training Module Desc</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <textarea class="form-control" id="training_module_desc" name="training_module_desc" rows="3"></textarea>
             </div>
             <div class="form-group col-md">
                 <label for="noModule">Job Title CG</label>
-                <select id="jabatan" class="form-control form-control-sm" name="job_title">
+                <select id="id_job_title" class="form-control form-control-sm" name="id_job_title">
                     <option value="">Pilih Jabatan</option>
                 </select>
             </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" onclick="createPost()">Save changes</button>
+          <button type="button" class="btn btn-primary" onclick="createPost()">Save</button>
         </div>
         </form>
       </div>
     </div>
 </div>
-
 
 <div class="modal fade" id="modal-cr-hapus" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17" aria-hidden="true">
     <div class="modal-dialog">
@@ -231,7 +181,7 @@
         type: "POST",
         // data : $("#registerSubmit").serialize(),
         data: {
-          id: id,
+        //   id_curriculum: id_curriculum,
           no_training_module: $('#no_training_module').val(),
           id_skill_category: $('#id_skill_category').val(), 
           training_module:  $('#training_module').val(),
@@ -243,15 +193,30 @@
         },
         success: function(response) {
             if(response.code == 200) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Your work has been saved',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
              }
               $('#title').val('');
               $('#description').val('');
 
               $('#modal-tambah').modal('hide');
         },
-        error: function(response) {
-          $('#titleError').text(response.responseJSON.errors.title);
-          $('#descriptionError').text(response.responseJSON.errors.description);
+        error: function(err) {
+            console.log(err)
+            Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: err.responseJSON.message,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+        //   $('#titleError').text(response.responseJSON.errors.title);
+        //   $('#descriptionError').text(response.responseJSON.errors.description);
         }
       });
   }
@@ -271,28 +236,38 @@
         },
         success: function(response) {
           $("#row_"+id).remove();
+          Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Data has been delete',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
         }
       });
   }
 
-    function getCG(){
+    function getSkill(){
             $.ajax({
                 type: "GET",
                 url: "{{ route('get.skill') }}",
                 success: function(res) {
-                    console.log(res);
                     var option = "";
                     for (let i = 0; i < res.data.length; i++) {
-                        option += '<option value="'+res.data[i].id+'">'
+                        option += '<option value="'+res.data[i].id_skill_category+'">'
                             +res.data[i].skill_category+'</option>';
                     }
-                    $('#skill_category').html();
-                    $('#skill_category').append(option);
+                    $('#id_skill_category').html();
+                    $('#id_skill_category').append(option);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    console.log(xhr);
-                    alert(xhr.status);
-                    alert(thrownError);
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'error',
+                        title: response.responseJSON.errors,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
                 }
             })
     }
@@ -306,19 +281,23 @@
                 for (let i = 0; i < res.data.length; i++) {
                     option += '<option value="'+res.data[i].id_job_title+'">'+res.data[i].nama_job_title+'</option>';
                 }
-                $('#jabatan').html();
-                $('#jabatan').append(option);
+                $('#id_job_title').html();
+                $('#id_job_title').append(option);
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                console.log(xhr);
-                alert(xhr.status);
-                alert(thrownError);
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: response.responseJSON.errors,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
             }
         })
     }
 
     $(document).ready(function() {
-        getCG();
+        getSkill();
         getJabatan();
     });
 </script>
