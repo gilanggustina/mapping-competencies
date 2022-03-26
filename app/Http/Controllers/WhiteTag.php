@@ -80,7 +80,7 @@ class WhiteTag extends Controller
 
         if($validator->fails()){
             dd($validator->errors());
-            dd("error");
+
         }else{
             DB::beginTransaction();
             try{
@@ -122,9 +122,15 @@ class WhiteTag extends Controller
                     "message"=>"Terjadi kesalahan dalam penyimpanan data"
                 ];
             }
-            return redirect()
-            ->route('WhiteTag')
-            ->with($messages["type"], $messages["message"]);
+            if($request->type == "general"){
+                return redirect()
+                ->route('WhiteTag')
+                ->with($messages["type"], $messages["message"]);
+            }else{
+                return redirect()
+                ->route('WhiteTagFunc')
+                ->with($messages["type"], $messages["message"]);
+            }
         }
     }
 
