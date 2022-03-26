@@ -200,11 +200,13 @@
                     showConfirmButton: false,
                     timer: 1500
                 })
-             }
-              $('#title').val('');
-              $('#description').val('');
 
-              $('#modal-tambah').modal('hide');
+            }
+            $('#title').val('');
+            $('#description').val('');
+            
+            $('#modal-tambah').modal('hide');
+            location.reload();
         },
         error: function(err) {
             console.log(err)
@@ -246,6 +248,10 @@
         }
       });
   }
+
+//   $('#table-berita-daerah').on('click','.delete-button', function () {
+//             $('.modal-footer a').attr('href',"{{ url('manajemen-berita-daerah/delete/') }}/"+$(this).data('id'));
+//         })
 
     function getSkill(){
             $.ajax({
