@@ -257,7 +257,7 @@
         $('#table-detail').DataTable().destroy();
         var dtJson = $('#table-detail').DataTable({
             ajax:  url,
-            autoWidth: false,
+            autoWidth: true,
             serverSide: true,
             processing: true,
             searching: true,
@@ -302,7 +302,7 @@
             ],
         });
 
-        dtJson.columns.adjust().draw();
+        // dtJson.columns.adjust().draw();
 
     }
 

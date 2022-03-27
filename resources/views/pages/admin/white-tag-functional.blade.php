@@ -254,19 +254,12 @@
         $('#table-detail').DataTable().destroy();
         var dtJson = $('#table-detail').DataTable({
             ajax:  url,
-            autoWidth: false,
+            autoWidth: true,
             serverSide: true,
             processing: true,
             searching: true,
             dom: '<"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
             displayLength: 10,
-            columnDefs: [
-                {
-                    "targets": [0],
-                    "visible": false,
-                    "orderable": false
-                }
-            ],
             language: {
                 paginate: {
                     // remove previous & next text from pagination
@@ -307,7 +300,7 @@
             ],
         });
 
-        dtJson.columns.adjust().draw();
+        // dtJson.columns.adjust().draw();
 
     }
 
