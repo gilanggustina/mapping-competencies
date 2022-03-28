@@ -69,13 +69,13 @@
                             <table class="display expandable-table table-striped table-hover" id="table-cg" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
+                                        <th class="text-center">No</th>
                                         <th>Nama Anggota</th>
                                         <th>Job Title</th>
                                         <th>Dept</th>
                                         <th>Divisi</th>
                                         <th>Liga CG</th>
-                                        <th>Action</th>
+                                        <th class="text-center">Action</th>
                                     </tr> 
                                 </thead>
                                 <tbody></tbody>

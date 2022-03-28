@@ -75,7 +75,7 @@
                                         <th>Dept</th>
                                         <th>Divisi</th>
                                         <th>Liga CG</th>
-                                        <th>Action</th>
+                                        <th class="text-center">Action</th>
                                     </tr> 
                                 </thead>
                             </table>
