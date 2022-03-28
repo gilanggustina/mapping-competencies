@@ -45,11 +45,10 @@ class Curriculum extends Controller
         $post = CurriculumModel::find($id);
         return response()->json($post);
     }
-
-    public function destroy($id)
+    public function delete($id)
     {
         $post = CurriculumModel::find($id)->delete();
-        return response()->json(['success' => 'Post Deleted successfully']);
+        return redirect()->route('Curriculum')->with(['success' => 'Curriculum Deleted successfully']);
     }
 
     public function getSkill()

@@ -25,7 +25,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="table-responsive">
-                            <table class="display expandable-table table-striped table-hover" id="table-cg" style="width:100%">
+                            <table class="display expandable-table table-striped table-hover" id="table-cr" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>No.#</th>
@@ -52,7 +52,7 @@
                                         <td>{{ $data->nama_job_title }}</td>
                                         <td>
                                             <button data-id="{{ $data->id }}" onclick="editdata(event.target)" class="btn btn-inverse-success btn-icon delete-button mr-1 mr-1 Edit-button"><i class="icon-file menu-icon"></i></button>
-                                            <button data-id="{{ $data->id }}" class="btn btn-inverse-danger btn-icon mr-1" data-toggle="modal" data-target="#modal-cr-hapus" onclick="deletedata(event.target)"><i class="icon-trash"></i></button>
+                                            <button data-id="{{ $data->id }}" class="btn btn-inverse-danger btn-icon cr-hapus mr-1" data-toggle="modal" data-target="#modal-cr-hapus"><i class="icon-trash"></i></button>
                                         </td>
                                         </tr>
                                     @endforeach
@@ -217,41 +217,40 @@
                     showConfirmButton: false,
                     timer: 1500
                 })
-        //   $('#titleError').text(response.responseJSON.errors.title);
-        //   $('#descriptionError').text(response.responseJSON.errors.description);
         }
       });
   }
 
-  function deletedata(event) {
-    $('#modal-delete').modal('show');
+//   function deletedata(event) {
+//     $('#modal-delete').modal('show');
 
-    var id  = $(event).data("id");
-    let _url = `/curriculum-delete/${id}`;
-    let _token   = $('meta[name="csrf-token"]').attr('content');
+//     var id  = $(event).data("id");
+//     let _url = `/curriculum-delete/${id}`;
+//     let _token   = $('meta[name="csrf-token"]').attr('content');
 
-      $.ajax({
-        url: _url,
-        type: 'DELETE',
-        data: {
-          _token: _token
-        },
-        success: function(response) {
-          $("#row_"+id).remove();
-          Swal.fire({
-                    position: 'top-end',
-                    icon: 'success',
-                    title: 'Data has been delete',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-        }
-      });
-  }
+//       $.ajax({
+//         url: _url,
+//         type: 'DELETE',
+//         data: {
+//           _token: _token
+//         },
+//         success: function(response) {
+//           $("#row_"+id).remove();
+//           Swal.fire({
+//                     position: 'top-end',
+//                     icon: 'success',
+//                     title: 'Data has been delete',
+//                     showConfirmButton: false,
+//                     timer: 1500
+//                 })
+//         }
+//       });
+//   }
 
-//   $('#table-berita-daerah').on('click','.delete-button', function () {
-//             $('.modal-footer a').attr('href',"{{ url('manajemen-berita-daerah/delete/') }}/"+$(this).data('id'));
-//         })
+    $('#table-cr').on('click','.cr-hapus', function () {
+        console.log($(this).data('id_curriculum'), $(this).data('id'))
+        $('.modal-footer a').attr('href',"{{ url('curriculum-delete/') }}/"+$(this).data('id_curriculum'));
+    })
 
     function getSkill(){
             $.ajax({
