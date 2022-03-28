@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CopetenciesDirectoryModel extends Model
+class CompetenciesDirectoryModel extends Model
 {
     protected $table = 'competencies_directory';
     protected $fillable = [

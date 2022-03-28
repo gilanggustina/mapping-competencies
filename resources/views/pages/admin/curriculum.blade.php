@@ -266,7 +266,7 @@
                     $('#id_skill_category').html();
                     $('#id_skill_category').append(option);
                 },
-                error: function (xhr, ajaxOptions, thrownError) {
+                error: function (response) {
                     Swal.fire({
                         position: 'top-end',
                         icon: 'error',

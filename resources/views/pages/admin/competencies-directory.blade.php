@@ -66,6 +66,8 @@
                                     <tr>
                                         <th>No Training Module#</th>
                                         <th>Training Module</th>
+                                        <th>Year Between</th>
+                                        <th>Simbol</th>
                                         <th>Action</th>
                                     </tr> 
                                 </thead>
@@ -73,6 +75,8 @@
                                     <tr>
                                         <td>001/KMI/HRD-RT/SAL/001</td>
                                         <td>Company Strategy</td>
+                                        <td></td>
+                                        <td></td>
                                         <td>
                                             <button data-toggle="modal" data-target="#modal-tambah" class="btn btn-inverse-success btn-icon mr-1"><i class="icon-file menu-icon"></i></button>
                                             <button data-toggle="modal" data-target="#modal-hapus"   class="btn btn-inverse-danger btn-icon mr-1"><i class="icon-trash"></i></button>
@@ -82,14 +86,8 @@
                                     <tr>
                                         <td>002/KMI/HRD-RT/SAL/002</td>
                                         <td>Orientation Department</td>
-                                        {{-- <td>
-                                            <ul style="list-style-type:disc">
-                                                <li>HRD Supervisor</li>
-                                                <li>R&LD Staff</li>
-                                                <li>HRD Admin</li>
-                                                <li>Payroll & Secretary</li>
-                                              </ul>
-                                        </td> --}}
+                                        <td></td>
+                                        <td></td>
                                         <td>
                                             <button data-toggle="modal" data-target="#modal-tambah" class="btn btn-inverse-success btn-icon mr-1"><i class="icon-file menu-icon"></i></button>
                                             <button data-toggle="modal" data-target="#modal-hapus"   class="btn btn-inverse-danger btn-icon mr-1"><i class="icon-trash"></i></button>
@@ -98,17 +96,9 @@
                                     </tr>
                                     <tr>
                                         <td>003/KMI/HRD-RT/SAL/003</td>
-                                        {{-- <td>General Knowledge & Skills</td> --}}
                                         <td>KALBE Business Ethic</td>
-                                        {{-- <td>Berisi tentang tata kelola etika bisnis di KALBE Group</td> --}}
-                                        {{-- <td>
-                                            <ul style="list-style-type:disc">
-                                                <li>HRD Supervisor</li>
-                                                <li>R&LD Staff</li>
-                                                <li>HRD Admin</li>
-                                                <li>Payroll & Secretary</li>
-                                              </ul>
-                                        </td> --}}
+                                        <td></td>
+                                        <td></td>
                                         <td>
                                             <button data-toggle="modal" data-target="#modal-tambah" class="btn btn-inverse-success btn-icon mr-1"><i class="icon-file menu-icon"></i></button>
                                             <button data-toggle="modal" data-target="#modal-hapus"   class="btn btn-inverse-danger btn-icon mr-1"><i class="icon-trash"></i></button>
@@ -137,23 +127,36 @@
             </div>
             <form action="" method="POST" enctype="multipart/form-data">
                 @csrf
-        <div class="modal-body">
-            <div class="row">
-                <div class="col-6"></div>
-                <div class="col-6">
-                    <div class="form-group col-sm">
-                        <label for="yearduration">Year Duration</label>
-                        <select id="year_duration" class="form-control form-control-sm" name="year_duration">
-                            <option value="">Pilih Year Duration</option>
-                        </select>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group col-sm">
+                            <label for="yearduration">Job Title</label>
+                            <select id="id_job_title" class="form-control form-control-sm" name="id_job_title">
+                                <option value="">Pilih Job Title</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group col-sm">
+                            <label for="yearduration">Year Duration</label>
+                            <select id="year_duration" class="form-control form-control-sm" name="year_duration">
+                                <option value="">Pilih Year Duration</option>
+                                <option value="Y0-Y1">Y0-Y1</option>
+                                <option value="Y2-Y3">Y2-Y3</option>
+                                <option value="Y4-Y5">Y4-Y5</option>
+                                <option value="Y6-Y7">Y6-Y7</option>
+                                <option value="Y8-Y9">Y8-Y9</option>
+                                <option value="YN">YN</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
         </form>
       </div>
     </div>
@@ -182,5 +185,49 @@
 
 @endsection
 @push('script')
+<script>
+     
+     function getJabatan(){
+        $.ajax({
+            type: "GET",
+            url: "{{ route('get.jabatan') }}",
+            success: function(res) {
+                var option = "";
+                for (let i = 0; i < res.data.length; i++) {
+                    option += '<option value="'+res.data[i].id_job_title+'">'+res.data[i].nama_job_title+'</option>';
+                }
+                $('#jabatan').html();
+                $('#jabatan').append(option);
+            },
+            error: function (response) {
+                Swal.fire({
+                        position: 'top-end',
+                        icon: 'error',
+                        title: response.responseJSON.errors,
+                        showConfirmButton: false,
+                        timer: 1500
+                })
+            }
+        })
+    }
 
+    $(document).ready(function() {
+        // initDatatable();
+        getJabatan();
+
+        // $('#table-competencies-directory').on('click','.delete-button', function () {
+        //     $('.modal-footer a').attr('href',"{{ route('Member.delete') }}/"+$(this).data('id'));
+        // })
+
+        $('.delete-button').on('click',function () {
+            $('#modal-hapus').modal('show');
+        })
+
+        // $('.btn-tambah').on('click',function () {
+        //     $('.modal-dialog form').attr('action',"{{ route('Member.post') }}");
+        //     // $('input[name="_method"]').remove();
+        //     $('.modal-dialog form')[0].reset();
+        // })
+    });
+</script>
 @endpush
