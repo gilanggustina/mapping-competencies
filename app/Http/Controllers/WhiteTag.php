@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\WhiteTagModel;
-use App\CopetenciesDirectoryModel;
+use App\CompetenciesDirectoryModel;
 use Validator;
 use DB;
 use Yajra\Datatables\Datatables;
@@ -52,7 +52,7 @@ class WhiteTag extends Controller
             $skillId = [4,5];
         }
         
-        $comps = CopetenciesDirectoryModel::select("competencies_directory.id_directory as id_directory","curriculum.no_training_module as no_training","curriculum.training_module as training_module","curriculum.training_module_group as training_module_group","curriculum.level as level","skill_category.skill_category as skill_category","white_tag.start as start","white_tag.actual as actual","competencies_directory.target as target")
+        $comps = CompetenciesDirectoryModel::select("competencies_directory.id_directory as id_directory","curriculum.no_training_module as no_training","curriculum.training_module as training_module","curriculum.training_module_group as training_module_group","curriculum.level as level","skill_category.skill_category as skill_category","white_tag.start as start","white_tag.actual as actual","competencies_directory.target as target")
                                             ->join("curriculum",function ($join) use ($user,$skillId){
                                                 $join->on("curriculum.id_curriculum","competencies_directory.id_curriculum")
                                                     ->where("competencies_directory.id_job_title",$user->id_job_title)
@@ -142,7 +142,7 @@ class WhiteTag extends Controller
         }else{
             $skillId = [4,5];
         }
-        $data = CopetenciesDirectoryModel::select("curriculum.no_training_module as no_training","curriculum.training_module as training_module","curriculum.training_module_group as training_module_group","curriculum.level as level","skill_category.skill_category as skill_category","white_tag.start as start","white_tag.actual as actual","competencies_directory.target as target",)
+        $data = CompetenciesDirectoryModel::select("curriculum.no_training_module as no_training","curriculum.training_module as training_module","curriculum.training_module_group as training_module_group","curriculum.level as level","skill_category.skill_category as skill_category","white_tag.start as start","white_tag.actual as actual","competencies_directory.target as target",)
                                             ->join("curriculum",function ($join) use ($user,$skillId){
                                                 $join->on("curriculum.id_curriculum","competencies_directory.id_curriculum")
                                                     ->where("competencies_directory.id_job_title",$user->id_job_title)
