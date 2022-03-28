@@ -164,70 +164,70 @@ class WhiteTag extends Controller
         ->editColumn('start', function ($row) {
             switch($row->start){
                 case 0:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('theme/images/ico/logo-map.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/0.png').'"></div>';
                 break;
                 case 1:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('theme/images/ico/logo-map.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/1.png').'"></div>';
                 break;
                 case 2:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('theme/images/ico/logo-map.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/2.png').'"></div>';
                 break;
                 case 3:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('theme/images/ico/logo-map.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/3.png').'"></div>';
                 break;
                 case 4:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('theme/images/ico/logo-map.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/4.png').'"></div>';
                 break;
                 case 5:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('theme/images/ico/logo-map.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/5.png').'"></div>';
                 break;
                     
             }
             return $icon;
         })
         ->editColumn('actual', function ($row) {
-            switch($row->start){
+            switch($row->actual){
                 case 0:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('theme/images/ico/logo-map.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/0.png').'"></div>';
                 break;
                 case 1:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('theme/images/ico/logo-map.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/1.png').'"></div>';
                 break;
                 case 2:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('theme/images/ico/logo-map.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/2.png').'"></div>';
                 break;
                 case 3:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('theme/images/ico/logo-map.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/3.png').'"></div>';
                 break;
                 case 4:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('theme/images/ico/logo-map.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/4.png').'"></div>';
                 break;
                 case 5:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('theme/images/ico/logo-map.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/5.png').'"></div>';
                 break;
                     
             }
             return $icon;
         })
         ->editColumn('target', function ($row) {
-            switch($row->start){
+            switch($row->target){
                 case 0:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('theme/images/ico/logo-map.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/0.png').'"></div>';
                 break;
                 case 1:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('theme/images/ico/logo-map.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/1.png').'"></div>';
                 break;
                 case 2:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('theme/images/ico/logo-map.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/2.png').'"></div>';
                 break;
                 case 3:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('theme/images/ico/logo-map.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/3.png').'"></div>';
                 break;
                 case 4:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('theme/images/ico/logo-map.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/4.png').'"></div>';
                 break;
                 case 5:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('theme/images/ico/logo-map.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/5.png').'"></div>';
                 break;
                     
             }

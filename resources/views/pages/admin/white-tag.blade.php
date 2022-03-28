@@ -299,7 +299,7 @@
                 {
                     data: 'target'
                 }
-            ],
+            ]
         });
 
         // dtJson.columns.adjust().draw();
