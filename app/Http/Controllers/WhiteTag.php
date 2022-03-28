@@ -9,16 +9,21 @@ use App\CopetenciesDirectoryModel;
 use Validator;
 use DB;
 use Yajra\Datatables\Datatables;
+use Auth;
 
 
 
 class WhiteTag extends Controller
 {
     public function cgJson(Request $request)
-    {
+    {   
+        $cgAuth = Auth::user()->id_cg;
         $data = User::leftJoin('department as dp', 'users.id_department', '=', 'dp.id_department')
             ->leftJoin('job_title as jt', 'users.id_job_title', '=', 'jt.id_job_title')
-            ->leftJoin('cg', 'users.id_cg', '=', 'cg.id_cg')
+            ->join('cg',function ($join) use ($cgAuth){
+                $join->on('users.id_cg','cg.id_cg')
+                    ->where('users.id_cg',$cgAuth);
+            })
             ->leftJoin('divisi', 'users.id_divisi', '=', 'divisi.id_divisi')
             ->get(['users.*', 'dp.nama_department', 'jt.nama_job_title','cg.nama_cg','divisi.nama_divisi']);
         return Datatables::of($data)
