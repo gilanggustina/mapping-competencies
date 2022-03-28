@@ -42,5 +42,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/ceme', 'Ceme@index')->name('ceme');
 
     Route::get('/white-tag', 'WhiteTag@index')->name('WhiteTag');
+    Route::get('/white-tag-member', 'WhiteTag@cgJson')->name('WhiteTagMember');
     Route::get('/white-tag-func', 'WhiteTag@functional')->name('WhiteTagFunc');
+    Route::get('/form-white-tag','WhiteTag@formWhiteTag')->name("formWhiteTag");
+    Route::post('/action-white-tag','WhiteTag@actionWhiteTag')->name("actionWhiteTag");
+    Route::get('/detail-white-tag', 'WhiteTag@detailWhiteTag')->name('detailWhiteTag');
+
+
 });
