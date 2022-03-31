@@ -21,10 +21,10 @@ class Tagging extends Controller
     public function tagingJson()
     {
         $select = [
-            "id_taging_reason","white_tag.id_white_tag","nama_pengguna as employee_name",
+            "id_taging_reason","white_tag.id_white_tag","tr.no_taging as noTaging","nama_pengguna as employee_name",
             "skill_category","training_module",
             "level","training_module_group","white_tag.actual as actual",
-            "cd.target as target",DB::raw("(white_tag.actual - cd.target) as actualTarget"),DB::raw("null as noTaging"),DB::raw("(IF((white_tag.actual - cd.target) < 0,'Follow Up','Finished' )) as tagingStatus")
+            "cd.target as target",DB::raw("(white_tag.actual - cd.target) as actualTarget"),DB::raw("(IF((white_tag.actual - cd.target) < 0,'Follow Up','Finished' )) as tagingStatus")
         ];
         $data = WhiteTagModel::select($select)
                             ->join("competencies_directory as cd",function ($join){
@@ -132,6 +132,13 @@ class Tagging extends Controller
                 ->update($tempData);
                 $messages = "Success! Data berhasil diperbaharui";
             }else{
+                $lastId = TagingReason::orderBy("id_taging_reason","desc")->first();
+                if(isset($lastId)){
+                    $lastNumber = (int)$lastId->no_taging;
+                }else{
+                    $lastNumber = 0;
+                }
+                $tempData["no_taging"] = str_pad($lastNumber+1,5,'0',STR_PAD_LEFT);
                 $tempData["id_white_tag"] = $data["id_white_tag"];
                 $tempData["id_verified_by"] = Auth::user()->id;
                 TagingReason::insert($tempData);
@@ -155,6 +162,7 @@ class Tagging extends Controller
             dd($validator->errors());
         }else{
             $select = [
+                "taging_reason.no_taging as no_taging",
                 "taging_reason.year as year",
                 "taging_reason.period as period",
                 "member.nama_pengguna as name",

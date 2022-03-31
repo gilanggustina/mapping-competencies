@@ -6,7 +6,7 @@
       <div class="form-group row mb-0">
           <label class="col-sm-3 col-form-label">No</label>
           <div class="col-sm-9 m-auto">
-              <input type="number" value="001" value="" class="form-control form-control-sm" placeholder="0" disabled>
+              <input type="number" value="{{$data->no_taging}}" value="" class="form-control form-control-sm" placeholder="0" disabled>
           </div>
       </div>
       <div class="form-group row mb-0">
