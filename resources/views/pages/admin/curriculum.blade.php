@@ -41,7 +41,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach($data as $data)
-                                        <tr id="row_{{$data->id}}">
+                                        <tr id="row_{{$data->id_curriculum}}"> 
                                         <th scope="row" class="text-center">{{ $loop->iteration }}</th>
                                         <td>{{ $data->no_training_module  }}</td>
                                         <td>{{ $data->skill_category }}</td>
@@ -51,8 +51,8 @@
                                         <td>{{ $data->training_module_desc }}</td>
                                         <td>{{ $data->nama_job_title }}</td>
                                         <td>
-                                            <button data-id="{{ $data->id }}" onclick="editdata(event.target)" class="btn btn-inverse-success btn-icon delete-button mr-1 mr-1 Edit-button"><i class="icon-file menu-icon"></i></button>
-                                            <button data-id="{{ $data->id }}" class="btn btn-inverse-danger btn-icon cr-hapus mr-1" data-toggle="modal" data-target="#modal-cr-hapus"><i class="icon-trash"></i></button>
+                                            <button data-id="{{ $data->id_curriculum }}" onclick="editdata(event.target)" class="btn btn-inverse-success btn-icon delete-button mr-1 mr-1 Edit-button"><i class="icon-file menu-icon"></i></button>
+                                            <button data-id="{{ $data->id_curriculum }}" class="btn btn-inverse-danger btn-icon mr-1" data-toggle="modal" data-target="#modal-cr-hapus"><i class="icon-trash"></i></button>
                                         </td>
                                         </tr>
                                     @endforeach
@@ -140,7 +140,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <a href="" class="btn btn-danger">Hapus</a>
+                    <a href="" class="btn btn-danger cr-hapus">Hapus</a>
                 </div>
             </div>
         </form>
@@ -150,7 +150,7 @@
 @endsection
 @push('script')
 <script>
- $('#laravel_crud').DataTable();
+ $('#table-cr').DataTable();
 
   function editPost(event) {
     var id  = $(event).data("id");
@@ -221,35 +221,25 @@
       });
   }
 
-//   function deletedata(event) {
-//     $('#modal-delete').modal('show');
-
-//     var id  = $(event).data("id");
-//     let _url = `/curriculum-delete/${id}`;
-//     let _token   = $('meta[name="csrf-token"]').attr('content');
-
-//       $.ajax({
-//         url: _url,
-//         type: 'DELETE',
-//         data: {
-//           _token: _token
-//         },
-//         success: function(response) {
-//           $("#row_"+id).remove();
-//           Swal.fire({
-//                     position: 'top-end',
-//                     icon: 'success',
-//                     title: 'Data has been delete',
-//                     showConfirmButton: false,
-//                     timer: 1500
-//                 })
-//         }
-//       });
-//   }
-
     $('#table-cr').on('click','.cr-hapus', function () {
-        console.log($(this).data('id_curriculum'), $(this).data('id'))
-        $('.modal-footer a').attr('href',"{{ url('curriculum-delete/') }}/"+$(this).data('id_curriculum'));
+        // $('.modal-footer a').attr('href',"{{ url('curriculum-delete') }}/"+$(this).data('id'));
+        var id = $(this).data('id');
+        $.ajax({
+                url:"{{route('Curriculum.delete', ['id_curriculum' => " . id . "])}}",
+                mehtod:"get",
+                data:{id:id},
+                success:function(res)
+                {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Data berhasil di hapus',
+                        showConfirmButton: true,
+                        timer: 1500
+                    })  
+                    $('#table-cr').DataTable().reload();
+                }
+            })
     })
 
     function getSkill(){
