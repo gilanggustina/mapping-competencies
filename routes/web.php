@@ -38,6 +38,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/competencies-group', 'CompetenciesGroup@index')->name('CompetenciesGroup');
     Route::get('/achievement-competencies', 'AchievementCompetencies@index')->name('AchievementCompetencies');
     Route::get('/tagging-list', 'Tagging@taglist')->name('TagList');
+    Route::get('/tagging-json','Tagging@tagingJson')->name('taggingJson');
+    Route::get('/form-taging','Tagging@formTaggingList')->name('tagingForm');
+    Route::post('/action-form-taging','Tagging@actionTagingList')->name('actionTagingList');
+    Route::get('/detail-taging','Tagging@detail')->name('tagingDetail');
+    
     Route::get('/tagging-card', 'Tagging@tagcard')->name('TagCard');
     Route::get('/ceme', 'Ceme@index')->name('ceme');
 

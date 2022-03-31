@@ -4851,9 +4851,9 @@ fieldset:disabled .btn {
     border-radius: 0; } }
 
 .tooltip {
-  position: absolute;
+  position: relative;
   z-index: 1080;
-  display: block;
+  display: inline-block;
   margin: 0;
   font-family: var(--bs-font-sans-serif);
   font-style: normal;
@@ -4872,6 +4872,24 @@ fieldset:disabled .btn {
   font-size: 0.857rem;
   word-wrap: break-word;
   opacity: 0; }
+  
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+  
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+  }
+  
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+  }
 
 .tooltip.show {
   opacity: 1; }
