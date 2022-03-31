@@ -10,4 +10,6 @@ class WhiteTagModel extends Model
     protected $fillable = [
         'id_curriculum', 'id_user', 'id_training_module', 'start', 'actual', 'target'
     ];
+    public $timestamps = false;
+
 }

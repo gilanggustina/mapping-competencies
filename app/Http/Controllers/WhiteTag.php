@@ -51,13 +51,15 @@ class WhiteTag extends Controller
         ]);
         $type = $request->type;
         $user = User::select("id","id_job_title")->where("id",$request->id)->first();
-        if($request->type == "general"){
-            $skillId = [1,2,3];
-        }else{
-            $skillId = [4,5];
-        }
-        
-        $comps = CompetenciesDirectoryModel::select("competencies_directory.id_directory as id_directory","curriculum.no_training_module as no_training","curriculum.training_module as training_module","curriculum.training_module_group as training_module_group","curriculum.level as level","skill_category.skill_category as skill_category","white_tag.start as start","white_tag.actual as actual","competencies_directory.target as target")
+        $skillId = [1,2];
+        $select = [
+            "competencies_directory.id_directory as id_directory","curriculum.no_training_module as no_training",
+            "curriculum.training_module as training_module","curriculum.training_module_group as training_module_group",
+            "curriculum.level as level","skill_category.skill_category as skill_category","white_tag.start as start",
+            "white_tag.actual as actual","competencies_directory.target as target",
+            DB::raw("(SELECT COUNT(*) FROM taging_reason as tr where tr.id_white_tag = white_tag.id_white_tag) as cntTagingReason")
+        ];
+        $comps = CompetenciesDirectoryModel::select($select)
                                             ->join("curriculum",function ($join) use ($user,$skillId){
                                                 $join->on("curriculum.id_curriculum","competencies_directory.id_curriculum")
                                                     ->where("competencies_directory.id_job_title",$user->id_job_title)
@@ -78,29 +80,25 @@ class WhiteTag extends Controller
             "type" => "required|string|in:general,functional",
             "user_id" => "required|numeric",
             "data" => "nullable|array",
-            "data.*.id" => "required|numeric",
-            "data.*.start" => "required|numeric",
-            "data.*.actual" => "required|numeric"
+            "data.*.id" => "nullable|numeric",
+            "data.*.start" => "nullable|numeric",
+            "data.*.actual" => "nullable|numeric"
         ]);
 
         if($validator->fails()){
             dd($validator->errors());
-
         }else{
             DB::beginTransaction();
             try{
-                if($request->type == "general"){
-                    $skillId = [1,2,3];
-                }else{
-                    $skillId = [4,5];
-                }
-                WhiteTagModel::where("id_user",$request->user_id)
-                    ->join("competencies_directory",function ($join) use ($skillId){
-                        $join->on('competencies_directory.id_directory','white_tag.id_directory')
-                            ->join('curriculum','curriculum.id_curriculum','competencies_directory.id_curriculum')
-                            ->whereIn('curriculum.id_skill_category',$skillId);
-                    })
-                    ->delete();
+                $skillId = [1,2];
+                WhiteTagModel::whereRaw("id_user = '".$request->user_id."' AND (select count(*) from taging_reason where taging_reason.id_white_tag = white_tag.id_white_tag) <= 0 ")
+                            ->join("competencies_directory",function ($join) use ($skillId){
+                                $join->on('competencies_directory.id_directory','white_tag.id_directory')
+                                    ->join('curriculum','curriculum.id_curriculum','competencies_directory.id_curriculum')
+                                    ->whereIn('curriculum.id_skill_category',$skillId);
+                            })
+                            ->delete();
+                            
                 if(isset($request->data)){
                     $insert = [];
                     for($i=0; $i < count($request->data); $i++){
@@ -114,11 +112,11 @@ class WhiteTag extends Controller
                     }
                     WhiteTagModel::insert($insert);
                 }
-                DB::commit();
                 $messages = [
                     "type"=>"success",
                     "message"=>"Berhasil mengubah data white tag!"
                 ];
+                DB::commit();
             }catch(\Exception $e){
                 DB::rollback();
                 dd($e->getMessage());
@@ -142,11 +140,7 @@ class WhiteTag extends Controller
     public function detailWhiteTag(Request $request)
     {
         $user = User::select("id","id_job_title")->where("id",$request->id)->first();
-        if($request->type == "general"){
-            $skillId = [1,2,3];
-        }else{
-            $skillId = [4,5];
-        }
+        $skillId = [1,2];
         $data = CompetenciesDirectoryModel::select("curriculum.no_training_module as no_training","curriculum.training_module as training_module","curriculum.training_module_group as training_module_group","curriculum.level as level","skill_category.skill_category as skill_category","white_tag.start as start","white_tag.actual as actual","competencies_directory.target as target",)
                                             ->join("curriculum",function ($join) use ($user,$skillId){
                                                 $join->on("curriculum.id_curriculum","competencies_directory.id_curriculum")
@@ -164,22 +158,22 @@ class WhiteTag extends Controller
         ->editColumn('start', function ($row) {
             switch($row->start){
                 case 0:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/0.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->start.'" class="mx-auto"><img class="img-thumbnail mx-auto tooltip-info" src="'.asset('assets/images/point/0.png').'"></div>';
                 break;
                 case 1:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/1.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->start.'" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/1.png').'"></div>';
                 break;
                 case 2:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/2.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->start.'" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/2.png').'"></div>';
                 break;
                 case 3:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/3.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->start.'" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/3.png').'"></div>';
                 break;
                 case 4:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/4.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->start.'" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/4.png').'"></div>';
                 break;
                 case 5:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/5.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->start.'" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/5.png').'"></div>';
                 break;
                     
             }
@@ -188,22 +182,22 @@ class WhiteTag extends Controller
         ->editColumn('actual', function ($row) {
             switch($row->actual){
                 case 0:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/0.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->actual.'" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/0.png').'"></div>';
                 break;
                 case 1:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/1.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->actual.'" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/1.png').'"></div>';
                 break;
                 case 2:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/2.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->actual.'" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/2.png').'"></div>';
                 break;
                 case 3:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/3.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->actual.'" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/3.png').'"></div>';
                 break;
                 case 4:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/4.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->actual.'" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/4.png').'"></div>';
                 break;
                 case 5:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/5.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->actual.'" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/5.png').'"></div>';
                 break;
                     
             }
@@ -212,22 +206,22 @@ class WhiteTag extends Controller
         ->editColumn('target', function ($row) {
             switch($row->target){
                 case 0:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/0.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->target.'" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/0.png').'"></div>';
                 break;
                 case 1:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/1.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->target.'" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/1.png').'"></div>';
                 break;
                 case 2:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/2.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->target.'" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/2.png').'"></div>';
                 break;
                 case 3:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/3.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->target.'" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/3.png').'"></div>';
                 break;
                 case 4:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/4.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->target.'" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/4.png').'"></div>';
                 break;
                 case 5:
-                    $icon = '<div style="width:50px;heigth:50px" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/5.png').'"></div>';
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->target.'" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/5.png').'"></div>';
                 break;
                     
             }

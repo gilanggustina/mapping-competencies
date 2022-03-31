@@ -66,7 +66,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="table-responsive">
-                            <table class="display expandable-table table-striped table-hover" id="table-cg" style="width:100%">
+                            <table class="display nowrap expandable-table table-striped table-hover" id="table-cg" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>No</th>

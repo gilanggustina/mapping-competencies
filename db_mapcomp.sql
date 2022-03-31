@@ -1,5 +1,5 @@
 /*
-SQLyog Ultimate v13.1.1 (32 bit)
+SQLyog Ultimate
 MySQL - 10.4.24-MariaDB : Database - db_mapcomp
 *********************************************************************
 */
@@ -69,7 +69,7 @@ CREATE TABLE `competencies_directory` (
   `id_curriculum` int(11) NOT NULL,
   `id_job_title` char(8) NOT NULL,
   `between_year` varchar(150) NOT NULL,
-  `target` int(6) NOT NULL DEFAULT 0,
+  `target` tinyint(6) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id_directory`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
@@ -429,11 +429,8 @@ CREATE TABLE `skill_category` (
 /*Data for the table `skill_category` */
 
 insert  into `skill_category`(`id_skill_category`,`skill_category`) values 
-(1,'General Knowledge & Skills'),
-(2,'General Skills'),
-(3,'Soft Skills'),
-(4,'Technical Knowledge & Skills'),
-(5,'Technical Skills');
+(1,'Technical Skills'),
+(2,'General Skills');
 
 /*Table structure for table `sub_department` */
 
@@ -480,6 +477,36 @@ insert  into `sub_department`(`id_subdepartment`,`id_department`,`nama_subdepart
 ('SDP-0030','DP-0003','BDA-PRC','2021-01-27 04:40:45','2021-01-27 04:40:45'),
 ('SDP-0031','DP-0003','BDA-FA','2021-01-27 04:41:13','2021-01-27 04:41:13'),
 ('SDP-0032','DP-0009','MDP-IT subdept','2021-01-27 06:33:33','2021-01-27 06:33:33');
+
+/*Table structure for table `taging_reason` */
+
+DROP TABLE IF EXISTS `taging_reason`;
+
+CREATE TABLE `taging_reason` (
+  `id_taging_reason` int(255) unsigned NOT NULL AUTO_INCREMENT,
+  `id_white_tag` varchar(15) DEFAULT NULL,
+  `year` year(4) DEFAULT NULL,
+  `period` varchar(20) DEFAULT NULL,
+  `date_open` date DEFAULT NULL,
+  `learning_method` varchar(50) DEFAULT NULL,
+  `trainer` varchar(50) DEFAULT NULL,
+  `date_plan_implementation` date DEFAULT NULL,
+  `notes_learning_implementation` text DEFAULT NULL,
+  `date_closed` date DEFAULT NULL,
+  `start` time DEFAULT NULL,
+  `finish` time DEFAULT NULL,
+  `duration` varchar(100) DEFAULT NULL,
+  `date_verified` date DEFAULT NULL,
+  `id_verified_by` int(255) unsigned DEFAULT NULL,
+  `result_score` double DEFAULT NULL,
+  `notes_for_result` text DEFAULT NULL,
+  PRIMARY KEY (`id_taging_reason`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `taging_reason` */
+
+insert  into `taging_reason`(`id_taging_reason`,`id_white_tag`,`year`,`period`,`date_open`,`learning_method`,`trainer`,`date_plan_implementation`,`notes_learning_implementation`,`date_closed`,`start`,`finish`,`duration`,`date_verified`,`id_verified_by`,`result_score`,`notes_for_result`) values 
+(12,'9LXoD1648631883',2022,'Maret 2022','2022-03-30','Example Learning','Example Coach','2022-03-31','Note Implementation','2022-04-01','10:00:00','12:00:00','2 Jam : 0 Menit','2022-03-31',1,5,'Example Catatan Nilai');
 
 /*Table structure for table `users` */
 
@@ -879,15 +906,16 @@ CREATE TABLE `white_tag` (
   `id_white_tag` varchar(15) NOT NULL,
   `id_directory` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
-  `start` char(2) NOT NULL,
-  `actual` char(2) NOT NULL,
+  `start` tinyint(2) NOT NULL,
+  `actual` tinyint(2) NOT NULL,
   PRIMARY KEY (`id_white_tag`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `white_tag` */
 
 insert  into `white_tag`(`id_white_tag`,`id_directory`,`id_user`,`start`,`actual`) values 
-('AQ7Hp1648285881',2,2,'3','3');
+('9LXoD1648631883',2,2,2,5),
+('LgIcg1648521124',2,1,1,2);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

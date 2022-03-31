@@ -66,7 +66,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="table-responsive">
-                            <table class="display expandable-table table-striped table-hover" id="table-cg" style="width:100%">
+                            <table class="display nowrap expandable-table table-striped table-hover" id="table-cg" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th class="text-center">No</th>
@@ -235,7 +235,13 @@
 <script type="text/javascript">
     $(document).ready(function () {
         initDatatable();
+        $('[data-toggle="tooltip"]').tooltip({
+            animation: true,
+            placement: "top",
+            trigger: "hover focus"
+        });
     });
+
 
     function getMapComp(id) {
         const url = "{!! route('formWhiteTag') !!}?id="+id+"&type=general";
