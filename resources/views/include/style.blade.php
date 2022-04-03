@@ -23,3 +23,7 @@
         padding: 0px !important;
     }
 </style>
+
+{{-- Selectize --}}
+<link rel="stylesheet" href="{{asset ('assets/select/css/bootstrap-select.css')}}">
+

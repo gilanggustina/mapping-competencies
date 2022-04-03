@@ -31,8 +31,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/curriculum', 'Curriculum@index')->name('Curriculum');
     Route::post('/curriculum-post', 'Curriculum@store')->name('Curriculum.post');
-    Route::post('/curriculum-edit/{id_curriculum}', 'Curriculum@edit')->name('Curriculum.edit');
-    Route::get('/curriculum-delete/{id_curriculum}', 'Curriculum@delete')->name('Curriculum.delete');
+    Route::get('/form-edit-curriculum','Curriculum@getFormEditCurriculum')->name('getFormEditCurriculum');
+    Route::post('/curriculum-edit', 'Curriculum@editCurriculum')->name('editCurriculum');
+    Route::get('/curriculum-delete/{id}', 'Curriculum@delete')->name('Curriculum.delete');
 
     Route::get('/competencies-directory', 'CompetenciesDirectory@index')->name('CompetenciesDirectory');
     Route::get('/competencies-group', 'CompetenciesGroup@index')->name('CompetenciesGroup');
@@ -43,7 +44,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/action-form-taging','Tagging@actionTagingList')->name('actionTagingList');
     Route::get('/detail-taging','Tagging@detail')->name('tagingDetail');
     
-    Route::get('/tagging-card', 'Tagging@tagcard')->name('TagCard');
     Route::get('/ceme', 'Ceme@index')->name('ceme');
 
     Route::get('/white-tag', 'WhiteTag@index')->name('WhiteTag');

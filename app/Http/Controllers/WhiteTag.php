@@ -233,9 +233,4 @@ class WhiteTag extends Controller
         ->make(true);
         
     }
-
-    public function functional(Request $request)
-    {
-        return view('pages.admin.white-tag-functional');
-    }
 }

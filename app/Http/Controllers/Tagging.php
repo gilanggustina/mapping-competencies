@@ -196,9 +196,4 @@ class Tagging extends Controller
             return view("pages.admin.taging-list.detail",compact("data"));
         }
     }
-
-    public function tagcard()
-    {
-        return view('pages.admin.tag-card');
-    }
 }

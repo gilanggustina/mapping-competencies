@@ -8,6 +8,7 @@
         font-size: 2rem;
     }
 </style>
+
 @endpush
 @section('content')
  
@@ -42,18 +43,20 @@
                                 <tbody>
                                     @foreach($data as $data)
                                         <tr id="row_{{$data->id_curriculum}}"> 
-                                        <th scope="row" class="text-center">{{ $loop->iteration }}</th>
-                                        <td>{{ $data->no_training_module  }}</td>
-                                        <td>{{ $data->skill_category }}</td>
-                                        <td>{{ $data->training_module }}</td>
-                                        <td>{{ $data->level }}</td>
-                                        <td>{{ $data->training_module_group }}</td>
-                                        <td>{{ $data->training_module_desc }}</td>
-                                        <td>{{ $data->nama_job_title }}</td>
-                                        <td>
-                                            <button data-id="{{ $data->id_curriculum }}" onclick="editdata(event.target)" class="btn btn-inverse-success btn-icon delete-button mr-1 mr-1 Edit-button"><i class="icon-file menu-icon"></i></button>
-                                            <button data-id="{{ $data->id_curriculum }}" class="btn btn-inverse-danger btn-icon mr-1" data-toggle="modal" data-target="#modal-cr-hapus"><i class="icon-trash"></i></button>
-                                        </td>
+                                            <th scope="row" class="text-center">{{ $loop->iteration }}</th>
+                                            <td>{{ $data->no_training_module  }}</td>
+                                            <td>{{ $data->skill_category }}</td>
+                                            <td>{{ $data->training_module }}</td>
+                                            <td>{{ $data->level }}</td>
+                                            <td>{{ $data->training_module_group }}</td>
+                                            <td>{{ $data->training_module_desc }}</td>
+                                            <td>{{ $data->nama_job_title }}</td>
+                                            <td>
+                                                <button data-id="{{ $data->id_curriculum }}" onclick="editdata(this)" class="btn btn-inverse-success btn-icon delete-button mr-1 mr-1 Edit-button" data-toggle="modal" data-target="#modal-edit"><i class="icon-file menu-icon"></i></button>
+                                                <button data-id="{{ $data->id_curriculum }}" class="btn btn-inverse-danger btn-icon mr-1 cr-hapus" data-toggle="modal" data-target="#modal-cr-hapus">
+                                                    <i class="icon-trash">
+                                                </i></button>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -71,7 +74,7 @@
     <div class="modal-dialog modal-md" role="document">
       <div class="modal-content">
           <div class="modal-header p-3">
-              <h5 class="modal-title" id="modal-tambahLabel">Tambah Data Karyawan</h5>
+              <h5 class="modal-title" id="modal-tambahLabel">Tambah Data Kurikulum</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -112,8 +115,7 @@
             </div>
             <div class="form-group col-md">
                 <label for="noModule">Job Title CG</label>
-                <select id="id_job_title" class="form-control form-control-sm" name="id_job_title">
-                    <option value="">Pilih Jabatan</option>
+                <select id="id_job_title" class="selectpicker form-control form-control-sm" name="id_job_title[]" data-live-search="true" data-hide-disabled="true" multiple data-actions-box="true">
                 </select>
             </div>
         </div>
@@ -121,6 +123,27 @@
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-primary" onclick="createPost()">Save</button>
         </div>
+        </form>
+      </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="modal-editLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+          <div class="modal-header p-3">
+              <h5 class="modal-title" id="modal-editLabel">Edit Data Kurikulum</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="" id="formEditCurriculum" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body" id="form-edit"></div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="editPost()">Save</button>
+                </div>
         </form>
       </div>
     </div>
@@ -140,7 +163,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <a href="" class="btn btn-danger cr-hapus">Hapus</a>
+                    <button id="btnHapus" onclick="deleteCurriculum(this)" data-id="" class="btn btn-danger">Hapus</button>
                 </div>
             </div>
         </form>
@@ -150,26 +173,53 @@
 @endsection
 @push('script')
 <script>
+
  $('#table-cr').DataTable();
 
   function editPost(event) {
     var id  = $(event).data("id");
-    let _url = `/curriculum-edit/${id}`;
-    $('#titleError').text('');
-    $('#descriptionError').text('');
-    
+    let _url = "{!!route('editCurriculum')!!}";
+    var curriculumEditForm = $("#formEditCurriculum");
+    var formData = curriculumEditForm.serialize();
     $.ajax({
       url: _url,
-      type: "GET",
+      type: "post",
+      data: formData,
       success: function(response) {
-          if(response) {
-            $("#post_id").val(response.id);
-            $("#title").val(response.title);
-            $("#description").val(response.description);
-            $('#modal-tambah').modal('show');
-          }
+        if(response.code == 200) {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Your work has been saved',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            $('#modal-edit').modal('hide');
+            location.reload();
+        }
+      },
+      error:function (err) {
+        console.log(err)
+        Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: err.responseJSON.message,
+            showConfirmButton: false,
+            timer: 1500
+        })
       }
     });
+  }
+
+  function editdata(el) {
+    var id = $(el).attr("data-id");
+    $.ajax({
+        url:"{!!route('getFormEditCurriculum')!!}?id="+id,
+        mehtod:"get",
+        success:function (html) {
+            $("#form-edit").html(html);
+        }
+    })
   }
 
   function createPost() {
@@ -200,7 +250,6 @@
                     showConfirmButton: false,
                     timer: 1500
                 })
-
             }
             $('#title').val('');
             $('#description').val('');
@@ -222,25 +271,35 @@
   }
 
     $('#table-cr').on('click','.cr-hapus', function () {
-        // $('.modal-footer a').attr('href',"{{ url('curriculum-delete') }}/"+$(this).data('id'));
         var id = $(this).data('id');
-        $.ajax({
-                url:"{{route('Curriculum.delete', ['id_curriculum' => " . id . "])}}",
-                mehtod:"get",
-                data:{id:id},
-                success:function(res)
-                {
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: 'Data berhasil di hapus',
-                        showConfirmButton: true,
-                        timer: 1500
-                    })  
-                    $('#table-cr').DataTable().reload();
-                }
-            })
+        $('#btnHapus').attr('data-id',id);
     })
+
+    function deleteCurriculum(el) {
+        var id = $(el).attr("data-id");
+        var token = $("meta[name='csrf-token']").attr("content");
+        var rowid = '#row_'+id;
+        $.ajax({
+            url:"curriculum-delete/"+id,
+            mehtod:"delete",
+            data: {
+                "id": id,
+                "_token": token,
+            },
+            success:function(res)
+            {
+                $("#modal-cr-hapus").modal('hide');
+                window.location.reload();
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Data berhasil di hapus',
+                    showConfirmButton: true,
+                    timer: 1500
+                })
+            }
+        })
+    }
 
     function getSkill(){
             $.ajax({
@@ -276,8 +335,7 @@
                 for (let i = 0; i < res.data.length; i++) {
                     option += '<option value="'+res.data[i].id_job_title+'">'+res.data[i].nama_job_title+'</option>';
                 }
-                $('#id_job_title').html();
-                $('#id_job_title').append(option);
+                $("#id_job_title").html(option).selectpicker('refresh');
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 Swal.fire({
@@ -291,9 +349,11 @@
         })
     }
 
-    $(document).ready(function() {
-        getSkill();
+    $(document).ready(function() {        
         getJabatan();
+        getSkill();
     });
+    
 </script>
+
 @endpush

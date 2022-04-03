@@ -19,3 +19,6 @@
 <script src="{{ asset('assets/js/dashboard.js') }}"></script>
 <script src="{{ asset('assets/js/Chart.roundedBarCharts.js') }}"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+{{-- Selectize --}}
+<script src="{{ asset ('assets/select/js/bootstrap-select.js')}}"></script>
