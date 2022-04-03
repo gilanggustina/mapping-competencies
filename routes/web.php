@@ -31,8 +31,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/curriculum', 'Curriculum@index')->name('Curriculum');
     Route::post('/curriculum-post', 'Curriculum@store')->name('Curriculum.post');
-    Route::post('/curriculum-edit/{id}', 'Curriculum@edit')->name('Curriculum.edit');
-    Route::post('/curriculum-delete/{id}', 'Curriculum@delete')->name('Curriculum.delete');
+    Route::post('/curriculum-edit/{id_curriculum}', 'Curriculum@edit')->name('Curriculum.edit');
+    Route::get('/curriculum-delete/{id_curriculum}', 'Curriculum@delete')->name('Curriculum.delete');
 
     Route::get('/competencies-directory', 'CompetenciesDirectory@index')->name('CompetenciesDirectory');
     Route::get('/competencies-group', 'CompetenciesGroup@index')->name('CompetenciesGroup');

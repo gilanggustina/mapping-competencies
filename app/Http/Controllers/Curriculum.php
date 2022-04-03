@@ -47,7 +47,7 @@ class Curriculum extends Controller
     }
     public function delete($id)
     {
-        $post = CurriculumModel::find($id)->delete();
+        $post = CurriculumModel::where('id_curriculum', $id)->delete();
         return redirect()->route('Curriculum')->with(['success' => 'Curriculum Deleted successfully']);
     }
 
