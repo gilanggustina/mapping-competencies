@@ -485,6 +485,7 @@ DROP TABLE IF EXISTS `taging_reason`;
 CREATE TABLE `taging_reason` (
   `id_taging_reason` int(255) unsigned NOT NULL AUTO_INCREMENT,
   `id_white_tag` varchar(15) DEFAULT NULL,
+  `no_taging` varchar(25) DEFAULT NULL,
   `year` year(4) DEFAULT NULL,
   `period` varchar(20) DEFAULT NULL,
   `date_open` date DEFAULT NULL,
@@ -501,12 +502,13 @@ CREATE TABLE `taging_reason` (
   `result_score` double DEFAULT NULL,
   `notes_for_result` text DEFAULT NULL,
   PRIMARY KEY (`id_taging_reason`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `taging_reason` */
 
-insert  into `taging_reason`(`id_taging_reason`,`id_white_tag`,`year`,`period`,`date_open`,`learning_method`,`trainer`,`date_plan_implementation`,`notes_learning_implementation`,`date_closed`,`start`,`finish`,`duration`,`date_verified`,`id_verified_by`,`result_score`,`notes_for_result`) values 
-(12,'9LXoD1648631883',2022,'Maret 2022','2022-03-30','Example Learning','Example Coach','2022-03-31','Note Implementation','2022-04-01','10:00:00','12:00:00','2 Jam : 0 Menit','2022-03-31',1,5,'Example Catatan Nilai');
+insert  into `taging_reason`(`id_taging_reason`,`id_white_tag`,`no_taging`,`year`,`period`,`date_open`,`learning_method`,`trainer`,`date_plan_implementation`,`notes_learning_implementation`,`date_closed`,`start`,`finish`,`duration`,`date_verified`,`id_verified_by`,`result_score`,`notes_for_result`) values 
+(13,'LgIcg1648521124','00001',2022,'Maret 2022','2022-03-31','Learning Method','Example Trainer','2022-03-29','Example Note Implementation','2022-04-01','08:00:00','09:00:00','1 Jam : 0 Menit','2022-04-01',1,4,'Catatan Nilai'),
+(14,'CPOe81648718503','00002',2020,'Februari 2020','2022-03-30','Methode Pelatihan','Ginanjar','2022-03-31','Catatan','2022-04-01','05:23:00','03:21:00','2 Jam : 2 Menit','2022-03-23',1,4,'Catatatan');
 
 /*Table structure for table `users` */
 
@@ -914,8 +916,8 @@ CREATE TABLE `white_tag` (
 /*Data for the table `white_tag` */
 
 insert  into `white_tag`(`id_white_tag`,`id_directory`,`id_user`,`start`,`actual`) values 
-('9LXoD1648631883',2,2,2,5),
-('LgIcg1648521124',2,1,1,2);
+('CPOe81648718503',2,2,2,4),
+('LgIcg1648521124',2,1,1,4);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
