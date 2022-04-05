@@ -233,191 +233,189 @@
 @endsection
 @push('script')
 <script type="text/javascript">
-    $(document).ready(function () {
-        initDatatable();
-        $('[data-toggle="tooltip"]').tooltip({
-            animation: true,
-            placement: "top",
-            trigger: "hover focus"
-        });
-    });
+  $(document).ready(function () {
+      initDatatable();
+      $('[data-toggle="tooltip"]').tooltip({
+          animation: true,
+          placement: "top",
+          trigger: "hover focus"
+      });
+  });
 
 
-    function getMapComp(id) {
-        const url = "{!! route('formWhiteTag') !!}?id="+id+"&type=general";
-        $.ajax({
-            url:url,
-            cache:false,
-            success: function(html) {
-                $("#formMapComp").html(html);
-            },
-            error: function(req, sts, err) {
-                console.log(err);
-            }
+  function getMapComp(id) {
+      const url = "{!! route('formWhiteTag') !!}?id="+id+"&type=general";
+      $.ajax({
+          url:url,
+          cache:false,
+          success: function(html) {
+              $("#formMapComp").html(html);
+          },
+          error: function(req, sts, err) {
+              console.log(err);
+          }
 
-        });
-    }
+      });
+  }
 
-    function detailWhiteTag(id) {
-        const url = "{{ route('detailWhiteTag') }}?id="+id+"&type=general";
-        $('#table-detail').DataTable().destroy();
-        var dtJson = $('#table-detail').DataTable({
-            ajax:  url,
-            autoWidth: true,
-            serverSide: true,
-            processing: true,
-            searching: true,
-            dom: '<"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
-            displayLength: 10,
-            language: {
-                paginate: {
-                    // remove previous & next text from pagination
-                    previous: '&nbsp;',
-                    next: '&nbsp;'
-                }
-            },
-            scrollX: true,
-            columns: [
-                {
-                    data: 'DT_RowIndex', name: 'DT_RowIndex'
-                },
-                {
-                    data: 'no_training'
-                },
-                {
-                    data: 'skill_category'
-                },
-                {
-                    data: 'training_module'
-                },
-                {
-                    data: 'level'
-                },
-                {
-                    data: 'training_module_group'
-                },
-                {
-                    data: 'start'
-                },
-                {
-                    data: 'actual'
-                },
-                {
-                    data: 'target'
-                }
-            ]
-        });
+  function detailWhiteTag(id) {
+      const url = "{{ route('detailWhiteTag') }}?id="+id+"&type=general";
+      $('#table-detail').DataTable().destroy();
+      var dtJson = $('#table-detail').DataTable({
+          ajax:  url,
+          autoWidth: true,
+          serverSide: true,
+          processing: true,
+          searching: true,
+          dom: '<"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+          displayLength: 10,
+          language: {
+              paginate: {
+                  // remove previous & next text from pagination
+                  previous: '&nbsp;',
+                  next: '&nbsp;'
+              }
+          },
+          scrollX: true,
+          columns: [
+              {
+                  data: 'DT_RowIndex', name: 'DT_RowIndex'
+              },
+              {
+                  data: 'no_training'
+              },
+              {
+                  data: 'skill_category'
+              },
+              {
+                  data: 'training_module'
+              },
+              {
+                  data: 'level'
+              },
+              {
+                  data: 'training_module_group'
+              },
+              {
+                  data: 'start'
+              },
+              {
+                  data: 'actual'
+              },
+              {
+                  data: 'target'
+              }
+          ]
+      });
 
-        // dtJson.columns.adjust().draw();
-
-    }
+  }
 
 
 
-    function initDatatable() {
-        var dtJson = $('#table-cg').DataTable({
-            ajax: "{{ route('WhiteTagMember') }}",
-            autoWidth: false,
-            serverSide: true,
-            processing: true,
-            aaSorting: [
-                [0, "desc"]
-            ],
-            searching: true,
-            dom: '<"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
-            displayLength: 10,
-            lengthMenu: [10, 15, 20],
-            language: {
-                paginate: {
-                    // remove previous & next text from pagination
-                    previous: '&nbsp;',
-                    next: '&nbsp;'
-                }
-            },
-            scrollX: true,
-            columns: [
-                {
-                    data: 'DT_RowIndex', name: 'DT_RowIndex'
-                },
-                {
-                    data: 'nama_pengguna'
-                },
-                {
-                    data: 'nama_job_title'
-                },
-                {
-                    data: 'nama_department'
-                },
-                {
-                    data: 'nama_divisi'
-                },
-                {
-                    data: 'nama_cg'
-                },
-                {
-                    data: 'action'
-                }
-            ],
-        })
-    }
+  function initDatatable() {
+      var dtJson = $('#table-cg').DataTable({
+          ajax: "{{ route('memberJson') }}",
+          autoWidth: false,
+          serverSide: true,
+          processing: true,
+          aaSorting: [
+              [0, "desc"]
+          ],
+          searching: true,
+          dom: '<"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+          displayLength: 10,
+          lengthMenu: [10, 15, 20],
+          language: {
+              paginate: {
+                  // remove previous & next text from pagination
+                  previous: '&nbsp;',
+                  next: '&nbsp;'
+              }
+          },
+          scrollX: true,
+          columns: [
+              {
+                  data: 'DT_RowIndex', name: 'DT_RowIndex'
+              },
+              {
+                  data: 'nama_pengguna'
+              },
+              {
+                  data: 'nama_job_title'
+              },
+              {
+                  data: 'nama_department'
+              },
+              {
+                  data: 'nama_divisi'
+              },
+              {
+                  data: 'nama_cg'
+              },
+              {
+                  data: 'action'
+              }
+          ],
+      })
+  }
 
-    $(function() {
-        'use strict';
-        var data = {
-            labels: ["2013", "2014", "2014", "2015", "2016", "2017"],
-            datasets: [{
-            label: '# of Votes',
-            data: [10, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1,
-            fill: false
-            }]
-        };
+  $(function() {
+    'use strict';
+    var data = {
+        labels: ["2013", "2014", "2014", "2015", "2016", "2017"],
+        datasets: [{
+        label: '# of Votes',
+        data: [10, 19, 3, 5, 2, 3],
+        backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+            'rgba(255,99,132,1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1,
+        fill: false
+        }]
+    };
 
-        var options = {
-            scales: {
-            yAxes: [{
-                ticks: {
-                beginAtZero: true
-                }
-            }]
-            },
-            legend: {
-            display: false
-            },
-            elements: {
-            point: {
-                radius: 0
-            }
-            }
+      var options = {
+          scales: {
+          yAxes: [{
+              ticks: {
+              beginAtZero: true
+              }
+          }]
+          },
+          legend: {
+          display: false
+          },
+          elements: {
+          point: {
+              radius: 0
+          }
+          }
 
-        };
-        
-        if ($("#barChart").length) {
-            var barChartCanvas = $("#barChart").get(0).getContext("2d");
-            // This will get the first returned node in the jQuery collection.
-            var barChart = new Chart(barChartCanvas, {
-            type: 'bar',
-            data: data,
-            options: options
-            });
-        }
-    })
+      };
+      
+      if ($("#barChart").length) {
+          var barChartCanvas = $("#barChart").get(0).getContext("2d");
+          // This will get the first returned node in the jQuery collection.
+          var barChart = new Chart(barChartCanvas, {
+          type: 'bar',
+          data: data,
+          options: options
+          });
+      }
+  })
 
 </script>
 @endpush

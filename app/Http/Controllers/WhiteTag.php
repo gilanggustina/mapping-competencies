@@ -40,7 +40,7 @@ class WhiteTag extends Controller
 
     public function index(Request $request)
     {
-        return view('pages.admin.white-tag');
+        return view('pages.admin.white-tag.index');
     }
 
     public function formWhiteTag(Request $request)
@@ -50,8 +50,13 @@ class WhiteTag extends Controller
             "type" => "required|string|in:functional,general"
         ]);
         $type = $request->type;
-        $user = User::select("id","id_job_title")->where("id",$request->id)->first();
-        $skillId = [1,2];
+        $user = User::select("id","id_job_title",DB::raw("(YEAR(NOW()) - YEAR(tgl_masuk)) AS tahun"))->where("id",$request->id)->first();
+        $between = 0;
+        if($user->tahun > 5){
+            $between = 5;
+        }else{
+            $between = $user->tahun;
+        }
         $select = [
             "competencies_directory.id_directory as id_directory","curriculum.no_training_module as no_training",
             "curriculum.training_module as training_module","curriculum.training_module_group as training_module_group",
@@ -60,10 +65,9 @@ class WhiteTag extends Controller
             DB::raw("(SELECT COUNT(*) FROM taging_reason as tr where tr.id_white_tag = white_tag.id_white_tag) as cntTagingReason")
         ];
         $comps = CompetenciesDirectoryModel::select($select)
-                                            ->join("curriculum",function ($join) use ($user,$skillId){
+                                            ->join("curriculum",function ($join) use ($user,$between){
                                                 $join->on("curriculum.id_curriculum","competencies_directory.id_curriculum")
-                                                    ->where("competencies_directory.id_job_title",$user->id_job_title)
-                                                    ->whereIn("id_skill_category",$skillId);
+                                                    ->whereRaw("competencies_directory.id_job_title = '".$user->id_job_title."' AND competencies_directory.between_year = '".$between."'");
                                             })
                                             ->join("skill_category","skill_category.id_skill_category","curriculum.id_skill_category")
                                             ->leftJoin("white_tag",function ($join) use ($user){

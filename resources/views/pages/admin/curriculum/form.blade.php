@@ -1,4 +1,4 @@
-<input type="hidden" value="{{$curriculum->id_curriculum}}">
+<input type="hidden" name="id_curriculum" value="{{$curriculum->id_curriculum}}">
 <div class="form-group col-md">
   <label for="noModule">No Training Module</label>
   <input type="text" class="form-control" id="no_training_module" name="no_training_module" placeholder="004/KMI/HRD-RT/SAL/004" value="{{$curriculum->no_training_module}}">

@@ -14,8 +14,8 @@ use Illuminate\Http\Request;
 
 class Tagging extends Controller
 {   
-    public function taglist(Request $request){
-        return view ("pages.admin.tag-list");
+    public function index(){
+        return view ("pages.admin.taging-list.index");
     }
 
     public function tagingJson()
