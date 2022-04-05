@@ -280,7 +280,7 @@
         var token = $("meta[name='csrf-token']").attr("content");
         var rowid = '#row_'+id;
         $.ajax({
-            url:"curriculum-delete/"+id,
+            url:"curriculum/curriculum-delete/"+id,
             mehtod:"delete",
             data: {
                 "id": id,
