@@ -4,6 +4,8 @@
 
 @section('content')
 <div class="row">
+</div>
+<div class="row">
     <div class="col-md-5 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
@@ -11,48 +13,33 @@
             <canvas id="barChart"></canvas>
           </div>
         </div>
-      </div>
+    </div>
+    
     <div class="col-md-7 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
                 <p class="card-title">CEME</p>
                 <div class="row">
-                    <div class="col-md mb-2">
+                    {{-- <div class="col-md mb-2">
                         <a class="btn btn-success float-right" href="javascript:void(0)" id="createNewItem" data-toggle="modal" data-target="#modal-tambah"><i class="icon-plus"></i> Tambah CEME</a>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="row">
                     <div class="col-12">
                         <div class="table-responsive">
-                            <table class="display expandable-table table-striped table-hover" id="table-cg" style="width:100%">
+                            <table class="display expandable-table table table-sm table-striped table-hover" id="table-ceme" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>No.</th>
                                         <th>Name</th>
                                         <th>Job Title</th>
                                         <th>Department</th>
+                                        <th>Level</th>
+                                        <th>CG Name</th>
                                         <th>Action</th>
                                     </tr> 
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Windy Kacaribu</td>
-                                        <td>Recruitment & Learning Development Staff</td>
-                                        <td>Human Capital</td>
-                                        <td>
-                                            <button data-toggle="modal" data-target="#modal-detail"  class="btn btn-inverse-info btn-icon"><i class="icon-eye"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Maria Kurniati Gedi Raya</td>
-                                        <td>Payroll</td>
-                                        <td>Human Capital</td>
-                                        <td>
-                                            <button data-toggle="modal" data-target="#modal-detail"  class="btn btn-inverse-info btn-icon"><i class="icon-eye"></i></button>
-                                        </td>
-                                    </tr>
+                                <tbody >
                                 </tbody>
                             </table>
                         </div>
@@ -76,123 +63,6 @@
             <form action="" method="POST" enctype="multipart/form-data">
                 @csrf
         <div class="modal-body">
-            <div class="form-row">
-                <div class="col-md-3 mb-3">
-                    <label>NIK</label>
-                    <input type="text" class="form-control form-control-sm" name="nik" placeholder="10119912">
-                </div>
-                <div class="col-md-3 mb-3">
-                    <label>Password</label>
-                    <input type="password" class="form-control form-control-sm" name="password" placeholder="Masukan Password">
-                </div>
-                <div class="col-md-3 mb-3">
-                    <label>Peran Pengguna</label>
-                    <select class="form-control form-control-sm" name="peran_pengguna">
-                        <option value="3">Admin</option>
-                        <option value="2">CG Leader</option>
-                        <option value="1">Pengguna</option>
-                    </select>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <label>Tanggal Masuk</label>
-                    <input type="date" id="birthday" name="tgl_masuk" class="form-control form-control-sm">
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="col-md-6 mb-3">
-                    <label>Nama Karyawan</label>
-                    <input type="text" class="form-control form-control-sm" name="nama_pengguna" placeholder="Nama Karyawan">
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label>Email</label>
-                    <input type="text" name="email" class="form-control form-control-sm" placeholder="nama@gmail.com">
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="col-md-4 mb-3">
-                    <label>Divisi</label>
-                    <select class="form-control form-control-sm" name="divisi">
-                        <option value="">Pilih</option>
-                    </select>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label>Jabatan</label>
-                    <select class="form-control form-control-sm" name="job_title">
-                        <option value="">Pilih</option>
-                    </select>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label>Level</label>
-                    <select class="form-control form-control-sm" name="level">
-                        <option value="">Pilih</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="col-md-4 mb-3">
-                    <label>Department</label>
-                    <select class="form-control form-control-sm" name="department">
-                        <option value="">Pilih</option>
-                    </select>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label>Sub Department</label>
-                    <select class="form-control form-control-sm" name="sub_department">
-                        <option value="">Pilih</option>
-                    </select>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label>Liga CG</label>
-                    <select class="form-control form-control-sm" name="cg">
-                        <option value="">Pilih</option>
-                    </select>
-                </div>
-            </div>
-            {{-- <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        
-                    </div>
-                    <div class="form-group">
-                        <label>Nama Karyawan</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control form-control-sm" name="judul_berita" placeholder="Nama Berita">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Peran Pengguna</label>
-                        <div class="input-group">
-                            <select class="form-control form-control-sm">
-                                <option value="3">Admin</option>
-                                <option value="2">CG Leader</option>
-                                <option value="1">Pengguna</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Email</label>
-                        <div class="input-group">
-                            <input type="text" name="email" class="form-control form-control-sm" placeholder="URL Berita">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Tgl Masuk</label>
-                        <div class="input-group">
-                            <input type="date" id="birthday" name="tgl_masuk" class="form-control form-control-sm">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Upload Gambar Berita</label>
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="gambar" id="customFile">
-                            <label class="custom-file-label" onclick="$('#file-uploader').click()" for="customFile">Choose file</label>
-                          </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-
-                </div>
-            </div> --}}
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -225,6 +95,63 @@
 @endsection
 @push('script')
 <script>
+   $(document).ready(function () {
+        initDatatable();
+        $('[data-toggle="tooltip"]').tooltip({
+            animation: true,
+            placement: "top",
+            trigger: "hover focus"
+        });
+    });
+
+    function initDatatable() {
+        var dtJson = $('#table-ceme').DataTable({
+            ajax: "{{ route('WhiteTagMember') }}",
+            autoWidth: false,
+            serverSide: true,
+            processing: true,
+            aaSorting: [
+                [0, "desc"]
+            ],
+            searching: true,
+            dom: '<"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+            displayLength: 10,
+            lengthMenu: [10, 15, 20],
+            language: {
+                paginate: {
+                    // remove previous & next text from pagination
+                    previous: '&nbsp;',
+                    next: '&nbsp;'
+                }
+            },
+            scrollX: true,
+            columns: [
+                {
+                    data: 'DT_RowIndex', name: 'DT_RowIndex'
+                },
+                {
+                    data: 'nama_pengguna'
+                },
+                {
+                    data: 'nama_job_title'
+                },
+                {
+                    data: 'nama_department'
+                },
+                {
+                    data: 'nama_divisi'
+                },
+                {
+                    data: 'nama_cg'
+                },
+                {
+                    data: 'action'
+                }
+            ],
+        })
+    }
+
+
 $(function() {
     'use strict';
   var data = {
@@ -276,7 +203,7 @@ $(function() {
     var barChartCanvas = $("#barChart").get(0).getContext("2d");
     // This will get the first returned node in the jQuery collection.
     var barChart = new Chart(barChartCanvas, {
-      type: 'bar',
+      type: 'pie',
       data: data,
       options: options
     });
