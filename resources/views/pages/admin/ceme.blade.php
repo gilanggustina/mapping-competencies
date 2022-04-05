@@ -60,7 +60,7 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="" method="POST" enctype="multipart/form-data">
+            <form action="{!!route('actionWhiteTag')!!}" method="POST" enctype="multipart/form-data">
                 @csrf
         <div class="modal-body">
         </div>
