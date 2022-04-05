@@ -68,18 +68,12 @@ CREATE TABLE `competencies_directory` (
   `id_directory` int(11) NOT NULL AUTO_INCREMENT,
   `id_curriculum` int(11) NOT NULL,
   `id_job_title` char(8) NOT NULL,
-  `between_year` varchar(150) NOT NULL,
+  `between_year` enum('0','1','2','3','4','5') NOT NULL,
   `target` tinyint(6) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id_directory`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=132 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `competencies_directory` */
-
-insert  into `competencies_directory`(`id_directory`,`id_curriculum`,`id_job_title`,`between_year`,`target`) values 
-(1,1,'JT-0048','',4),
-(2,3,'JT-0049','',3),
-(3,4,'JT-0047','',5),
-(4,5,'JT-0047','',5);
 
 /*Table structure for table `curriculum` */
 
@@ -97,18 +91,20 @@ CREATE TABLE `curriculum` (
   `created_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
   `updated_At` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
   PRIMARY KEY (`id_curriculum`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `curriculum` */
 
 insert  into `curriculum`(`id_curriculum`,`no_training_module`,`id_skill_category`,`training_module`,`level`,`training_module_group`,`training_module_desc`,`id_job_title`,`created_at`,`updated_At`) values 
-(1,'001/KMI/HRD-RT/SAL/001',1,'Company Strategy','B','New Employee Orientation','Berisi penjelasan mengenai Sejarah Berdiri Perusahaan, Product Knowledge, Visi, Misi, Strategi & Core Value Perusahaan (3 Sun Credo)','JT-0048','2022-03-25 10:37:12','2022-03-25 10:37:12'),
 (3,'001/KMI/HRD-RT/SAL/002',1,'Orientation Department','B','New Employee Orientation','Berisi penjelasan mengenai tugas dan tanggung jawab dari masing-masing departemen dan struktur organisasi perusahaan','JT-0049','2022-03-26 09:03:07','2022-03-26 09:03:07'),
 (4,'001/KMI/HRD-RT/SAL/003',1,'KALBE Business Ethic','B','New Employee Orientation','Berisi tentang tata kelola etika bisnis di KALBE Group','JT-0047','2022-03-26 09:04:13','2022-03-26 09:04:13'),
 (5,'001/KMI/HRD-RT/SAL/004',1,'Company Regulation','B','New Employee Orientation','Berisi tentang informasi tambahan mengenai BPJS Ketenagakerjaan, BPJS Kesehatan & Paguyuban','JT-0047','2022-03-26 09:04:16','2022-03-26 09:04:16'),
-(6,'002/KMI/HRD-RT/SAL/001',5,'Organizational Design','B','Organizational Development','Berisi penjelasan mengenai Desain Organisasi','JT-0153','2022-03-26 09:13:28','2022-03-26 09:13:28'),
-(7,'002/KMI/HRD-RT/SAL/002',5,'Job analysis','I','Organizational Development','Berisi penjelasan mengenai analisa pekerjaan per jabatan','JT-0153','2022-03-26 09:13:44','2022-03-26 09:13:44'),
-(8,'011/KMI/HRD-RT/SAL/026',4,'BPJS Ketenagakerjaan ','B','Operational Procedure','Mengenai cara pelaporan kecelakaan kerja serta dokumen-dokumen yang dibutuhkan','JT-0153','2022-03-26 09:14:26','2022-03-26 09:14:26');
+(6,'002/KMI/HRD-RT/SAL/001',1,'Organizational Design','B','Organizational Development','Berisi penjelasan mengenai Desain Organisasi','JT-0153','2022-04-05 10:53:17','2022-04-05 10:53:17'),
+(7,'002/KMI/HRD-RT/SAL/002',2,'Job analysis','I','Organizational Development','Berisi penjelasan mengenai analisa pekerjaan per jabatan','JT-0153','2022-04-05 10:53:22','2022-04-05 10:53:22'),
+(8,'011/KMI/HRD-RT/SAL/026',2,'BPJS Ketenagakerjaan ','B','Operational Procedure','Mengenai cara pelaporan kecelakaan kerja serta dokumen-dokumen yang dibutuhkan','JT-0153','2022-04-05 10:53:24','2022-04-05 10:53:24'),
+(19,'ertrtr',1,'asdasfsdfd','A','asdsgdfgdfg','sdfsdfdsf','JT-0007',NULL,NULL),
+(20,'004/Cahaya/2022',1,'Example Training Module','A','Training Module Group','Training Module Desc','JT-0007','2022-04-03 09:13:47','2022-04-03 09:13:47'),
+(21,'004/Cahaya/2022',1,'Example Training Module','A','Training Module Group','Training Module Desc','JT-0007','2022-04-03 09:14:38','2022-04-03 09:14:38');
 
 /*Table structure for table `department` */
 
@@ -489,6 +485,7 @@ CREATE TABLE `taging_reason` (
   `year` year(4) DEFAULT NULL,
   `period` varchar(20) DEFAULT NULL,
   `date_open` date DEFAULT NULL,
+  `due_date` date DEFAULT NULL,
   `learning_method` varchar(50) DEFAULT NULL,
   `trainer` varchar(50) DEFAULT NULL,
   `date_plan_implementation` date DEFAULT NULL,
@@ -505,10 +502,6 @@ CREATE TABLE `taging_reason` (
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `taging_reason` */
-
-insert  into `taging_reason`(`id_taging_reason`,`id_white_tag`,`no_taging`,`year`,`period`,`date_open`,`learning_method`,`trainer`,`date_plan_implementation`,`notes_learning_implementation`,`date_closed`,`start`,`finish`,`duration`,`date_verified`,`id_verified_by`,`result_score`,`notes_for_result`) values 
-(13,'LgIcg1648521124','00001',2022,'Maret 2022','2022-03-31','Learning Method','Example Trainer','2022-03-29','Example Note Implementation','2022-04-01','08:00:00','09:00:00','1 Jam : 0 Menit','2022-04-01',1,4,'Catatan Nilai'),
-(14,'CPOe81648718503','00002',2020,'Februari 2020','2022-03-30','Methode Pelatihan','Ginanjar','2022-03-31','Catatan','2022-04-01','05:23:00','03:21:00','2 Jam : 2 Menit','2022-03-23',1,4,'Catatatan');
 
 /*Table structure for table `users` */
 
@@ -914,10 +907,6 @@ CREATE TABLE `white_tag` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `white_tag` */
-
-insert  into `white_tag`(`id_white_tag`,`id_directory`,`id_user`,`start`,`actual`) values 
-('CPOe81648718503',2,2,2,4),
-('LgIcg1648521124',2,1,1,4);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
