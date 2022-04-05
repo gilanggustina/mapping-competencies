@@ -53,11 +53,11 @@
         <div class="card">
             <div class="card-body">
                 <p class="card-title">Competencies Directory</p>
-                <div class="row">
+                {{-- <div class="row">
                     <div class="col-md mb-2">
                         <a class="btn btn-success float-right" href="javascript:void(0)" id="createNewItem" data-toggle="modal" data-target="#modal-tambah"><i class="icon-plus"></i> Add Competencies Directory</a>
                     </div>
-                </div>
+                </div> --}}
                 <div class="row">
                     <div class="col-12">
                         <div class="table-responsive">
@@ -65,9 +65,10 @@
                                 <thead>
                                     <tr>
                                         <th>No Training Module#</th>
+                                        <th>Skill Category</th>
                                         <th>Training Module</th>
                                         <th>Year Between</th>
-                                        <th>Simbol</th>
+                                        <th>Target</th>
                                         <th>Action</th>
                                     </tr> 
                                 </thead>
@@ -79,7 +80,6 @@
                                         <td></td>
                                         <td>
                                             <button data-toggle="modal" data-target="#modal-tambah" class="btn btn-inverse-success btn-icon mr-1"><i class="icon-file menu-icon"></i></button>
-                                            <button data-toggle="modal" data-target="#modal-hapus"   class="btn btn-inverse-danger btn-icon mr-1"><i class="icon-trash"></i></button>
                                             <button data-toggle="modal" data-target="#modal-detail"  class="btn btn-inverse-info btn-icon"><i class="icon-eye"></i></button>
                                         </td>
                                     </tr>
@@ -90,7 +90,6 @@
                                         <td></td>
                                         <td>
                                             <button data-toggle="modal" data-target="#modal-tambah" class="btn btn-inverse-success btn-icon mr-1"><i class="icon-file menu-icon"></i></button>
-                                            <button data-toggle="modal" data-target="#modal-hapus"   class="btn btn-inverse-danger btn-icon mr-1"><i class="icon-trash"></i></button>
                                             <button data-toggle="modal" data-target="#modal-detail"  class="btn btn-inverse-info btn-icon"><i class="icon-eye"></i></button>
                                         </td>
                                     </tr>
@@ -101,7 +100,6 @@
                                         <td></td>
                                         <td>
                                             <button data-toggle="modal" data-target="#modal-tambah" class="btn btn-inverse-success btn-icon mr-1"><i class="icon-file menu-icon"></i></button>
-                                            <button data-toggle="modal" data-target="#modal-hapus"   class="btn btn-inverse-danger btn-icon mr-1"><i class="icon-trash"></i></button>
                                             <button data-toggle="modal" data-target="#modal-detail"  class="btn btn-inverse-info btn-icon"><i class="icon-eye"></i></button>
                                         </td>
                                     </tr>
@@ -137,7 +135,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-4">
                         <div class="form-group col-sm">
                             <label for="yearduration">Year Duration</label>
                             <select id="year_duration" class="form-control form-control-sm" name="year_duration">
@@ -149,6 +147,15 @@
                                 <option value="Y8-Y9">Y8-Y9</option>
                                 <option value="YN">YN</option>
                             </select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group col-sm">
+                            <label for="yearduration">Target</label>
+                            <input type="number">
+                            {{-- <select id="id_job_title" class="form-control form-control-sm" name="id_job_title">
+                                <option value="">Pilih Job Title</option>
+                            </select> --}}
                         </div>
                     </div>
                 </div>
