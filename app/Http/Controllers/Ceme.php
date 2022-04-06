@@ -40,12 +40,6 @@ class Ceme extends Controller
     public function actionCeme(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            // "type" => "required|string|in:general,functional",
-            // "user_id" => "required|numeric",
-            // "data" => "nullable|array",
-            // "data.*.id" => "nullable|numeric",
-            // "data.*.start" => "nullable|numeric",
-            // "data.*.actual" => "nullable|numeric"
             "on_the_job_training" => "nullable|numeric",
             "temporary_back_up" => "nullable|numeric",
             "full_back_up" => "nullable|numeric",
@@ -92,5 +86,64 @@ class Ceme extends Controller
                 ->with($messages["type"], $messages["message"]);
         }
     }
-    
+
+    // public function index()
+    // {
+    //     $data = CemeModel::leftJoin('skill_category as sc', 'ceme.id_skill_category', '=', 'sc.id_skill_category')
+    //     ->leftJoin('job_title as jt', 'ceme.id_job_title', '=', 'jt.id_job_title')
+    //     ->get(['ceme.*', 'jt.nama_job_title', 'sc.skill_category']);
+    //     return view('pages.admin.ceme.index', compact('data'));
+    // }
+
+    public function getFormEditceme(Request $request)
+    {
+        $ceme = CemeModel::where("id_ceme", $request->id)->first();
+        $skills = SkillCategory::all();
+        $jabatans = Jabatan::all();
+        return view("pages.admin.ceme.form", compact("ceme", "skills", "jabatans"));
+    }
+
+    public function editCeme(Request $request)
+    {
+        $request->validate([
+            "on_the_job_training" => "nullable|numeric",
+            "temporary_back_up" => "nullable|numeric",
+            "full_back_up" => "nullable|numeric",
+            "main_back_up" => "nullable|numeric",
+            "result_multiskill" => "nullable|numeric",
+            "job_title_id" => "nullable|numeric",
+        ]);
+        $post = CemeModel::updateOrCreate(['id_ceme' => $request->id_ceme], [
+            "id_ceme" => $this->random_string(5, 5, false) . time(),
+            "id_user" => $request->user_id,
+            "on_the_job_training" => $request->on_the_job_training,
+            "temporary_back_up" => $request->temporary_back_up,
+            "full_back_up" => $request->full_back_up,
+            "result_multiskill" => $request->result_multiskill,
+            "id_job_title" => $request->id_job_title
+        ]);
+
+        return response()->json(['code' => 200, 'message' => 'Post Created successfully', 'data' => $post], 200);
+    }
+
+    public function show($id)
+    {
+        $post = CemeModel::find($id);
+        return response()->json($post);
+    }
+    public function delete($id)
+    {
+        $post = CemeModel::where('id_ceme', $id)->delete();
+        return redirect()->route('ceme')->with(['success' => 'ceme Deleted successfully']);
+    }
+
+    public function getSkill()
+    {
+        $skill = SkillCategory::all();
+        return response()->json([
+            'data' => $skill,
+            'status' => 200,
+            'success' => true,
+        ]);
+    }
 }

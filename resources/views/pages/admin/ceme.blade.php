@@ -60,14 +60,14 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{!!route('actionWhiteTag')!!}" method="POST" enctype="multipart/form-data">
+            <form action="{!! route('actionCeme') !!}" method="POST" enctype="multipart/form-data">
                 @csrf
-        <div class="modal-body">
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
         </form>
       </div>
     </div>
@@ -104,9 +104,192 @@
         });
     });
 
+    
+ $('#table-cr').DataTable();
+
+function editPost(event) {
+  var id  = $(event).data("id");
+  let _url = "{!!route('editCurriculum')!!}";
+  var curriculumEditForm = $("#formEditCurriculum");
+  var formData = curriculumEditForm.serialize();
+  $.ajax({
+    url: _url,
+    type: "post",
+    data: formData,
+    success: function(response) {
+      if(response.code == 200) {
+          Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Your work has been saved',
+              showConfirmButton: false,
+              timer: 1500
+          })
+          $('#modal-edit').modal('hide');
+          location.reload();
+      }
+    },
+    error:function (err) {
+      console.log(err)
+      Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: err.responseJSON.message,
+          showConfirmButton: false,
+          timer: 1500
+      })
+    }
+  });
+}
+
+function editdata(el) {
+  var id = $(el).attr("data-id");
+  $.ajax({
+      url:"{!!route('getFormEditCurriculum')!!}?id="+id,
+      mehtod:"get",
+      success:function (html) {
+          $("#form-edit").html(html);
+      }
+  })
+}
+
+function createPost() {
+  let _url     = `{{ route('Curriculum.post') }}`;
+  let _token   = $('meta[name="csrf-token"]').attr('content');
+
+    $.ajax({
+      url: _url,
+      type: "POST",
+      // data : $("#registerSubmit").serialize(),
+      data: {
+      //   id_curriculum: id_curriculum,
+        no_training_module: $('#no_training_module').val(),
+        id_skill_category: $('#id_skill_category').val(), 
+        training_module:  $('#training_module').val(),
+        level: $('#level').val(),
+        training_module_group: $('#training_module_group').val(),
+        training_module_desc: $('#training_module_desc').val(),
+        id_job_title: $('#id_job_title').val(),
+        _token: _token
+      },
+      success: function(response) {
+          if(response.code == 200) {
+              Swal.fire({
+                  position: 'top-end',
+                  icon: 'success',
+                  title: 'Your work has been saved',
+                  showConfirmButton: false,
+                  timer: 1500
+              })
+          }
+          $('#title').val('');
+          $('#description').val('');
+          
+          $('#modal-tambah').modal('hide');
+          location.reload();
+      },
+      error: function(err) {
+          console.log(err)
+          Swal.fire({
+                  position: 'top-end',
+                  icon: 'error',
+                  title: err.responseJSON.message,
+                  showConfirmButton: false,
+                  timer: 1500
+              })
+      }
+    });
+}
+
+  $('#table-cr').on('click','.cr-hapus', function () {
+      var id = $(this).data('id');
+      $('#btnHapus').attr('data-id',id);
+  })
+
+  function deleteCurriculum(el) {
+      var id = $(el).attr("data-id");
+      var token = $("meta[name='csrf-token']").attr("content");
+      var rowid = '#row_'+id;
+      $.ajax({
+          url:"curriculum/curriculum-delete/"+id,
+          mehtod:"delete",
+          data: {
+              "id": id,
+              "_token": token,
+          },
+          success:function(res)
+          {
+              $("#modal-cr-hapus").modal('hide');
+              window.location.reload();
+              Swal.fire({
+                  position: 'center',
+                  icon: 'success',
+                  title: 'Data berhasil di hapus',
+                  showConfirmButton: true,
+                  timer: 1500
+              })
+          }
+      })
+  }
+ 
+   function getSkill(){
+          $.ajax({
+              type: "GET",
+              url: "{{ route('get.skill') }}",
+              success: function(res) {
+                  var option = "";
+                  for (let i = 0; i < res.data.length; i++) {
+                      option += '<option value="'+res.data[i].id_skill_category+'">'
+                          +res.data[i].skill_category+'</option>';
+                  }
+                  $('#id_skill_category').html();
+                  $('#id_skill_category').append(option);
+              },
+              error: function (response) {
+                  Swal.fire({
+                      position: 'top-end',
+                      icon: 'error',
+                      title: response.responseJSON.errors,
+                      showConfirmButton: false,
+                      timer: 1500
+                  })
+              }
+          })
+  }
+
+  function getJabatan(){
+      $.ajax({
+          type: "GET",
+          url: "{{ route('get.jabatan') }}",
+          success: function(res) {
+              var option = "";
+              for (let i = 0; i < res.data.length; i++) {
+                  option += '<option value="'+res.data[i].id_job_title+'">'+res.data[i].nama_job_title+'</option>';
+              }
+              $("#id_job_title").html(option).selectpicker('refresh');
+          },
+          error: function (xhr, ajaxOptions, thrownError) {
+              Swal.fire({
+                  position: 'top-end',
+                  icon: 'error',
+                  title: response.responseJSON.errors,
+                  showConfirmButton: false,
+                  timer: 1500
+              })
+          }
+      })
+  }
+
+  $(document).ready(function() {        
+      getJabatan();
+      getSkill();
+  });
+  
+
+
     function initDatatable() {
         var dtJson = $('#table-ceme').DataTable({
-            ajax: "{{ route('WhiteTagMember') }}",
+            ajax: "{{ route('memberJson') }}",
             autoWidth: false,
             serverSide: true,
             processing: true,

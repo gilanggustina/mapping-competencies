@@ -15,6 +15,18 @@
               </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="#">
+                <i class="icon-head menu-icon"></i>
+                <span class="menu-title">Master Grade</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+                <i class="icon-head menu-icon"></i>
+                <span class="menu-title">Master Skill Category</span>
+            </a>
+          </li>
+          <li class="nav-item">
               <a class="nav-link" href="{{ route('Curriculum') }}">
                   <i class="icon-grid-2 menu-icon"></i>
                   <span class="menu-title">Curriculum</span>
