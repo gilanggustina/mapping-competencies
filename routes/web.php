@@ -69,5 +69,6 @@ Route::group(['middleware' => 'auth'], function () {
         
         
     Route::get('/ceme', 'Ceme@index')->name('ceme');
+    Route::post('/ceme-post', 'Ceme@actionCeme')->name('actionCeme');
 
 });
