@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\CurriculumModel;
 use App\SkillCategory;
 use App\Jabatan;
+use App\CurriculumToJob;
 use Validator;
 use DB;
 
@@ -14,16 +15,20 @@ class Curriculum extends Controller
     public function index()
     {
         $data = CurriculumModel::leftJoin('skill_category as sc', 'curriculum.id_skill_category', '=', 'sc.id_skill_category')
-        ->leftJoin('job_title as jt', 'curriculum.id_job_title', '=', 'jt.id_job_title')
-        ->get(['curriculum.*', 'jt.nama_job_title', 'sc.skill_category']);
+        ->get(['curriculum.*', 'sc.skill_category']);
         return view('pages.admin.curriculum.index', compact('data'));
     }
 
     public function getFormEditCurriculum(Request $request)
     {
         $curriculum = CurriculumModel::where("id_curriculum",$request->id)->first();
+        // $curriculumToJob = CurriculumToJob::where
         $skills = SkillCategory::all();
-        $jabatans = Jabatan::all();
+        $jabatans = Jabatan::select("job_title.id_job_title","nama_job_title",DB::raw("IF(id_ctb IS NULL,0,1) as sts"))
+                            ->leftJoin("curriculum_to_job as ctb",function ($join) use ($request){
+                                $join->on("ctb.id_job_title","job_title.id_job_title")
+                                    ->where("ctb.id_curriculum",$request->id);
+                            })->get();
         return view("pages.admin.curriculum.form",compact("curriculum","skills","jabatans"));
     }
 
@@ -43,22 +48,29 @@ class Curriculum extends Controller
         if($validator->fails()){
             return response()->json(['code' => 422, 'message' => 'The given data was invalid.', 'data' => $validator->errors()], 422);
         }else{
+            $data = $this->validate_input_v2($request);
             DB::beginTransaction();
             try {
                 if(isset($request->id_job_title) && count($request->id_job_title) > 0){
+                    $curriculum = new CurriculumModel;
+                    $curriculum->no_training_module = $request->no_training_module;
+                    $curriculum->id_skill_category = $request->id_skill_category;
+                    $curriculum->training_module = $request->training_module;
+                    $curriculum->level = $request->level;
+                    $curriculum->training_module_group = $request->training_module_group;
+                    $curriculum->training_module_desc = $request->training_module_desc;
+                    $curriculum->save();
                     $insert = [];
                     for($i = 0;$i < count($request->id_job_title);$i++){
                         $insert[$i] = [
-                            'no_training_module' => $request->no_training_module,
-                            'id_skill_category' => $request->id_skill_category,
-                            'training_module' => $request->training_module,
-                            'level' => $request->level,
-                            'training_module_group' => $request->training_module_group,
-                            'training_module_desc' => $request->training_module_desc,
+                            'id_curriculum' => $curriculum->id,
                             'id_job_title' => $request->id_job_title[$i]
                         ];
                     }
-                    CurriculumModel::insert($insert);
+                    if(count($insert) > 0){
+                        CurriculumToJob::insert($insert);
+                    }
+
                 }
                 DB::commit();
                 return response()->json(['code' => 200, 'message' => 'Post Created successfully'], 200);
@@ -77,19 +89,27 @@ class Curriculum extends Controller
             'level' => 'required',
             'training_module_group' => 'required',
             'training_module_desc' => 'required',
-            'id_job_title' => 'required',
+            'id_job_title' => 'required|array',
         ]);
-        $post = CurriculumModel::updateOrCreate(['id_curriculum' => $request->id_curriculum], [
+        CurriculumModel::where("id_curriculum",$request->id_curriculum)->update([
             'no_training_module' => $request->no_training_module,
             'id_skill_category' => $request->id_skill_category,
             'training_module' => $request->training_module,
             'level' => $request->level,
             'training_module_group' => $request->training_module_group,
-            'training_module_desc' => $request->training_module_desc,
-            'id_job_title' => $request->id_job_title,
+            'training_module_desc' => $request->training_module_desc
         ]);
-
-        return response()->json(['code' => 200, 'message' => 'Post Created successfully', 'data' => $post], 200);
+        $jobTitleId = [];
+        for($i = 0; $i < count($request->id_job_title); $i++){
+            array_push($jobTitleId,$request->id_job_title[$i]); 
+            CurriculumToJob::updateOrCreate(['id_curriculum'=>$request->id_curriculum,"id_job_title"=>$request->id_job_title[$i]]);
+        }
+        DB::commit();
+        if(count($jobTitleId) > 0){
+            CurriculumToJob::where("id_curriculum",$request->id_curriculum)->whereNotIn("id_job_title",$jobTitleId)->delete();
+        }
+        
+        return response()->json(['code' => 200, 'message' => 'Post Created successfully'], 200);
     }
 
     public function show($id)
@@ -99,7 +119,8 @@ class Curriculum extends Controller
     }
     public function delete($id)
     {
-        $post = CurriculumModel::where('id_curriculum', $id)->delete();
+        CurriculumModel::where('id_curriculum', $id)->delete();
+        CurriculumToJob::where("id_curriculum",$id)->delete();
         return redirect()->route('Curriculum')->with(['success' => 'Curriculum Deleted successfully']);
     }
 

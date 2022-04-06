@@ -36,7 +36,6 @@
                                         <th>Level</th>
                                         <th>Training Module Group</th>
                                         <th>Training Module Description</th>
-                                        <th>Job Title CG</th>
                                         <th width="15%">Action</th>
                                     </tr> 
                                 </thead>
@@ -50,7 +49,6 @@
                                             <td>{{ $data->level }}</td>
                                             <td>{{ $data->training_module_group }}</td>
                                             <td>{{ $data->training_module_desc }}</td>
-                                            <td>{{ $data->nama_job_title }}</td>
                                             <td>
                                                 <button data-id="{{ $data->id_curriculum }}" onclick="editdata(this)" class="btn btn-inverse-success btn-icon delete-button mr-1 mr-1 Edit-button" data-toggle="modal" data-target="#modal-edit"><i class="icon-file menu-icon"></i></button>
                                                 <button data-id="{{ $data->id_curriculum }}" class="btn btn-inverse-danger btn-icon mr-1 cr-hapus" data-toggle="modal" data-target="#modal-cr-hapus">
@@ -79,50 +77,50 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="" method="POST" enctype="multipart/form-data">
+            <form action="" id="formCreate" method="POST" enctype="multipart/form-data">
                 @csrf
-        <div class="modal-body">
-            <div class="form-group col-md">
-                <label for="noModule">No Training Module</label>
-                <input type="text" class="form-control" id="no_training_module" name="no_training_module" placeholder="004/KMI/HRD-RT/SAL/004" >
-            </div>
-            <div class="form-group col-md">
-                <label for="skillCategory">Skill Category</label>
-                <select id="id_skill_category" class="form-control form-control-sm" name="id_skill_category">
-                    <option value="">Pilih Skill Category</option>
-                </select>
-            </div>
-            <div class="form-group col-md">
-                <label for="training_module">Training Module</label>
-                <input type="text" class="form-control" id="training_module" name="training_module" placeholder="Masukan Training Module Name">
-            </div>
-            <div class="form-group col-md">
-                <label for="noModule">Level</label>
-                <select class="form-control form-control-sm" id="level" name="level">
-                    <option value="">Pilih Level</option>
-                    <option value="I">I</option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                </select>
-            </div>
-            <div class="form-group col-md">
-                <label for="training_module_group">Training Module Group</label>
-                <input type="text" class="form-control" id="training_module_group" name="training_module_group" placeholder="New Employee Orientation, Ext" >
-            </div>
-            <div class="form-group col-md">
-                <label for="noModule">Training Module Desc</label>
-                <textarea class="form-control" id="training_module_desc" name="training_module_desc" rows="3"></textarea>
-            </div>
-            <div class="form-group col-md">
-                <label for="noModule">Job Title CG</label>
-                <select id="id_job_title" class="selectpicker form-control form-control-sm" name="id_job_title[]" data-live-search="true" data-hide-disabled="true" multiple data-actions-box="true">
-                </select>
-            </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" onclick="createPost()">Save</button>
-        </div>
+                <div class="modal-body">
+                    <div class="form-group col-md">
+                        <label for="noModule">No Training Module</label>
+                        <input type="text" class="form-control" id="no_training_module" name="no_training_module" placeholder="004/KMI/HRD-RT/SAL/004" >
+                    </div>
+                    <div class="form-group col-md">
+                        <label for="skillCategory">Skill Category</label>
+                        <select id="id_skill_category" class="form-control form-control-sm" name="id_skill_category">
+                            <option value="">Pilih Skill Category</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md">
+                        <label for="training_module">Training Module</label>
+                        <input type="text" class="form-control" id="training_module" name="training_module" placeholder="Masukan Training Module Name">
+                    </div>
+                    <div class="form-group col-md">
+                        <label for="noModule">Level</label>
+                        <select class="form-control form-control-sm" id="level" name="level">
+                            <option value="">Pilih Level</option>
+                            <option value="I">I</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md">
+                        <label for="training_module_group">Training Module Group</label>
+                        <input type="text" class="form-control" id="training_module_group" name="training_module_group" placeholder="New Employee Orientation, Ext" >
+                    </div>
+                    <div class="form-group col-md">
+                        <label for="noModule">Training Module Desc</label>
+                        <textarea class="form-control" id="training_module_desc" name="training_module_desc" rows="3"></textarea>
+                    </div>
+                    <div class="form-group col-md">
+                        <label for="noModule">Job Title CG</label>
+                        <select id="id_job_title" class="selectpicker form-control form-control-sm" name="id_job_title[]" data-live-search="true" data-hide-disabled="true" multiple data-actions-box="true">
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="createPost()">Save</button>
+                </div>
         </form>
       </div>
     </div>
@@ -225,22 +223,12 @@
   function createPost() {
     let _url     = `{{ route('Curriculum.post') }}`;
     let _token   = $('meta[name="csrf-token"]').attr('content');
-
+    const data = $("#formCreate").serialize();
       $.ajax({
         url: _url,
         type: "POST",
-        // data : $("#registerSubmit").serialize(),
-        data: {
-        //   id_curriculum: id_curriculum,
-          no_training_module: $('#no_training_module').val(),
-          id_skill_category: $('#id_skill_category').val(), 
-          training_module:  $('#training_module').val(),
-          level: $('#level').val(),
-          training_module_group: $('#training_module_group').val(),
-          training_module_desc: $('#training_module_desc').val(),
-          id_job_title: $('#id_job_title').val(),
-          _token: _token
-        },
+        data: data,
+        cache:false,
         success: function(response) {
             if(response.code == 200) {
                 Swal.fire({
@@ -251,9 +239,15 @@
                     timer: 1500
                 })
             }
+            $('#no_training_module').val(''),
+            $('#id_skill_category').val(''), 
+            $('#training_module').val(''),
+            $('#level').val(''),
+            $('#training_module_group').val(''),
+            $('#training_module_desc').val(''),
+            $('#id_job_title').val(''),
             $('#title').val('');
             $('#description').val('');
-            
             $('#modal-tambah').modal('hide');
             location.reload();
         },

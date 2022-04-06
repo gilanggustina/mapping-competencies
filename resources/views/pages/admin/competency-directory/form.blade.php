@@ -20,7 +20,7 @@
       <div class="form-group ml-0 mb-1">
           <label class="col-sm-5">Training Module</label>
           <div class="col-sm-7">
-            <select name="id_curriculum" class="form-control form-control-sm" id="" required>
+            <select name="id_curriculum" onchange="changeTraining(this)" class="form-control form-control-sm" id="" required>
               <option value="">Pilih Training Module</option>
               @foreach($competencies as $competency)
                 <option value="{{$competency->id_curriculum}}">{{$competency->training_module}} ({{$competency->no_training_module}})</option>
@@ -34,7 +34,7 @@
 <div class="row">
   <div class="col-md-12 mb-3">
       <div class="col-sm mb-2">
-          <button class="btn btn-success float-right" type="button" onclick="addRow(this)">
+          <button class="btn btn-success float-right" id="btnAddRowJobTitle" {{isset($curriculum) ? '' : 'disabled'}} curriculum-id="{{isset($curriculum) ? $curriculum->id_curriculum : ''}}" type="button" onclick="addRow(this)">
               <i class="icon-plus"></i> Add Row Job Title
           </button>
       </div>
@@ -87,90 +87,8 @@
               </td>
               </tr>
             @empty
-              <tr>
-                  <td>
-                      <select class="form-control form-control-sm" name="datas[{{time()}}][id_job_title]" required>
-                          <option value="">Pilih Job Title</option>
-                          @foreach($jobTitles as $job)
-                            <option value="{{$job->id_job_title}}">{{$job->nama_job_title}}</option>
-                          @endforeach
-                      </select>
-                  </td>
-                  <td>
-                      <input type="hidden" name="datas[{{time()}}][data][0][between]" value="0">
-                      <select class="form-control form-control-sm" name="datas[{{time()}}][data][0][target]" required>
-                          <option value="">Pilih Target</option>
-                          <option value="0">0</option>
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="4">4</option>
-                          <option value="5">5</option>
-                      </select>
-                  </td>
-                  <td>
-                    <input type="hidden" name="datas[{{time()}}][data][1][between]" value="1">
-                      <select class="form-control form-control-sm" name="datas[{{time()}}][data][1][target]" required>
-                          <option value="">Pilih Target</option>
-                          <option value="0">0</option>
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="4">4</option>
-                          <option value="5">5</option>
-                      </select>
-                  </td>
-                  <td>
-                    <input type="hidden" name="datas[{{time()}}][data][2][between]" value="2">
-                      <select class="form-control form-control-sm" name="datas[{{time()}}][data][2][target]" required>
-                          <option value="">Pilih Target</option>
-                          <option value="0">0</option>
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="4">4</option>
-                          <option value="5">5</option>
-                      </select>
-                  </td>
-                  <td>
-                    <input type="hidden" name="datas[{{time()}}][data][3][between]" value="3">
-                      <select class="form-control form-control-sm" name="datas[{{time()}}][data][3][target]" required>
-                          <option value="">Pilih Target</option>
-                          <option value="0">0</option>
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="4">4</option>
-                          <option value="5">5</option>
-                      </select>
-                  </td>
-                  <td>
-                    <input type="hidden" name="datas[{{time()}}][data][4][between]" value="4">
-                      <select class="form-control form-control-sm" name="datas[{{time()}}][data][4][target]" required>
-                          <option value="">Pilih Target</option>
-                          <option value="0">0</option>
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="4">4</option>
-                          <option value="5">5</option>
-                      </select>
-                  </td>
-                  <td>
-                    <input type="hidden" name="datas[{{time()}}][data][5][between]" value="5">
-                      <select class="form-control form-control-sm" name="datas[{{time()}}][data][5][target]" required>
-                          <option value="">Pilih Target</option>
-                          <option value="0">0</option>
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="4">4</option>
-                          <option value="5">5</option>
-                      </select>
-                  </td>
-                  <td style="text-align: center">
-                      <button type="button" onclick="delRow(this)" class="btn btn-inverse-danger btn-icon mr-1"><i class="icon-trash"></i></button>
-                  </td>
+              <tr id="rowDefault">
+                <td colspan="8" class="text-center">Silakan Tambahkan Job Title</td>
               </tr>
             @endforelse
           </tbody>
@@ -178,14 +96,30 @@
   </div>
 </div>
 <script>
+  function changeTraining(el) {
+    var val = $(el).val();
+    if(val){
+      $("#btnAddRowJobTitle").removeAttr("disabled");
+      $("#btnAddRowJobTitle").attr("curriculum-id",val);
+    }else{
+      $("#btnAddRowJobTitle").attr("disabled",true);
+      $("#btnAddRowJobTitle").attr("curriculum-id","");
+    }
+  }
+
   function addRow(el) {
         var options = "";
-        const url = "{!!route('addRow')!!}"
+        var curriculumId = $(el).attr("curriculum-id");
+        const url = "{!!route('addRow')!!}?curriculumId="+curriculumId
         $.ajax({
           url:url,
           type:"get",
           cache:false,
           success:function(html){
+            var rowDefault = $("#bodyCompetencies").find("#rowDefault");
+            if(rowDefault){
+              rowDefault.remove();
+            }
             tr = document.createElement("tr");
             tr.innerHTML = html;
             $("#bodyCompetencies").append(tr);
@@ -195,5 +129,11 @@
 
     function delRow(el) {
       $(el).closest("tr").remove();
+      var length = $("#bodyCompetencies").children().length;
+      if(length <= 0){
+        var html = "<tr id='rowDefault'><td colspan='8' class='text-center'>Silakan Tambahkan Job Title</td></tr>";
+        $("#bodyCompetencies").html(html);
+      }
+
     }
 </script>

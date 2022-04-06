@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\CompetenciesDirectoryModel;
 use App\CurriculumModel;
 use App\Jabatan;
+use App\CurriculumToJob;
 use Validator;
 use DB;
 use Yajra\Datatables\Datatables;
@@ -44,12 +45,17 @@ class CompetenciesDirectory extends Controller
             "id_curriculum","training_module","no_training_module"
         ];
         $competencies = CurriculumModel::select($select)->whereRaw("id_curriculum NOT IN (select cd.id_curriculum from competencies_directory as cd group by cd.id_curriculum)")->get();
-        $jobTitles = Jabatan::all();
         if($request->type == 'add'){
             $curriculum = null;
             $directories = [];
+            $jobTitles = [];
         }else{
             $curriculum = CurriculumModel::where("id_curriculum",$request->id)->first();
+            $jobTitles = CurriculumToJob::select("curriculum_to_job.id_job_title","jt.nama_job_title")
+                                    ->join("job_title as jt","jt.id_job_title","curriculum_to_job.id_job_title")
+                                    ->join("curriculum","curriculum.id_curriculum","curriculum_to_job.id_curriculum")
+                                    ->where("curriculum_to_job.id_curriculum",$request->id)
+                                    ->get();
             $select = [
                 "competencies_directory.id_curriculum","competencies_directory.id_job_title",
                 DB::raw("CONCAT('{\"list\":[',GROUP_CONCAT(CONCAT('{','\"id\":\"',id_directory,'\",','\"between\":\"',between_year,'\",','\"target\":\"',target,'\"','}') ORDER BY between_year ASC SEPARATOR ','),']}') AS list")
@@ -67,7 +73,11 @@ class CompetenciesDirectory extends Controller
 
     public function addRow(Request $request)
     {
-        $jobTitles = Jabatan::all();
+        $jobTitles = CurriculumToJob::select("curriculum_to_job.id_job_title","jt.nama_job_title")
+                                    ->join("job_title as jt","jt.id_job_title","curriculum_to_job.id_job_title")
+                                    ->join("curriculum","curriculum.id_curriculum","curriculum_to_job.id_curriculum")
+                                    ->where("curriculum_to_job.id_curriculum",$request->curriculumId)
+                                    ->get();
         $time = rand(time(),2);
         return view("pages.admin.competency-directory.tr",compact("jobTitles","time"));
     }
@@ -76,9 +86,9 @@ class CompetenciesDirectory extends Controller
     {
         $request->validate([
             "id_curriculum" => "required|numeric",
-            "datas" => "required|array",
+            "datas" => "array",
             "datas.*.id_job_title" => "required|string",
-            "datas.*.data" => "required|array",
+            "datas.*.data" => "array",
             // "datas.*.data.*.between" => "required|numeric",
             // "datas.*.data.*.target" => "required|numeric|min:0|max:5"
         ]);
@@ -86,33 +96,37 @@ class CompetenciesDirectory extends Controller
             $data = $this->validate_input_v2($request);
             $directoryId = [];
             $insert = [];
-            for ($i=0; $i < count($data["datas"]); $i++) { 
-                for ($j=0; $j < count($data["datas"][$i]["data"]); $j++) { 
-                    $tempData = [
-                        "id_curriculum" => $data["id_curriculum"],
-                        "id_job_title" => $data["datas"][$i]["id_job_title"],
-                        "between_year" => $data["datas"][$i]["data"][$j]["between"],
-                        "target" => $data["datas"][$i]["data"][$j]["target"]
-                    ];
-                    if(isset($data["datas"][$i]["data"][$j]["id_directory"])){
-                        array_push($directoryId,$data["datas"][$i]["data"][$j]["id_directory"]);
-                        CompetenciesDirectoryModel::where("id_directory",$data["datas"][$i]["data"][$j]["id_directory"])
-                            ->update($tempData);
-                    }else{
-                        $cek = CompetenciesDirectoryModel::where([
-                            ["id_curriculum",$data["id_curriculum"]],
-                            ["id_job_title",$data["datas"][$i]["id_job_title"]]
-                            ])->count();
-                        if($cek == 0){
-                            array_push($insert,$tempData);
+            if(isset($data["datas"])){
+                for ($i=0; $i < count($data["datas"]); $i++) { 
+                    for ($j=0; $j < count($data["datas"][$i]["data"]); $j++) { 
+                        $tempData = [
+                            "id_curriculum" => $data["id_curriculum"],
+                            "id_job_title" => $data["datas"][$i]["id_job_title"],
+                            "between_year" => $data["datas"][$i]["data"][$j]["between"],
+                            "target" => $data["datas"][$i]["data"][$j]["target"]
+                        ];
+                        if(isset($data["datas"][$i]["data"][$j]["id_directory"])){
+                            array_push($directoryId,$data["datas"][$i]["data"][$j]["id_directory"]);
+                            CompetenciesDirectoryModel::where("id_directory",$data["datas"][$i]["data"][$j]["id_directory"])
+                                ->update($tempData);
+                        }else{
+                            $cek = CompetenciesDirectoryModel::where([
+                                ["id_curriculum",$data["id_curriculum"]],
+                                ["id_job_title",$data["datas"][$i]["id_job_title"]]
+                                ])->count();
+                            if($cek == 0){
+                                array_push($insert,$tempData);
+                            }
                         }
                     }
                 }
+                if(count($directoryId) > 0){
+                    CompetenciesDirectoryModel::where("id_curriculum",$data["id_curriculum"])->whereNotIn("id_directory",$directoryId)->delete();
+                }
+            }else{
+                CompetenciesDirectoryModel::where("id_curriculum",$data["id_curriculum"])->delete();
             }
             
-            if(count($directoryId) > 0){
-                CompetenciesDirectoryModel::where("id_curriculum",$data["id_curriculum"])->whereNotIn("id_directory",$directoryId)->delete();
-            }
             if(count($insert) > 0){
                 CompetenciesDirectoryModel::insert($insert);
             }

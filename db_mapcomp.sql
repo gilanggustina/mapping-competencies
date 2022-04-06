@@ -71,9 +71,47 @@ CREATE TABLE `competencies_directory` (
   `between_year` enum('0','1','2','3','4','5') NOT NULL,
   `target` tinyint(6) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id_directory`)
-) ENGINE=InnoDB AUTO_INCREMENT=132 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=192 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `competencies_directory` */
+
+insert  into `competencies_directory`(`id_directory`,`id_curriculum`,`id_job_title`,`between_year`,`target`) values 
+(132,3,'JT-0049','0',0),
+(133,3,'JT-0049','1',1),
+(134,3,'JT-0049','2',2),
+(135,3,'JT-0049','3',3),
+(136,3,'JT-0049','4',4),
+(137,3,'JT-0049','5',5),
+(138,3,'JT-0013','0',0),
+(139,3,'JT-0013','1',1),
+(140,3,'JT-0013','2',2),
+(141,3,'JT-0013','3',3),
+(142,3,'JT-0013','4',4),
+(143,3,'JT-0013','5',5),
+(144,3,'JT-0015','0',0),
+(145,3,'JT-0015','1',1),
+(146,3,'JT-0015','2',2),
+(147,3,'JT-0015','3',3),
+(148,3,'JT-0015','4',4),
+(149,3,'JT-0015','5',5),
+(150,7,'JT-0049','0',0),
+(151,7,'JT-0049','1',1),
+(152,7,'JT-0049','2',2),
+(153,7,'JT-0049','3',3),
+(154,7,'JT-0049','4',4),
+(155,7,'JT-0049','5',5),
+(156,6,'JT-0153','0',0),
+(157,6,'JT-0153','1',1),
+(158,6,'JT-0153','2',2),
+(159,6,'JT-0153','3',3),
+(160,6,'JT-0153','4',4),
+(161,6,'JT-0153','5',5),
+(180,36,'JT-0001','0',1),
+(181,36,'JT-0001','1',1),
+(182,36,'JT-0001','2',1),
+(183,36,'JT-0001','3',2),
+(184,36,'JT-0001','4',3),
+(185,36,'JT-0001','5',3);
 
 /*Table structure for table `curriculum` */
 
@@ -91,20 +129,37 @@ CREATE TABLE `curriculum` (
   `created_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
   `updated_At` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
   PRIMARY KEY (`id_curriculum`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `curriculum` */
 
 insert  into `curriculum`(`id_curriculum`,`no_training_module`,`id_skill_category`,`training_module`,`level`,`training_module_group`,`training_module_desc`,`id_job_title`,`created_at`,`updated_At`) values 
-(3,'001/KMI/HRD-RT/SAL/002',1,'Orientation Department','B','New Employee Orientation','Berisi penjelasan mengenai tugas dan tanggung jawab dari masing-masing departemen dan struktur organisasi perusahaan','JT-0049','2022-03-26 09:03:07','2022-03-26 09:03:07'),
-(4,'001/KMI/HRD-RT/SAL/003',1,'KALBE Business Ethic','B','New Employee Orientation','Berisi tentang tata kelola etika bisnis di KALBE Group','JT-0047','2022-03-26 09:04:13','2022-03-26 09:04:13'),
-(5,'001/KMI/HRD-RT/SAL/004',1,'Company Regulation','B','New Employee Orientation','Berisi tentang informasi tambahan mengenai BPJS Ketenagakerjaan, BPJS Kesehatan & Paguyuban','JT-0047','2022-03-26 09:04:16','2022-03-26 09:04:16'),
-(6,'002/KMI/HRD-RT/SAL/001',1,'Organizational Design','B','Organizational Development','Berisi penjelasan mengenai Desain Organisasi','JT-0153','2022-04-05 10:53:17','2022-04-05 10:53:17'),
-(7,'002/KMI/HRD-RT/SAL/002',2,'Job analysis','I','Organizational Development','Berisi penjelasan mengenai analisa pekerjaan per jabatan','JT-0153','2022-04-05 10:53:22','2022-04-05 10:53:22'),
-(8,'011/KMI/HRD-RT/SAL/026',2,'BPJS Ketenagakerjaan ','B','Operational Procedure','Mengenai cara pelaporan kecelakaan kerja serta dokumen-dokumen yang dibutuhkan','JT-0153','2022-04-05 10:53:24','2022-04-05 10:53:24'),
-(19,'ertrtr',1,'asdasfsdfd','A','asdsgdfgdfg','sdfsdfdsf','JT-0007',NULL,NULL),
-(20,'004/Cahaya/2022',1,'Example Training Module','A','Training Module Group','Training Module Desc','JT-0007','2022-04-03 09:13:47','2022-04-03 09:13:47'),
-(21,'004/Cahaya/2022',1,'Example Training Module','A','Training Module Group','Training Module Desc','JT-0007','2022-04-03 09:14:38','2022-04-03 09:14:38');
+(36,'004/SKN/PEL-9283/2022',1,'Example Training Module','B','Training Module Group','Deskripsi','','2022-04-06 16:47:39','2022-04-06 16:47:39'),
+(37,'005/IJIAJKS/OPP-2022',2,'Training Module General Skill','B','Training Group','Desc','','2022-04-06 16:53:40','2022-04-06 16:53:40');
+
+/*Table structure for table `curriculum_to_job` */
+
+DROP TABLE IF EXISTS `curriculum_to_job`;
+
+CREATE TABLE `curriculum_to_job` (
+  `id_ctb` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id_curriculum` int(11) NOT NULL,
+  `id_job_title` char(8) NOT NULL,
+  PRIMARY KEY (`id_ctb`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `curriculum_to_job` */
+
+insert  into `curriculum_to_job`(`id_ctb`,`id_curriculum`,`id_job_title`) values 
+(9,36,'JT-0001'),
+(10,36,'JT-0002'),
+(11,36,'JT-0003'),
+(12,36,'JT-0049'),
+(13,36,'JT-0153'),
+(14,37,'JT-0006'),
+(15,37,'JT-0007'),
+(16,37,'JT-0008'),
+(17,37,'JT-0009');
 
 /*Table structure for table `department` */
 
@@ -534,7 +589,7 @@ CREATE TABLE `users` (
 /*Data for the table `users` */
 
 insert  into `users`(`id`,`nik`,`nama_pengguna`,`peran_pengguna`,`email`,`email_verified_at`,`password`,`tgl_masuk`,`id_job_title`,`id_divisi`,`id_cg`,`id_department`,`id_sub_department`,`id_level`,`status`,`gambar`,`remember_token`,`created_at`,`updated_at`) values 
-(1,'K210300063','Rezki Ramadhan','1','rramadhan1818@gmail.com','2022-03-01 16:58:33','$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','2022-03-01','JT-0049','DV_0002','CG_0011','DP-0008','SDP-0023','LV-0009',1,'',NULL,'2022-03-05 16:58:33','2022-03-05 16:58:33'),
+(1,'K210300063','Rezki Ramadhan','1','rramadhan1818@gmail.com','2022-03-01 16:58:33','$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','2020-03-01','JT-0049','DV_0002','CG_0011','DP-0008','SDP-0023','LV-0009',1,'',NULL,'2022-03-05 16:58:33','2022-03-05 16:58:33'),
 (2,'K200900257','Chandra Prawira','1','chandra@gmail.com','2022-03-01 16:58:33','$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','2022-03-11','JT-0049','DV_0002','CG_0011','DP-0008','SDP-0023','LV-0009',1,'',NULL,'2022-03-11 08:46:24','2022-03-11 08:46:24'),
 (3,'050700014','DIDIK BUDIARTO',NULL,'didik.budiarto@gmail.com',NULL,'$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','0000-00-00','JT-0149',NULL,NULL,'DP-0003',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (4,'051000017','I GEDE PUTU EKA PUTRA',NULL,'igedeputu.ekaputra@gmail.com',NULL,'$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','0000-00-00','JT-0076',NULL,NULL,'DP-0010',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
@@ -768,7 +823,7 @@ insert  into `users`(`id`,`nik`,`nama_pengguna`,`peran_pengguna`,`email`,`email_
 (232,'200700143','TENDI SOBARNANSYAH',NULL,'sobarnansyah@gmail.com',NULL,'$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','0000-00-00','JT-0064',NULL,NULL,'DP-0005',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (233,'200700144','MUHAMAD RIDWAN',NULL,'muhamadridwan133@gmail.com',NULL,'$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','0000-00-00','JT-0130',NULL,NULL,'DP-0006',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (234,'201200194','DENLEI DIYOROSSI',NULL,'diyorossi@gmail.com',NULL,'$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','0000-00-00','',NULL,NULL,'DP-0009',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(361,'210100004','SETYO DEWI UTARI',NULL,'setyod@gmail.com',NULL,'$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','0000-00-00','JT-0153',NULL,'CG_0011','DP-0008',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(361,'210100004','SETYO DEWI UTARI',NULL,'setyod@gmail.com',NULL,'$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','2022-04-06','JT-0153',NULL,'CG_0011','DP-0008',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (362,'210100024','SARI DIYAH PALUPY',NULL,'saridpha@gmail.com',NULL,'$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','0000-00-00','JT-0016',NULL,NULL,'DP-0002',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (363,'211200171','TOSHIHITO  ABE',NULL,'abe@gmail.com',NULL,'$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','0000-00-00','JT-0113',NULL,NULL,'DP-0001',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (364,'220100111','KUKUH GUMILANG',NULL,'kukuh_gumilDP-0001@yahoo.com',NULL,'$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','0000-00-00','JT-0033',NULL,NULL,'DP-0005',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
@@ -907,6 +962,10 @@ CREATE TABLE `white_tag` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `white_tag` */
+
+insert  into `white_tag`(`id_white_tag`,`id_directory`,`id_user`,`start`,`actual`) values 
+('7eeXy1649145212',134,1,0,1),
+('p2co41649145212',152,1,0,1);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

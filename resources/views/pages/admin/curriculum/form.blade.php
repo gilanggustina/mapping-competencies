@@ -35,10 +35,21 @@
 </div>
 <div class="form-group col-md">
   <label for="noModule">Job Title CG</label>
-  <select class="form-control form-control-sm" name="id_job_title">
+  <select class="form-control selectpicker form-control-sm" id="id_job_titles" name="id_job_title[]" data-live-search="true" data-hide-disabled="true" multiple data-actions-box="true">
       <option value="">Pilih Job Title</option>
       @foreach($jabatans as $jabatan)
-        <option {{($curriculum->id_job_title == $jabatan->id_job_title) ? 'selected' : ''}} value="{{$jabatan->id_job_title}}">{{$jabatan->nama_job_title}}</option>
+        <option {{($jabatan->sts == 1) ? 'selected' : ''}} value="{{$jabatan->id_job_title}}">{{$jabatan->nama_job_title}}</option>
       @endforeach
   </select>
 </div>
+
+<script>
+  $(document).ready(function () {
+    fetchJobTitle();
+  })
+  
+  function fetchJobTitle() {
+    var option = '<option value="ui">Contoh</option>';
+    $("#id_job_titles").selectpicker('refresh');
+  }
+</script>
