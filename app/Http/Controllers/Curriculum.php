@@ -15,7 +15,7 @@ class Curriculum extends Controller
     public function index()
     {
         $data = CurriculumModel::leftJoin('skill_category as sc', 'curriculum.id_skill_category', '=', 'sc.id_skill_category')
-        ->get(['curriculum.*', 'sc.skill_category']);
+        ->get(['curriculum.*', 'sc.skill_category',DB::raw("(SELECT GROUP_CONCAT(nama_job_title SEPARATOR ', ') FROM curriculum_to_job AS ctb JOIN job_title AS jt ON jt.id_job_title = ctb.id_job_title WHERE ctb.id_curriculum = curriculum.id_curriculum GROUP BY ctb.id_curriculum ) AS job_title")]);
         return view('pages.admin.curriculum.index', compact('data'));
     }
 

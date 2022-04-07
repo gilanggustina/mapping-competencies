@@ -71,7 +71,7 @@ CREATE TABLE `competencies_directory` (
   `between_year` enum('0','1','2','3','4','5') NOT NULL,
   `target` tinyint(6) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id_directory`)
-) ENGINE=InnoDB AUTO_INCREMENT=192 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=198 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `competencies_directory` */
 
@@ -105,13 +105,7 @@ insert  into `competencies_directory`(`id_directory`,`id_curriculum`,`id_job_tit
 (158,6,'JT-0153','2',2),
 (159,6,'JT-0153','3',3),
 (160,6,'JT-0153','4',4),
-(161,6,'JT-0153','5',5),
-(180,36,'JT-0001','0',1),
-(181,36,'JT-0001','1',1),
-(182,36,'JT-0001','2',1),
-(183,36,'JT-0001','3',2),
-(184,36,'JT-0001','4',3),
-(185,36,'JT-0001','5',3);
+(161,6,'JT-0153','5',5);
 
 /*Table structure for table `curriculum` */
 

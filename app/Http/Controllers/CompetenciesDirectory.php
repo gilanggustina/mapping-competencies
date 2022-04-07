@@ -140,22 +140,23 @@ class CompetenciesDirectory extends Controller
 
     public function detail(Request $request)
     {
+        // 081312468147
         $request->validate([
             "id" => "required|numeric"
         ]);
         $data = $this->validate_input_v2($request);
         $curriculum = CurriculumModel::where("id_curriculum",$data["id"])->first();
         $select = [
-            "competencies_directory.id_curriculum","jt.nama_job_title",
+            DB::raw("(SELECT nama_job_title FROM job_title AS jt WHERE jt.id_job_title = competencies_directory.id_job_title) as nama_job_title"),
             DB::raw("CONCAT('{\"list\":[',GROUP_CONCAT(CONCAT('{','\"id\":\"',id_directory,'\",','\"between\":\"',between_year,'\",','\"target\":\"',target,'\"','}') ORDER BY between_year ASC SEPARATOR ','),']}') AS list")
         ];
         $directories = CompetenciesDirectoryModel::select($select)
-                                                ->join("curriculum as cr",function ($join) use ($data){
+                                                ->join("curriculum as cr",function ($join) use ($request){
                                                     $join->on("cr.id_curriculum","competencies_directory.id_curriculum")
-                                                        ->where("competencies_directory.id_curriculum",$data["id"]);
+                                                        ->where("competencies_directory.id_curriculum",$request->id)
+                                                        ->groupBy("competencies_directory.id_curriculum","competencies_directory.id_curriculum");
                                                 })
-                                                ->join("job_title as jt","jt.id_job_title","competencies_directory.id_job_title")
-                                                ->groupBy("competencies_directory.id_curriculum","competencies_directory.id_job_title")
+                                                ->groupBy("competencies_directory.id_job_title")
                                                 ->get();
         return view("pages.admin.competency-directory.detail",compact("curriculum","directories"));
     }

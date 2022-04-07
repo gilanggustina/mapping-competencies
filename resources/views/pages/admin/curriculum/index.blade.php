@@ -36,6 +36,7 @@
                                         <th>Level</th>
                                         <th>Training Module Group</th>
                                         <th>Training Module Description</th>
+                                        <th>Job Title</th>
                                         <th width="15%">Action</th>
                                     </tr> 
                                 </thead>
@@ -49,6 +50,7 @@
                                             <td>{{ $data->level }}</td>
                                             <td>{{ $data->training_module_group }}</td>
                                             <td>{{ $data->training_module_desc }}</td>
+                                            <td>{{ $data->job_title }}</td>
                                             <td>
                                                 <button data-id="{{ $data->id_curriculum }}" onclick="editdata(this)" class="btn btn-inverse-success btn-icon delete-button mr-1 mr-1 Edit-button" data-toggle="modal" data-target="#modal-edit"><i class="icon-file menu-icon"></i></button>
                                                 <button data-id="{{ $data->id_curriculum }}" class="btn btn-inverse-danger btn-icon mr-1 cr-hapus" data-toggle="modal" data-target="#modal-cr-hapus">
