@@ -84,50 +84,39 @@ class MemberCG extends Controller
         return redirect()->route('Member')->with('success', 'Berhasil menambah Berita!');
     }
 
+    
     public function edit(Request $request)
     {
-        $berita = User::where('id', $request->id)->first();
-        return response()->json([
-            'status' => true,
-            'data' => $berita,
-            'message' => 'success',
-        ]);
+        $curriculum = CurriculumModel::where("id_curriculum", $request->id)->first();
+        $skills = SkillCategory::all();
+        $jabatans = Jabatan::all();
+        return view("pages.admin.curriculum.form", compact("curriculum", "skills", "jabatans"));
     }
-    public function update($id, Request $request)
+
+    public function update(Request $request)
     {
         $request->validate([
-            'judul_berita' => 'required',
-            'tanggal' => 'required',
-            'link' => 'required',
+            'no_training_module' => 'required|max:100',
+            'id_skill_category' => 'required',
+            'training_module' => 'required',
+            'level' => 'required',
+            'training_module_group' => 'required',
+            'training_module_desc' => 'required',
+            'id_job_title' => 'required',
         ]);
-        $data = [
-            'id_user' => Auth::user()->id,
-            'id_prov' => Auth::user()->id_provinsi,
-            'id_kab' => Auth::user()->id_kab,
-            'judul_berita' => $request->judul_berita,
-            'tanggal' => $request->tanggal,
-            'link' => $request->link,
-        ];
-        $berita = User::find($id);
-        if ($request->hasFile('gambar')) {
-            $request->validate([
-                'gambar' => 'required|image|mimes:jpg,png,jpeg|max:5000',
-            ]);
-            $image_path = 'assets/img/' . $berita->gambar;
-            if (file_exists($image_path)) {
-                @unlink($image_path);
-            }
-            $file = $request->file('gambar');
-            $extension = $file->getClientOriginalExtension();
-            $filename = time() . '.' . $extension;
-            $file->move('assets/img/', $filename);
-            $data['gambar'] = $filename;
-        }
-        $berita->update($data);
-        return redirect()
-            ->route('manajemen-berita')
-            ->with('success', 'Berhasil mengubah Berita!');
+        $post = CurriculumModel::updateOrCreate(['id_curriculum' => $request->id_curriculum], [
+            'no_training_module' => $request->no_training_module,
+            'id_skill_category' => $request->id_skill_category,
+            'training_module' => $request->training_module,
+            'level' => $request->level,
+            'training_module_group' => $request->training_module_group,
+            'training_module_desc' => $request->training_module_desc,
+            'id_job_title' => $request->id_job_title,
+        ]);
+
+        return response()->json(['code' => 200, 'message' => 'Post Created successfully', 'data' => $post], 200);
     }
+    
     public function delete($id)
     {
         $berita = User::find($id);
