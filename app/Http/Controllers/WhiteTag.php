@@ -80,7 +80,7 @@ class WhiteTag extends Controller
 
     public function actionWhiteTag(Request $request)
     {
-        $validator = Validator::make($request->all(),[
+        $request->validate([
             "type" => "required|string|in:general,functional",
             "user_id" => "required|numeric",
             "data" => "nullable|array",
@@ -88,57 +88,35 @@ class WhiteTag extends Controller
             "data.*.start" => "nullable|numeric",
             "data.*.actual" => "nullable|numeric"
         ]);
-
-        if($validator->fails()){
-            dd($validator->errors());
-        }else{
-            DB::beginTransaction();
-            try{
-                $skillId = [1,2];
-                WhiteTagModel::whereRaw("id_user = '".$request->user_id."' AND (select count(*) from taging_reason where taging_reason.id_white_tag = white_tag.id_white_tag) <= 0 ")
-                            ->join("competencies_directory",function ($join) use ($skillId){
-                                $join->on('competencies_directory.id_directory','white_tag.id_directory')
-                                    ->join('curriculum','curriculum.id_curriculum','competencies_directory.id_curriculum')
-                                    ->whereIn('curriculum.id_skill_category',$skillId);
-                            })
-                            ->delete();
-                            
-                if(isset($request->data)){
-                    $insert = [];
-                    for($i=0; $i < count($request->data); $i++){
-                        $insert[$i] = [
-                            "id_white_tag"=>$this->random_string(5,5,false).time(),
-                            "id_directory" => $request->data[$i]["id"],
-                            "id_user" => $request->user_id,
-                            "start" => $request->data[$i]["start"],
-                            "actual" => $request->data[$i]["actual"]
-                        ];
-                    }
-                    WhiteTagModel::insert($insert);
+        DB::beginTransaction();
+        try{
+            $skillId = [1,2];
+            WhiteTagModel::whereRaw("id_user = '".$request->user_id."' AND (select count(*) from taging_reason where taging_reason.id_white_tag = white_tag.id_white_tag) <= 0 ")
+                        ->join("competencies_directory",function ($join) use ($skillId){
+                            $join->on('competencies_directory.id_directory','white_tag.id_directory')
+                                ->join('curriculum','curriculum.id_curriculum','competencies_directory.id_curriculum')
+                                ->whereIn('curriculum.id_skill_category',$skillId);
+                        })
+                        ->delete();
+                        
+            if(isset($request->data)){
+                $insert = [];
+                for($i=0; $i < count($request->data); $i++){
+                    $insert[$i] = [
+                        "id_white_tag"=>$this->random_string(5,5,false).time(),
+                        "id_directory" => $request->data[$i]["id"],
+                        "id_user" => $request->user_id,
+                        "start" => $request->data[$i]["start"],
+                        "actual" => $request->data[$i]["actual"]
+                    ];
                 }
-                $messages = [
-                    "type"=>"success",
-                    "message"=>"Berhasil mengubah data white tag!"
-                ];
-                DB::commit();
-            }catch(\Exception $e){
-                DB::rollback();
-                dd($e->getMessage());
-                $messages = [
-                    "type"=>"error",
-                    "message"=>"Terjadi kesalahan dalam penyimpanan data"
-                ];
+                WhiteTagModel::insert($insert);
             }
-            if($request->type == "general"){
-                return redirect()
-                ->route('WhiteTag')
-                ->with($messages["type"], $messages["message"]);
-            }else{
-                return redirect()
-                ->route('WhiteTagFunc')
-                ->with($messages["type"], $messages["message"]);
-            }
+            DB::commit();
+        }catch(\Exception $e){
+            DB::rollback();
         }
+        return response()->json(['code' => 200, 'message' => 'Post successfully'], 200);
     }
 
     public function detailWhiteTag(Request $request)
@@ -156,6 +134,7 @@ class WhiteTag extends Controller
                                                 $join->on("white_tag.id_directory","competencies_directory.id_directory")
                                                     ->where("white_tag.id_user",$user->id);
                                             })
+                                            ->groupBy("competencies_directory.id_curriculum")
                                             ->get();
         return Datatables::of($data)
         ->addIndexColumn()

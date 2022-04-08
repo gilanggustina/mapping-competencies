@@ -78,7 +78,7 @@
 @endsection
 
 @push('script')
-<script>
+<script type="text/javascript">
   $(document).ready(function () {
       iniDatatable();
       $("#formSubmit").click(function (e) {
@@ -102,6 +102,7 @@
           $( '#year' ).removeClass('is-invalid');
           $( '#period' ).removeClass('is-invalid');
           $( '#date_open' ).removeClass('is-invalid');
+          $( '#due_date' ).removeClass('is-invalid');
           $( '#learning_method' ).removeClass('is-invalid');
           $( '#date_plan_implementation' ).removeClass('is-invalid');
           $( '#date_closed' ).removeClass('is-invalid');
@@ -147,6 +148,11 @@
                           $( '#feed-back-date-open' ).html(errors.date_open[0]); 
                           $( '#feed-back-date-open' ).show();
                           $( '#date_open' ).addClass('is-invalid');
+                      }
+                      if(errors.due_date){
+                          $( '#feed-back-due-date' ).html(errors.due_date[0]); 
+                          $( '#feed-back-due-date' ).show();
+                          $( '#due_date' ).addClass('is-invalid');
                       }
                       if(errors.learning_method){
                           $( '#feed-back-learning-method' ).html(errors.learning_method[0]); 

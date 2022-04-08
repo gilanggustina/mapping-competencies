@@ -62,7 +62,7 @@
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <p class="card-title">White Tag General</p>
+                <p class="card-title">White Tag</p>
                 <div class="row">
                     <div class="col-12">
                         <div class="table-responsive">
@@ -86,52 +86,6 @@
             </div>
         </div>
     </div>
-
-    {{-- <div class="col-md-12 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-                <p class="card-title">Tagging List</p>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="table-responsive">
-                            <table class="display expandable-table table-striped table-hover" id="table-cg" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Skill Category</th>
-                                        <th>Training Modules</th>
-                                        <th>Level</th>
-                                        <th>Training Modules Group</th>
-                                        <th>Actual</th>
-                                        <th>Target</th>
-                                        <th>Actual vs Target</th>
-                                        <th>Tagging Status</th>
-                                        <th>Action</th>
-                                    </tr> 
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>
-                                            <button data-toggle="modal" data-target="#modal-detail"  class="btn btn-inverse-info btn-icon"><i class="icon-eye"></i></button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
 </div>
 
 {{-- Modal --}}
@@ -144,7 +98,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{!!route('actionWhiteTag')!!}" method="POST" enctype="multipart/form-data">
+            <form action="{!!route('actionWhiteTag')!!}" id="formWhiteTag" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
                     <div class="table-responsive">
@@ -171,7 +125,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="button" id="submitWhiteTag" class="btn btn-primary">Save changes</button>
                 </div>
             </form>
         </div>
@@ -240,6 +194,41 @@
           placement: "top",
           trigger: "hover focus"
       });
+
+    $("#submitWhiteTag").click(function (e) {
+        e.preventDefault()
+        var form = $("#formWhiteTag")
+        const url = form.attr("action");
+        var formData = form.serialize();
+        $.ajax({
+            url:url,
+            type:"post",
+            cache:false,
+            data:formData,
+            success:function(data){
+                $("#modal-tambah").modal('hide');
+                $('#table-cg').DataTable().destroy();
+                initDatatable();
+                Swal.fire({
+                    position:'top-end',
+                    icon:'success',
+                    title:data.message,
+                    showConfirmButton:false,
+                    timer:1500
+                });
+            },
+            error:function(err){
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: err.responseJSON.message,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+        })
+    })
+
   });
 
 
