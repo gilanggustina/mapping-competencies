@@ -16,7 +16,7 @@ class CompetenciesDirectory extends Controller
     public function jsonDataTable(Request $request)
     {
         $select = [
-            "id_directory","cr.id_curriculum","cr.no_training_module as no_training_module","cr.training_module as training_module"
+            "id_directory", "cr.id_curriculum", "cr.no_training_module as no_training_module", "cr.level as level", "cr.id_skill_category as skill_category", "cr.training_module as training_module"
         ];
         $data = CompetenciesDirectoryModel::select($select)
                                             ->join("curriculum as cr",function ($join){

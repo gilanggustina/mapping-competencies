@@ -61,7 +61,7 @@
 </div>
 
 <div class="modal fade m-auto"  id="modal-detail" tabindex="-1" role="dialog" aria-labelledby="modal-detailLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" style="width:55%" role="document">
+    <div class="modal-md modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header p-3">
                 <h5 class="modal-title m-auto text-center" id="modal-detailLabel">COMPETENCY TAG</h5>
@@ -69,7 +69,10 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" id="body-detail">
+            <div class="modal-body" id="body-detail" style="padding : 5px 25px !important;">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">OKE</button>
             </div>
         </div>
     </div>
