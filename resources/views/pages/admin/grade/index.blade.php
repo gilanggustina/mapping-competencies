@@ -18,19 +18,27 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="table-responsive">
-                            <table class="display expandable-table table table-sm table-striped table-hover" id="table-Grade" style="width:100%">
+                            <table class="display expandable-table table table-sm table-striped table-hover" id="table-grade" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>No.</th>
-                                        <th>Name</th>
-                                        <th>Job Title</th>
-                                        <th>Department</th>
-                                        <th>Level</th>
-                                        <th>CG Name</th>
-                                        <th>Action</th>
+                                        <th>Name Grade</th>
+                                        <th  width="15%">Action</th>
                                     </tr> 
                                 </thead>
-                                <tbody >
+                                <tbody>
+                                    @foreach($data as $data)
+                                    <tr id="row_{{$data->id_grade}}"> 
+                                        <th scope="row">{{ $loop->iteration }}</th>
+                                        <td>{{ $data->name_grade  }}</td>
+                                        <td>
+                                            <button data-id="{{ $data->id_grade }}" onclick="editdata(this)" class="btn btn-inverse-success btn-icon delete-button mr-1 mr-1 Edit-button" data-toggle="modal" data-target="#modal-edit"><i class="icon-file menu-icon"></i></button>
+                                            <button data-id="{{ $data->id_grade }}" class="btn btn-inverse-danger btn-icon mr-1 cr-hapus" data-toggle="modal" data-target="#modal-cr-hapus">
+                                                <i class="icon-trash">
+                                            </i></button>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -51,7 +59,7 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{!! route('actionGrade') !!}" method="POST" enctype="multipart/form-data">
+            <form action="{!! route('Grade.post') !!}" method="POST" enctype="multipart/form-data">
                 @csrf
             <div class="modal-body">
             </div>
@@ -87,7 +95,6 @@
 @push('script')
 <script>
    $(document).ready(function () {
-        initDatatable();
         $('[data-toggle="tooltip"]').tooltip({
             animation: true,
             plaGradent: "top",
@@ -96,13 +103,13 @@
     });
 
     
- $('#table-cr').DataTable();
+ $('#table-grade').DataTable();
 
 function editPost(event) {
   var id  = $(event).data("id");
-  let _url = "{!!route('editCurriculum')!!}";
-  var curriculumEditForm = $("#formEditCurriculum");
-  var formData = curriculumEditForm.serialize();
+  let _url = "{!!route('editGrade')!!}";
+  var GradeEditForm = $("#formEditGrade");
+  var formData = GradeEditForm.serialize();
   $.ajax({
     url: _url,
     type: "post",
@@ -136,7 +143,7 @@ function editPost(event) {
 function editdata(el) {
   var id = $(el).attr("data-id");
   $.ajax({
-      url:"{!!route('getFormEditCurriculum')!!}?id="+id,
+      url:"{!!route('getFormEditGrade')!!}?id="+id,
       mehtod:"get",
       success:function (html) {
           $("#form-edit").html(html);
@@ -145,7 +152,7 @@ function editdata(el) {
 }
 
 function createPost() {
-  let _url     = `{{ route('Curriculum.post') }}`;
+  let _url     = `{{ route('Grade.post') }}`;
   let _token   = $('meta[name="csrf-token"]').attr('content');
 
     $.ajax({
@@ -153,14 +160,9 @@ function createPost() {
       type: "POST",
       // data : $("#registerSubmit").serialize(),
       data: {
-      //   id_curriculum: id_curriculum,
-        no_training_module: $('#no_training_module').val(),
-        id_skill_category: $('#id_skill_category').val(), 
-        training_module:  $('#training_module').val(),
-        level: $('#level').val(),
-        training_module_group: $('#training_module_group').val(),
-        training_module_desc: $('#training_module_desc').val(),
-        id_job_title: $('#id_job_title').val(),
+      //   id_Grade: id_Grade,
+        id_grade: $('#id_grade').val(),
+        name_grade: $('#name_grade').val(), 
         _token: _token
       },
       success: function(response) {
@@ -197,12 +199,12 @@ function createPost() {
       $('#btnHapus').attr('data-id',id);
   })
 
-  function deleteCurriculum(el) {
+  function deleteGrade(el) {
       var id = $(el).attr("data-id");
       var token = $("meta[name='csrf-token']").attr("content");
       var rowid = '#row_'+id;
       $.ajax({
-          url:"curriculum/curriculum-delete/"+id,
+          url:"Grade/Grade-delete/"+id,
           mehtod:"delete",
           data: {
               "id": id,
@@ -223,30 +225,6 @@ function createPost() {
       })
   }
  
-   function getSkill(){
-          $.ajax({
-              type: "GET",
-              url: "{{ route('get.skill') }}",
-              success: function(res) {
-                  var option = "";
-                  for (let i = 0; i < res.data.length; i++) {
-                      option += '<option value="'+res.data[i].id_skill_category+'">'
-                          +res.data[i].skill_category+'</option>';
-                  }
-                  $('#id_skill_category').html();
-                  $('#id_skill_category').append(option);
-              },
-              error: function (response) {
-                  Swal.fire({
-                      position: 'top-end',
-                      icon: 'error',
-                      title: response.responseJSON.errors,
-                      showConfirmButton: false,
-                      timer: 1500
-                  })
-              }
-          })
-  }
 
   function getJabatan(){
       $.ajax({
@@ -271,58 +249,43 @@ function createPost() {
       })
   }
 
-  $(document).ready(function() {        
-      getJabatan();
-      getSkill();
-  });
-  
 
-
-    function initDatatable() {
-        var dtJson = $('#table-Grade').DataTable({
-            ajax: "{{ route('memberJson') }}",
-            autoWidth: false,
-            serverSide: true,
-            processing: true,
-            aaSorting: [
-                [0, "desc"]
-            ],
-            searching: true,
-            dom: '<"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
-            displayLength: 10,
-            lengthMenu: [10, 15, 20],
-            language: {
-                paginate: {
-                    // remove previous & next text from pagination
-                    previous: '&nbsp;',
-                    next: '&nbsp;'
-                }
-            },
-            scrollX: true,
-            columns: [
-                {
-                    data: 'DT_RowIndex', name: 'DT_RowIndex'
-                },
-                {
-                    data: 'nama_pengguna'
-                },
-                {
-                    data: 'nama_job_title'
-                },
-                {
-                    data: 'nama_department'
-                },
-                {
-                    data: 'nama_divisi'
-                },
-                {
-                    data: 'nama_cg'
-                },
-                {
-                    data: 'action'
-                }
-            ],
-        })
-    }
+    // function initDatatable() {
+    //     var dtJson = $('#table-grade').DataTable({
+    //         ajax: "{{ route('Grade') }}",
+    //         autoWidth: false,
+    //         serverSide: true,
+    //         processing: true,
+    //         aaSorting: [
+    //             [0, "desc"]
+    //         ],
+    //         searching: true,
+    //         dom: '<"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+    //         displayLength: 10,
+    //         lengthMenu: [10, 15, 20],
+    //         language: {
+    //             paginate: {
+    //                 // remove previous & next text from pagination
+    //                 previous: '&nbsp;',
+    //                 next: '&nbsp;'
+    //             }
+    //         },
+    //         scrollX: true,
+    //         columns: [
+    //             {
+    //                 data: 'DT_RowIndex', name: 'DT_RowIndex'
+    //             },
+    //             {
+    //                 data: 'id_grade'
+    //             },
+    //             {
+    //                 data: 'name_grade'
+    //             },
+    //             {
+    //                 data: 'action'
+    //             }
+    //         ],
+    //     })
+    // }
 </script>
 @endpush

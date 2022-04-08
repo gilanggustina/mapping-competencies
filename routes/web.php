@@ -66,9 +66,27 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/action','WhiteTag@actionWhiteTag')->name("actionWhiteTag");
         Route::get('/detail', 'WhiteTag@detailWhiteTag')->name('detailWhiteTag');
     });
-        
-        
+
+    //CEME
     Route::get('/ceme', 'Ceme@index')->name('ceme');
     Route::post('/ceme-post', 'Ceme@actionCeme')->name('actionCeme');
+
+
+    Route::prefix("grade")->group(function () {
+        Route::get('/', 'Grade@index')->name('Grade');
+        Route::post('/grade-post', 'Grade@store')->name('Grade.post');
+        Route::get('/form-edit-Grade', 'Grade@getFormEditGrade')->name('getFormEditGrade');
+        Route::post('/grade-edit', 'Grade@editGrade')->name('editGrade');
+        Route::get('/grade-delete/{id}', 'Grade@delete')->name('Grade.delete');
+    });
+
+
+    Route::prefix("skill-categoty")->group(function () {
+        Route::get('/', 'SkillCategory@index')->name('SkillCategory');
+        Route::post('/post', 'SkillCategory@store')->name('SkillCategory.post');
+        Route::get('/form-edit', 'SkillCategory@FormEditSkillCategory')->name('getFormEditSkillCategory');
+        Route::post('/edit', 'SkillCategory@editSkillCategory')->name('editSkillCategory');
+        Route::get('/delete/{id}', 'SkillCategory@delete')->name('SkillCategory.delete');
+    });
 
 });

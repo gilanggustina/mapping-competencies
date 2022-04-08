@@ -17,7 +17,7 @@
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <p class="card-title">Curriculum</p>
+                <p class="card-title">Skill Category</p>
                 <div class="row">
                     <div class="col-md mb-2">
                         <a class="btn btn-success float-right" href="javascript:void(0)" id="createNewItem" data-toggle="modal" data-target="#modal-tambah"><i class="icon-plus"></i> Tambah Curriculum</a>
@@ -26,34 +26,22 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="table-responsive">
-                            <table class="display expandable-table table-striped table-hover" id="table-cr" style="width:100%">
+                            <table class="display expandable-table table table-striped table-hover" id="table-skill" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>No.#</th>
-                                        <th>No Training Module</th>
                                         <th>Skill Category</th>
-                                        <th>Training Module</th>
-                                        <th>Level</th>
-                                        <th>Training Module Group</th>
-                                        <th>Training Module Description</th>
-                                        <th>Job Title CG</th>
                                         <th width="15%">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($data as $data)
-                                    <tr id="row_{{$data->id_curriculum}}">
+                                    <tr id="row_{{$data->id_skill_category}}">
                                         <th scope="row" class="text-center">{{ $loop->iteration }}</th>
-                                        <td>{{ $data->no_training_module  }}</td>
                                         <td>{{ $data->skill_category }}</td>
-                                        <td>{{ $data->training_module }}</td>
-                                        <td>{{ $data->level }}</td>
-                                        <td>{{ $data->training_module_group }}</td>
-                                        <td>{{ $data->training_module_desc }}</td>
-                                        <td>{{ $data->nama_job_title }}</td>
                                         <td>
-                                            <button data-id="{{ $data->id_curriculum }}" onclick="editdata(this)" class="btn btn-inverse-success btn-icon delete-button mr-1 mr-1 Edit-button" data-toggle="modal" data-target="#modal-edit"><i class="icon-file menu-icon"></i></button>
-                                            <button data-id="{{ $data->id_curriculum }}" class="btn btn-inverse-danger btn-icon mr-1 cr-hapus" data-toggle="modal" data-target="#modal-cr-hapus">
+                                            <button data-id="{{ $data->id_skill_category }}" onclick="editdata(this)" class="btn btn-inverse-success btn-icon delete-button mr-1 mr-1 Edit-button" data-toggle="modal" data-target="#modal-edit"><i class="icon-file menu-icon"></i></button>
+                                            <button data-id="{{ $data->id_skill_category }}" class="btn btn-inverse-danger btn-icon mr-1 cr-hapus" data-toggle="modal" data-target="#modal-cr-hapus">
                                                 <i class="icon-trash">
                                                 </i></button>
                                         </td>
@@ -88,7 +76,7 @@
                     </div>
                     <div class="form-group col-md">
                         <label for="skillCategory">Skill Category</label>
-                        <select id="id_skill_category" class="form-control form-control-sm" name="id_skill_category">
+                        <select id="id_skill_category_category" class="form-control form-control-sm" name="id_skill_category_category">
                             <option value="">Pilih Skill Category</option>
                         </select>
                     </div>
@@ -173,7 +161,7 @@
 @endsection
 @push('script')
 <script>
-    $('#table-cr').DataTable();
+    $('#table-skill').DataTable();
 
     function editPost(event) {
         var id = $(event).data("id");
@@ -232,7 +220,7 @@
             data: {
                 //   id_curriculum: id_curriculum,
                 no_training_module: $('#no_training_module').val(),
-                id_skill_category: $('#id_skill_category').val(),
+                id_skill_category_category: $('#id_skill_category_category').val(),
                 training_module: $('#training_module').val(),
                 level: $('#level').val(),
                 training_module_group: $('#training_module_group').val(),
@@ -269,7 +257,7 @@
         });
     }
 
-    $('#table-cr').on('click', '.cr-hapus', function() {
+    $('#table-skill').on('click', '.cr-hapus', function() {
         var id = $(this).data('id');
         $('#btnHapus').attr('data-id', id);
     })
@@ -299,58 +287,58 @@
         })
     }
 
-    function getSkill() {
-        $.ajax({
-            type: "GET",
-            url: "{{ route('get.skill') }}",
-            success: function(res) {
-                var option = "";
-                for (let i = 0; i < res.data.length; i++) {
-                    option += '<option value="' + res.data[i].id_skill_category + '">' +
-                        res.data[i].skill_category + '</option>';
-                }
-                $('#id_skill_category').html();
-                $('#id_skill_category').append(option);
-            },
-            error: function(response) {
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'error',
-                    title: response.responseJSON.errors,
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            }
-        })
-    }
+    // function getSkill() {
+    //     $.ajax({
+    //         type: "GET",
+    //         url: "{{ route('get.skill') }}",
+    //         success: function(res) {
+    //             var option = "";
+    //             for (let i = 0; i < res.data.length; i++) {
+    //                 option += '<option value="' + res.data[i].id_skill_category_category + '">' +
+    //                     res.data[i].skill_category + '</option>';
+    //             }
+    //             $('#id_skill_category_category').html();
+    //             $('#id_skill_category_category').append(option);
+    //         },
+    //         error: function(response) {
+    //             Swal.fire({
+    //                 position: 'top-end',
+    //                 icon: 'error',
+    //                 title: response.responseJSON.errors,
+    //                 showConfirmButton: false,
+    //                 timer: 1500
+    //             })
+    //         }
+    //     })
+    // }
 
-    function getJabatan() {
-        $.ajax({
-            type: "GET",
-            url: "{{ route('get.jabatan') }}",
-            success: function(res) {
-                var option = "";
-                for (let i = 0; i < res.data.length; i++) {
-                    option += '<option value="' + res.data[i].id_job_title + '">' + res.data[i].nama_job_title + '</option>';
-                }
-                $("#id_job_title").html(option).selectpicker('refresh');
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'error',
-                    title: response.responseJSON.errors,
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            }
-        })
-    }
+    // function getJabatan() {
+    //     $.ajax({
+    //         type: "GET",
+    //         url: "{{ route('get.jabatan') }}",
+    //         success: function(res) {
+    //             var option = "";
+    //             for (let i = 0; i < res.data.length; i++) {
+    //                 option += '<option value="' + res.data[i].id_job_title + '">' + res.data[i].nama_job_title + '</option>';
+    //             }
+    //             $("#id_job_title").html(option).selectpicker('refresh');
+    //         },
+    //         error: function(xhr, ajaxOptions, thrownError) {
+    //             Swal.fire({
+    //                 position: 'top-end',
+    //                 icon: 'error',
+    //                 title: response.responseJSON.errors,
+    //                 showConfirmButton: false,
+    //                 timer: 1500
+    //             })
+    //         }
+    //     })
+    // }
 
-    $(document).ready(function() {
-        getJabatan();
-        getSkill();
-    });
+    // $(document).ready(function() {
+    //     getJabatan();
+    //     getSkill();
+    // });
 </script>
 
 @endpush

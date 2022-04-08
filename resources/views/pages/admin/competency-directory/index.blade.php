@@ -66,6 +66,8 @@
                                     <tr>
                                         <th>No Training Module#</th>
                                         <th>Training Module</th>
+                                        <th>Skill Category</th>
+                                        <th>Level</th>
                                         <th class="text-center">Action</th>
                                     </tr> 
                                 </thead>
@@ -265,6 +267,12 @@
                     },
                     {
                         data: 'training_module'
+                    },
+                    {
+                        data: 'skill_category'
+                    },
+                    {
+                        data: 'level'
                     },
                     {
                         data: 'action'

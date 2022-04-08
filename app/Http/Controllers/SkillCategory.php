@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\SkillCategoryModel;
 use Illuminate\Http\Request;
 
 class SkillCategory extends Controller
 {
     public function index()
     {
-        $data = SkillCategory::all();
-        return view('pages.admin.skill_category.index', compact('data'));
+        $data = SkillCategoryModel::all();
+        return view('pages.admin.skill-category.index', compact('data'));
     }
 
-    public function getFormEditskill_category(Request $request)
+    public function FormEditSkillCategory(Request $request)
     {
-        $skill_category = SkillCategory::where("id_skill_category", $request->id)->first();
-        $skills = SkillCategory::all();
-        $jabatans = Jabatan::all();
-        return view("pages.admin.skill_category.form", compact("skill_category", "skills", "jabatans"));
+        $skill_category = SkillCategoryModel::where("id_skill_category", $request->id)->first();
+        $skills = SkillCategoryModel::all();
+        return view("pages.admin.skill-category.form", compact("skill_category", "skills", "jabatans"));
     }
 
     public function store(Request $request)
@@ -51,7 +51,7 @@ class SkillCategory extends Controller
                             'id_job_title' => $request->id_job_title[$i]
                         ];
                     }
-                    skill_categoryModel::insert($insert);
+                    SkillCategoryModel::insert($insert);
                 }
                 DB::commit();
                 return response()->json(['code' => 200, 'message' => 'Post Created successfully'], 200);
@@ -61,7 +61,7 @@ class SkillCategory extends Controller
         }
     }
 
-    public function editskill_category(Request $request)
+    public function editSkillCategory(Request $request)
     {
         $request->validate([
             'no_training_module' => 'required|max:100',
@@ -72,7 +72,7 @@ class SkillCategory extends Controller
             'training_module_desc' => 'required',
             'id_job_title' => 'required',
         ]);
-        $post = skill_categoryModel::updateOrCreate(['id_skill_category' => $request->id_skill_category], [
+        $post = SkillCategoryModel::updateOrCreate(['id_skill_category' => $request->id_skill_category], [
             'no_training_module' => $request->no_training_module,
             'id_skill_category' => $request->id_skill_category,
             'training_module' => $request->training_module,
@@ -92,7 +92,7 @@ class SkillCategory extends Controller
     // }
     public function delete($id)
     {
-        $post = skill_categoryModel::where('id_skill_category', $id)->delete();
+        $post = SkillCategoryModel::where('id_skill_category', $id)->delete();
         return redirect()->route('skill_category')->with(['success' => 'skill_category Deleted successfully']);
     }
 }
