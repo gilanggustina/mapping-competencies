@@ -11,9 +11,9 @@
             <div class="card-body">
                 <p class="card-title">Grade</p>
                 <div class="row">
-                    {{-- <div class="col-md mb-2">
+                    <div class="col-md mb-2">
                         <a class="btn btn-success float-right" href="javascript:void(0)" id="createNewItem" data-toggle="modal" data-target="#modal-tambah"><i class="icon-plus"></i> Tambah Grade</a>
-                    </div> --}}
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-12">
@@ -33,7 +33,7 @@
                                         <td>{{ $data->name_grade  }}</td>
                                         <td>
                                             <button data-id="{{ $data->id_grade }}" onclick="editdata(this)" class="btn btn-inverse-success btn-icon delete-button mr-1 mr-1 Edit-button" data-toggle="modal" data-target="#modal-edit"><i class="icon-file menu-icon"></i></button>
-                                            <button data-id="{{ $data->id_grade }}" class="btn btn-inverse-danger btn-icon mr-1 cr-hapus" data-toggle="modal" data-target="#modal-cr-hapus">
+                                            <button data-id="{{ $data->id_grade }}" class="btn btn-inverse-danger btn-icon mr-1 cr-hapus" data-toggle="modal" data-target="#modal-hapus">
                                                 <i class="icon-trash">
                                             </i></button>
                                         </td>
@@ -51,10 +51,10 @@
 
 {{-- Modal --}}
 <div class="modal fade" id="modal-tambah" tabindex="-1" role="dialog" aria-labelledby="modal-tambahLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-md" role="document">
       <div class="modal-content">
           <div class="modal-header p-3">
-              <h5 class="modal-title" id="modal-tambahLabel">Tambah Data Karyawan</h5>
+              <h5 class="modal-title" id="modal-tambahLabel">Tambah Data Grade</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -62,6 +62,7 @@
             <form action="{!! route('Grade.post') !!}" method="POST" enctype="multipart/form-data">
                 @csrf
             <div class="modal-body">
+               
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -204,7 +205,7 @@ function createPost() {
       var token = $("meta[name='csrf-token']").attr("content");
       var rowid = '#row_'+id;
       $.ajax({
-          url:"Grade/Grade-delete/"+id,
+          url:"grade/grade-delete/"+id,
           mehtod:"delete",
           data: {
               "id": id,
@@ -212,7 +213,8 @@ function createPost() {
           },
           success:function(res)
           {
-              $("#modal-cr-hapus").modal('hide');
+              console.log(res);
+              $("#modal-hapus").modal('hide');
               window.location.reload();
               Swal.fire({
                   position: 'center',

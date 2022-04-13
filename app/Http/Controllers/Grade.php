@@ -78,7 +78,7 @@ class Grade extends Controller
     }
     public function delete($id)
     {
-        GradeModel::where('id_grade', $id)->delete();
+        $grade = GradeModel::where('id_grade', $id)->delete();
         return redirect()->route('grade')->with(['success' => 'Grade Deleted successfully']);
     }
 
