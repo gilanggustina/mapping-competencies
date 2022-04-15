@@ -71,7 +71,7 @@ CREATE TABLE `competencies_directory` (
   `between_year` enum('0','1','2','3','4','5') NOT NULL,
   `target` tinyint(6) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id_directory`)
-) ENGINE=InnoDB AUTO_INCREMENT=198 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=210 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `competencies_directory` */
 
@@ -105,7 +105,19 @@ insert  into `competencies_directory`(`id_directory`,`id_curriculum`,`id_job_tit
 (158,6,'JT-0153','2',2),
 (159,6,'JT-0153','3',3),
 (160,6,'JT-0153','4',4),
-(161,6,'JT-0153','5',5);
+(161,6,'JT-0153','5',5),
+(198,36,'JT-0049','0',0),
+(199,36,'JT-0049','1',1),
+(200,36,'JT-0049','2',2),
+(201,36,'JT-0049','3',3),
+(202,36,'JT-0049','4',4),
+(203,36,'JT-0049','5',5),
+(204,36,'JT-0153','0',0),
+(205,36,'JT-0153','1',1),
+(206,36,'JT-0153','2',2),
+(207,36,'JT-0153','3',3),
+(208,36,'JT-0153','4',4),
+(209,36,'JT-0153','5',5);
 
 /*Table structure for table `curriculum` */
 
@@ -535,7 +547,7 @@ CREATE TABLE `taging_reason` (
   `period` varchar(20) DEFAULT NULL,
   `date_open` date DEFAULT NULL,
   `due_date` date DEFAULT NULL,
-  `learning_method` varchar(50) DEFAULT NULL,
+  `learning_method` enum('0','1','2','3','4') DEFAULT NULL COMMENT '0:internal 1:external 2:inhouse 3:online 4:readbook',
   `trainer` varchar(50) DEFAULT NULL,
   `date_plan_implementation` date DEFAULT NULL,
   `notes_learning_implementation` text DEFAULT NULL,
@@ -548,9 +560,12 @@ CREATE TABLE `taging_reason` (
   `result_score` double DEFAULT NULL,
   `notes_for_result` text DEFAULT NULL,
   PRIMARY KEY (`id_taging_reason`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `taging_reason` */
+
+insert  into `taging_reason`(`id_taging_reason`,`id_white_tag`,`no_taging`,`year`,`period`,`date_open`,`due_date`,`learning_method`,`trainer`,`date_plan_implementation`,`notes_learning_implementation`,`date_closed`,`start`,`finish`,`duration`,`date_verified`,`id_verified_by`,`result_score`,`notes_for_result`) values 
+(15,'SWrxk1649384942','00001',2022,'April','2022-04-08','2022-04-08','0','Example','2022-04-09',NULL,'2022-04-10','16:03:00','04:03:00','12 Jam : 0 Menit','2022-04-08',1,5,NULL);
 
 /*Table structure for table `users` */
 
@@ -959,7 +974,8 @@ CREATE TABLE `white_tag` (
 
 insert  into `white_tag`(`id_white_tag`,`id_directory`,`id_user`,`start`,`actual`) values 
 ('7eeXy1649145212',134,1,0,1),
-('p2co41649145212',152,1,0,1);
+('p2co41649145212',152,1,0,1),
+('SWrxk1649384942',200,1,0,5);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

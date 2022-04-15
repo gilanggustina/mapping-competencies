@@ -1,4 +1,7 @@
 <script src="{{ asset('assets/js/jquery.js') }}"></script>
+<script src="{!! asset('assets/js/jquery.min.js?v='.time()) !!}"></script>
+<script src="{!! asset('assets/js/jquery-ui.js?v='.time()) !!}"></script>
+<script src="{!! asset('assets/js/jquery-ui.min.js?v='.time()) !!}"></script>
 
 <script src="{{ asset('assets/vendors/js/vendor.bundle.base.js') }}"></script>
 <script src="{{ asset('assets/vendors/chart.js/Chart.min.js') }}"></script>
@@ -22,3 +25,6 @@
 
 {{-- Selectize --}}
 <script src="{{ asset ('assets/select/js/bootstrap-select.js')}}"></script>
+
+<script src="{!! asset("assets/js/datepicker/datepicker.js?v=".time()) !!}" charset="utf-8"></script>
+<script src="{!! asset("assets/js/datepicker/datepicker.en.js?v=".time()) !!}" charset="utf-8"></script>

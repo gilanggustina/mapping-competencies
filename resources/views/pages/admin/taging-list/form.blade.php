@@ -8,38 +8,82 @@
   @endif
   <div class="col-md-3 mb-3">
       <label for="year">Tahun</label>
-      <input type="text" class="form-control form-control-sm" name="year" placeholder="Tahun" id="year" value="{{$taging->year ?? ''}}" required>
+      <input type="text" class="form-control form-control-sm year" name="year" placeholder="Tahun" id="year" value="{{$taging->year ?? ''}}" required >
       <div class="invalid-feedback" id="feed-back-year"></div>
   </div>
   <div class="col-md-3 mb-3">
       <label for="period">Periode</label>
-      <input type="text" class="form-control form-control-sm" name="period" placeholder="Masukan Periode" id="period" value="{{$taging->period ?? ''}}" required>
+      <input type="month" class="form-control form-control-sm" name="period" placeholder="Masukan Periode" id="period" value="{{$taging->period ?? ''}}" required>
       <div class="invalid-feedback" id="feed-back-period"></div>
     </div>
     <div class="col-md-3 mb-3">
         <label for="date_open">Tanggal Pembukaan</label>
-        <input type="date" class="form-control form-control-sm" name="date_open" id="date_open" value="{{$taging->date_open ?? ''}}" required>
+        <input type="text" class="form-control form-control-sm" name="date_open" id="date_open" value="{{$taging->date_open ?? ''}}" required placeholder="dd-mm-yyyy">
         <div class="invalid-feedback" id="feed-back-date-open"></div>
+        <script>
+            $("#date_open").datepicker({
+                language: "en",
+                dateFormat: "dd-mm-yyyy",
+                toggleSelected: true,
+                position:'bottom left'
+            });
+        </script>
+    </div>
+    <div class="col-md-3 mb-3">
+        <label for="due_date">Tanggal Jatuh Tempo</label>
+        <input type="text" class="form-control form-control-sm" name="due_date" id="due_date" value="{{$taging->due_date ?? ''}}" required placeholder="dd-mm-yyyy">
+        <div class="invalid-feedback" id="feed-back-due-date"></div>
+        <script>
+            $("#due_date").datepicker({
+                language: "en",
+                dateFormat: "dd-mm-yyyy",
+                toggleSelected: true,
+                position:'bottom left'
+            });
+        </script>
     </div>
     <div class="col-md-3 mb-3">
         <label for="learning_method">Learning Method</label>
-        <input type="text" name="learning_method" class="form-control form-control-sm" placeholder="Masukan Learning Method" id="learning_method" value="{{$taging->learning_method ?? ''}}" required>
+        <select name="learning_method" id="learning_method" class="form-control form-control-sm" required>
+            <option value="">Pilih Learning Method</option>
+            <option {{($taging->learning_method == '0') ? 'selected' : ''}} value="0">Internal</option>
+            <option {{($taging->learning_method == '1') ? 'selected' : ''}} value="1">External</option>
+            <option {{($taging->learning_method == '2') ? 'selected' : ''}} value="2">Inhouse</option>
+            <option {{($taging->learning_method == '3') ? 'selected' : ''}} value="3">Online</option>
+            <option {{($taging->learning_method == '4') ? 'selected' : ''}} value="4">Readbook</option>
+        </select>
         <div class="invalid-feedback" id="feed-back-learning-method"></div>
     </div>
-    <div class="col-md-4 mb-3">
+    <div class="col-md-3 mb-3">
         <label for="trainer">Pelatih</label>
         <input type="text" name="trainer" class="form-control form-control-sm" placeholder="Masukan Pelatih" id="trainer" value="{{$taging->trainer ?? ''}}" required>
         <div class="invalid-feedback" id="feed-back-trainer"></div>
     </div>
-    <div class="col-md-4 mb-3">
+    <div class="col-md-3 mb-3">
         <label for="date_plan_implementation">Tanggal Rencana Implementasi</label>
-        <input type="date" name="date_plan_implementation" class="form-control form-control-sm" id="date_plan_implementation" value="{{$taging->date_plan_implementation ?? ''}}" required>
+        <input type="text" name="date_plan_implementation" class="form-control form-control-sm" id="date_plan_implementation" value="{{$taging->date_plan_implementation ?? ''}}" placeholder="dd-mm-yyyy" required>
         <div class="invalid-feedback" id="feed-back-date-plan-implementation"></div>
+        <script>
+            $("#date_plan_implementation").datepicker({
+                language: "en",
+                dateFormat: "dd-mm-yyyy",
+                toggleSelected: true,
+                position:'bottom left'
+            });
+        </script>
     </div>
-    <div class="col-md-4 mb-3">
+    <div class="col-md-3 mb-3">
         <label for="date_closed">Tanggal Penutupan</label>
-        <input type="date" name="date_closed" class="form-control form-control-sm" id="date_closed" value="{{$taging->date_closed ?? ''}}" required>
+        <input type="text" name="date_closed" class="form-control form-control-sm" id="date_closed" value="{{$taging->date_closed ?? ''}}" placeholder="dd-mm-yyyy" required>
         <div class="invalid-feedback" id="feed-back-date-closed"></div>
+        <script>
+            $("#date_closed").datepicker({
+                language: "en",
+                dateFormat: "dd-mm-yyyy",
+                toggleSelected: true,
+                position:'bottom left'
+            });
+        </script>
     </div>
     <div class="col-md-12 mb-3">
         <label for="notes_learning_implementation">Catatan Implementasi</label>
@@ -73,8 +117,16 @@
     </div>
     <div class="col-md-4 mb-3">
         <label for="date_verified">Tanggal Verifikasi</label>
-        <input type="date" class="form-control form-control-sm" name="date_verified" placeholder="masukan tanggal verifikasi" id="date_verified" value="{{$taging->date_verified ?? ''}}" required>
+        <input type="text" class="form-control form-control-sm" name="date_verified" id="date_verified" value="{{$taging->date_verified ?? ''}}" placeholder="dd-mm-yyyy" required>
         <div class="invalid-feedback" id="feed-back-date-verified"></div>
+        <script>
+            $("#date_verified").datepicker({
+                language: "en",
+                dateFormat: "dd-mm-yyyy",
+                toggleSelected: true,
+                position:'bottom left'
+            });
+        </script>
     </div>
     <div class="col-md-4 mb-3">
         <label for="result_score">Nilai</label>
@@ -102,6 +154,24 @@
 
 <script>
     $(document).ready(function () {
+        $("#year").datepicker({
+            language: "en",
+            dateFormat: "yyyy",
+            view: "years",
+            minView: "years",
+            toggleSelected: true,
+            position:'bottom left'
+        });
+        $("#period").datepicker({
+            language: "en",
+            dateFormat: "MM",
+            view: "months",
+            minView: "months",
+            changeYear:false,
+            toggleSelected: false,
+            position:'bottom left'
+        });
+
         $('.start-time,.finish-time').change(function (el) {
             const start = $('.start-time')[0].value;
             const finish = $('.finish-time')[0].value;
@@ -113,6 +183,7 @@
                 $("#duration")[0].value = secondsTohhmmss(diff);
             }
         })
+
         function ConvertToSeconds(time) {
             var splitTime = time.split(":");
             return splitTime[0] * 3600 + splitTime[1] * 60;

@@ -27,3 +27,5 @@
 {{-- Selectize --}}
 <link rel="stylesheet" href="{{asset ('assets/select/css/bootstrap-select.css')}}">
 
+<link rel="stylesheet" href="{!! asset('assets/css/datepicker/datepicker.css?v='.time()) !!}">
+

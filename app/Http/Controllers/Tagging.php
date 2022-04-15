@@ -64,10 +64,10 @@ class Tagging extends Controller
         if(isset($id_reason_tag)){
             $select = [
                 "taging_reason.id_taging_reason","taging_reason.id_white_tag as id_white_tag","year","period",
-                "date_open","learning_method","trainer","date_plan_implementation",
-                "notes_learning_implementation","date_closed",
+                DB::raw("DATE_FORMAT(date_open,'%d-%m-%Y') AS date_open"),DB::raw("DATE_FORMAT(due_date,'%d-%m-%Y') AS due_date"),"learning_method","trainer",DB::raw("DATE_FORMAT(date_plan_implementation,'%d-%m-%Y') AS date_plan_implementation"),
+                "notes_learning_implementation",DB::raw("DATE_FORMAT(date_closed,'%d-%m-%Y') AS date_closed"),
                 DB::raw("(TIME_FORMAT(taging_reason.start,'%H:%i')) as start"),
-                DB::raw("(TIME_FORMAT(finish,'%H:%i')) as finish"),"duration","date_verified",
+                DB::raw("(TIME_FORMAT(finish,'%H:%i')) as finish"),"duration",DB::raw("DATE_FORMAT(date_verified,'%d-%m-%Y') AS date_verified"),
                 "result_score","notes_for_result"
             ];
             $taging = TagingReason::select($select)
@@ -90,21 +90,22 @@ class Tagging extends Controller
             'max'      => ':attribute jangan diisi lebih dari :max karakter !!'
         ];
 
-        $validate = $this->validate($request,[
+        $this->validate($request,[
             "id_taging_reason" => "nullable|numeric",
             "id_white_tag" => "required|string|min:15|max:15",
             "year" => "required|digits:4",
             "period" => "required|string|max:20",
-            "date_open" => "required|date_format:Y-m-d",
-            "learning_method" => "required|string|max:50",
+            "date_open" => "required|date_format:d-m-Y",
+            "due_date" => "required|date_format:d-m-Y",
+            "learning_method" => "required|string|in:0,1,2,3,4",
             "trainer" => "required|string|max:50",
-            "date_plan_implementation" => "required|date_format:Y-m-d",
+            "date_plan_implementation" => "required|date_format:d-m-Y",
             "notes_learning_implementation" => "nullable|string",
-            "date_closed" => "required|date_format:Y-m-d",
+            "date_closed" => "required|date_format:d-m-Y",
             "start" => "required|date_format:H:i",
             "finish" => "required|date_format:H:i",
             "duration" => "nullable|string",
-            "date_verified" => "required|date_format:Y-m-d",
+            "date_verified" => "required|date_format:d-m-Y",
             "result_score" => "required|numeric|min:0|max:5",
             "notes_for_result" => "nullable|string"
         ],$messages);
@@ -114,16 +115,17 @@ class Tagging extends Controller
             $tempData = [
                 "year" => $data["year"],
                 "period" => $data["period"],
-                "date_open" => $data["date_open"],
+                "date_open" => date("Y-m-d", strtotime($data["date_open"])),
+                "due_date" => date("Y-m-d", strtotime($data["due_date"])),
                 "learning_method" => $data["learning_method"],
                 "trainer" => $data["trainer"],
-                "date_plan_implementation" => $data["date_plan_implementation"],
+                "date_plan_implementation" => date("Y-m-d", strtotime($data["date_plan_implementation"])),
                 "notes_learning_implementation" => $data["notes_learning_implementation"],
-                "date_closed" => $data["date_closed"],
+                "date_closed" => date("Y-m-d", strtotime($data["date_closed"])),
                 "start" => $data["start"],
                 "finish" => $data["finish"],
                 "duration" => $data["duration"],
-                "date_verified" => $data["date_verified"],
+                "date_verified" => date("Y-m-d", strtotime($data["date_verified"])),
                 "result_score" => $data["result_score"],
                 "notes_for_result" => $data["notes_for_result"]
             ];
@@ -171,8 +173,13 @@ class Tagging extends Controller
                 "wt.actual as actual",
                 "cd.target as target",
                 "taging_reason.date_open as date_open",
+                "taging_reason.due_date as due_date",
                 "taging_reason.date_plan_implementation as date_plan_implementation",
-                "taging_reason.learning_method as learning_method",
+                DB::raw("(CASE WHEN taging_reason.learning_method = '0' THEN 'Internal'
+                                WHEN taging_reason.learning_method = '1' THEN 'External'
+                                WHEN taging_reason.learning_method = '2' THEN 'Inhouse'
+                                WHEN taging_reason.learning_method = '3' THEN 'Online' 
+                                ELSE 'Readbook' END) as learning_method"),
                 "taging_reason.trainer as trainer",
                 "taging_reason.notes_learning_implementation as notes_learning_implementation",
                 "taging_reason.date_closed as date_closed",
