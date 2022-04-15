@@ -348,7 +348,7 @@ $(document).ready(function() {
 
 function displayTime(){
   const timeNow = new Date();
-  document.getElementById('clock').innerText = "Pukul  " + timeNow.toLocaleString('id-ID',{
+  document.getElementById('clock').innerText = "Pukul   " + timeNow.toLocaleString('id-ID',{
     timeStyle:'medium'
   });
   
