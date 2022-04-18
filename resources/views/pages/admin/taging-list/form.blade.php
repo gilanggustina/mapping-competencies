@@ -46,11 +46,11 @@
         <label for="learning_method">Learning Method</label>
         <select name="learning_method" id="learning_method" class="form-control form-control-sm" required>
             <option value="">Pilih Learning Method</option>
-            <option {{($taging->learning_method == '0') ? 'selected' : ''}} value="0">Internal</option>
-            <option {{($taging->learning_method == '1') ? 'selected' : ''}} value="1">External</option>
-            <option {{($taging->learning_method == '2') ? 'selected' : ''}} value="2">Inhouse</option>
-            <option {{($taging->learning_method == '3') ? 'selected' : ''}} value="3">Online</option>
-            <option {{($taging->learning_method == '4') ? 'selected' : ''}} value="4">Readbook</option>
+            <option {{(isset($taging) && $taging->learning_method == '0') ? 'selected' : ''}} value="0">Internal</option>
+            <option {{(isset($taging) && $taging->learning_method == '1') ? 'selected' : ''}} value="1">External</option>
+            <option {{(isset($taging) && $taging->learning_method == '2') ? 'selected' : ''}} value="2">Inhouse</option>
+            <option {{(isset($taging) && $taging->learning_method == '3') ? 'selected' : ''}} value="3">Online</option>
+            <option {{(isset($taging) && $taging->learning_method == '4') ? 'selected' : ''}} value="4">Readbook</option>
         </select>
         <div class="invalid-feedback" id="feed-back-learning-method"></div>
     </div>
