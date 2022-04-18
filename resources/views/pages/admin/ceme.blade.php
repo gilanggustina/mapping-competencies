@@ -6,11 +6,11 @@
 <div class="row">
 </div>
 <div class="row">
-    <div class="col-md-5 grid-margin stretch-card">
+    <div class="col-md-5 grid-margin">
         <div class="card">
           <div class="card-body">
             <h4 class="card-title">Graphic CEME</h4>
-            <canvas id="barChart"></canvas>
+            <canvas id="pieChart"></canvas>
           </div>
         </div>
     </div>
@@ -337,18 +337,16 @@ function createPost() {
 
 $(function() {
     'use strict';
-  var data = {
-    labels: ["2013", "2014", "2014", "2015", "2016", "2017"],
+    var doughnutPieData = {
     datasets: [{
-      label: '# of Votes',
-      data: [10, 19, 3, 5, 2, 3],
+      data: [30, 40, 30, 20, 10],
       backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)'
+        'rgba(255, 99, 132, 0.5)',
+        'rgba(54, 162, 235, 0.5)',
+        'rgba(255, 206, 86, 0.5)',
+        'rgba(75, 192, 192, 0.5)',
+        'rgba(153, 102, 255, 0.5)',
+        'rgba(255, 159, 64, 0.5)'
       ],
       borderColor: [
         'rgba(255,99,132,1)',
@@ -358,9 +356,23 @@ $(function() {
         'rgba(153, 102, 255, 1)',
         'rgba(255, 159, 64, 1)'
       ],
-      borderWidth: 1,
-      fill: false
-    }]
+    }],
+
+    // These labels appear in the legend and in the tooltips when hovering different arcs
+    labels: [
+      'Rezki',
+      'Windy',
+      'Chandra',
+      'Maria',
+      'Natha',
+    ]
+  };
+  var doughnutPieOptions = {
+    responsive: true,
+    animation: {
+      animateScale: true,
+      animateRotate: true
+    }
   };
 
   var options = {
@@ -382,15 +394,15 @@ $(function() {
 
   };
   
-  if ($("#barChart").length) {
-    var barChartCanvas = $("#barChart").get(0).getContext("2d");
-    // This will get the first returned node in the jQuery collection.
-    var barChart = new Chart(barChartCanvas, {
+  if ($("#pieChart").length) {
+    var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
+    var pieChart = new Chart(pieChartCanvas, {
       type: 'pie',
-      data: data,
-      options: options
+      data: doughnutPieData,
+      options: doughnutPieOptions
     });
   }
+  
 })
 </script>
 @endpush
