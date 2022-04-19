@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\CurriculumModel;
-use App\SkillCategory;
+use App\SkillCategoryModel;
 use App\Jabatan;
 use App\CurriculumToJob;
 use Validator;
@@ -24,7 +24,7 @@ class Curriculum extends Controller
     {
         $curriculum = CurriculumModel::where("id_curriculum",$request->id)->first();
         // $curriculumToJob = CurriculumToJob::where
-        $skills = SkillCategory::all();
+        $skills = SkillCategoryModel::all();
         $jabatans = Jabatan::select("job_title.id_job_title","nama_job_title",DB::raw("IF(id_ctb IS NULL,0,1) as sts"))
                             ->leftJoin("curriculum_to_job as ctb",function ($join) use ($request){
                                 $join->on("ctb.id_job_title","job_title.id_job_title")
@@ -127,7 +127,7 @@ class Curriculum extends Controller
 
     public function getSkill()
     {
-        $skill = SkillCategory::all();
+        $skill = SkillCategoryModel::all();
         return response()->json([
             'data' => $skill,
             'status' => 200,
