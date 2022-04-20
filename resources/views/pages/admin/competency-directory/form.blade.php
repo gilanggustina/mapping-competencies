@@ -5,23 +5,23 @@
     @endisset
     @if($type == "edit")
       <div class="form-group row ml-0 mb-0">
-          <label class="col-sm-5 col-form-label">No. Training Module</label>
+          <label class="col-sm-5 col-form-label">No. Competency</label>
           <div class="col-sm-7">
               <input type="text" value="{{$curriculum->no_training_module}}" class="form-control form-control-sm" disabled="">
           </div>
       </div>
       <div class="form-group row ml-0 mb-0">
-        <label class="col-sm-5 col-form-label">Training Module</label>
+        <label class="col-sm-5 col-form-label">Competency</label>
         <div class="col-sm-7">
             <input type="text" value="{{$curriculum->training_module}}" class="form-control form-control-sm" disabled="">
         </div>
     </div>
     @else
       <div class="form-group ml-0 mb-1">
-          <label class="col-sm-5">Training Module</label>
+          <label class="col-sm-5">Competency</label>
           <div class="col-sm-7">
             <select name="id_curriculum" onchange="changeTraining(this)" class="form-control form-control-sm" id="" required>
-              <option value="">Pilih Training Module</option>
+              <option value="">Pilih Competency</option>
               @foreach($competencies as $competency)
                 <option value="{{$competency->id_curriculum}}">{{$competency->training_module}} ({{$competency->no_training_module}})</option>
               @endforeach

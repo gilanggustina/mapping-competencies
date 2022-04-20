@@ -106,11 +106,11 @@
                             <thead>
                                 <tr>
                                     <th rowspan="2" class="text-center">No</th>
-                                    <th rowspan="2">No Training Module</th>
+                                    <th rowspan="2">No. Competency</th>
                                     <th rowspan="2">Skill Category</th>
-                                    <th rowspan="2">Training Modules</th>
+                                    <th rowspan="2">Competency</th>
                                     <th rowspan="2">Level</th>
-                                    <th rowspan="2">Training Modules Group</th>
+                                    <th rowspan="2">Competency Group</th>
                                     <th colspan="3" class="text-center">Action</th>
                                 </tr> 
                                 <tr>
@@ -147,11 +147,11 @@
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
-                                <th>No Training Module</th>
+                                <th>No Competency</th>
                                 <th>Skill Category</th>
-                                <th>Training Modules</th>
+                                <th>Competency</th>
                                 <th>Level</th>
-                                <th>Training Modules Group</th>
+                                <th>Competency Group</th>
                                 <th class="text-center">Start</th>
                                 <th class="text-center">Actual</th>
                                 <th class="text-center">Target</th>

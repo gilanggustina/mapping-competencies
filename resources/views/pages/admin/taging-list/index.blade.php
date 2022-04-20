@@ -18,9 +18,9 @@
                                         <th>No Taging</th>
                                         <th>Employee Name</th>
                                         <th>Skill Category</th>
-                                        <th>Training Modules</th>
+                                        <th>Competency</th>
                                         <th>Level</th>
-                                        <th>Training Modules Group</th>
+                                        <th>Competenc Group</th>
                                         <th>Actual</th>
                                         <th>Target</th>
                                         <th>Gap</th>

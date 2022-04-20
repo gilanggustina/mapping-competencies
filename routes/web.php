@@ -89,4 +89,12 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/delete/{id}', 'SkillCategory@delete')->name('SkillCategory.delete');
     });
 
+    Route::prefix("cg-master")->group(function () {
+        Route::get('/', 'CGMaster@index')->name('CG');
+        // Route::post('/post', 'CGMaster@store')->name('CGMaster.post');
+        // Route::get('/form-edit', 'CGMaster@FormEditCGMaster')->name('getFormEditCGMaster');
+        // Route::post('/edit', 'CGMaster@editCGMaster')->name('editCGMaster');
+        // Route::get('/delete/{id}', 'CGMaster@delete')->name('CGMaster.delete');
+    });
+
 });

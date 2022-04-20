@@ -30,12 +30,12 @@
                                 <thead>
                                     <tr>
                                         <th>No.#</th>
-                                        <th>No Training Module</th>
+                                        <th>No Competency</th>
                                         <th>Skill Category</th>
-                                        <th>Training Module</th>
+                                        <th>Competency</th>
                                         <th>Level</th>
-                                        <th>Training Module Group</th>
-                                        <th>Training Module Description</th>
+                                        <th>Competency Group</th>
+                                        <th>Competency Description</th>
                                         <th>Job Title</th>
                                         <th width="15%">Action</th>
                                     </tr> 
@@ -74,7 +74,7 @@
     <div class="modal-dialog modal-md" role="document">
       <div class="modal-content">
           <div class="modal-header p-3">
-              <h5 class="modal-title" id="modal-tambahLabel">Tambah Data Kurikulum</h5>
+              <h5 class="modal-title" id="modal-tambahLabel">Tambah Data Curriculum</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -83,7 +83,7 @@
                 @csrf
                 <div class="modal-body">
                     <div class="form-group col-md">
-                        <label for="noModule">No Training Module</label>
+                        <label for="noModule">No Competency</label>
                         <input type="text" class="form-control" id="no_training_module" name="no_training_module" placeholder="004/KMI/HRD-RT/SAL/004" >
                     </div>
                     <div class="form-group col-md">
@@ -93,8 +93,8 @@
                         </select>
                     </div>
                     <div class="form-group col-md">
-                        <label for="training_module">Training Module</label>
-                        <input type="text" class="form-control" id="training_module" name="training_module" placeholder="Masukan Training Module Name">
+                        <label for="training_module">Competency</label>
+                        <input type="text" class="form-control" id="training_module" name="training_module" placeholder="Masukan Competency Name">
                     </div>
                     <div class="form-group col-md">
                         <label for="noModule">Level</label>
@@ -106,11 +106,11 @@
                         </select>
                     </div>
                     <div class="form-group col-md">
-                        <label for="training_module_group">Training Module Group</label>
+                        <label for="training_module_group">Competency Group</label>
                         <input type="text" class="form-control" id="training_module_group" name="training_module_group" placeholder="New Employee Orientation, Ext" >
                     </div>
                     <div class="form-group col-md">
-                        <label for="noModule">Training Module Desc</label>
+                        <label for="noModule">Competency Desc</label>
                         <textarea class="form-control" id="training_module_desc" name="training_module_desc" rows="3"></textarea>
                     </div>
                     <div class="form-group col-md">

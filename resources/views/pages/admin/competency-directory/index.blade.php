@@ -25,7 +25,7 @@
     <div id="accordion" class="accordion ">
         <div class="card">
             <div class="card-header card-title" data-toggle="collapse" href="#collapseOne">
-            Key Point General
+            General Key Level
             </div>
             <div id="collapseOne" class="card-body collapse show" data-parent="#accordion" aria-expanded="true">
                 <img src="{{ asset('assets/images/general.png') }}" alt="General" class="img-accordion mt-4">
@@ -38,7 +38,7 @@
         <div id="accordion" class="accordion">
             <div class="card">
                 <div class="card-header card-title" data-toggle="collapse" href="#collapseOne">
-                Key Point Functional
+                Functional Key Level
                 </div>
                 <div id="collapseOne" class="card-body collapse show" data-parent="#accordion" aria-expanded="true">
                     <img src="{{ asset('assets/images/functional.png') }}" alt="General" class="img-accordion mt-4">
@@ -52,10 +52,10 @@
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <p class="card-title">Competencies Directory</p>
+                <p class="card-title">Competency Dictionary</p>
                 <div class="row">
                     <div class="col-md mb-2">
-                        <button class="btn btn-success float-right add-directory" data-toggle="modal" data-id="" onclick="formCompetencyDirectory(this)" data-target="#modal-tambah"><i class="icon-plus"></i> Add Competencies Directory</button>
+                        <button class="btn btn-success float-right add-directory" data-toggle="modal" data-id="" onclick="formCompetencyDirectory(this)" data-target="#modal-tambah"><i class="icon-plus"></i> Add Competency Dictionary</button>
                     </div>
                 </div>
                 <div class="row">
@@ -64,8 +64,8 @@
                             <table class="display expandable-table table-striped table-hover table-sm" id="table-cd" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>No Training Module#</th>
-                                        <th>Training Module</th>
+                                        <th>No Competency#</th>
+                                        <th>Competency</th>
                                         <th>Skill Category</th>
                                         <th>Level</th>
                                         <th class="text-center">Action</th>

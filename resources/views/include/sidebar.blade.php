@@ -8,24 +8,32 @@
                   <span class="menu-title">Dashboard</span>
               </a>
           </li>
-          <li class="nav-item">
-              <a class="nav-link" href="{{ route('Member') }}">
-                  <i class="icon-head menu-icon"></i>
-                  <span class="menu-title">Member CG</span>
-              </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{ route('Grade') }}">
-                <i class="icon-head menu-icon"></i>
-                <span class="menu-title">Master Grade</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{ route('SkillCategory')  }}">
-                <i class="icon-head menu-icon"></i>
-                <span class="menu-title">Master Skill Category</span>
-            </a>
-          </li>
+          @if(Auth::user()->peran_pengguna == 1)
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('Member') }}">
+                        <i class="icon-head menu-icon"></i>
+                        <span class="menu-title">Member CG</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{{ route('CG') }}">
+                    <i class="icon-head menu-icon"></i>
+                    <span class="menu-title">Master Liga CG</span>
+                </a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{{ route('Grade') }}">
+                    <i class="icon-head menu-icon"></i>
+                    <span class="menu-title">Master Grade</span>
+                </a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="{{ route('SkillCategory')  }}">
+                    <i class="icon-head menu-icon"></i>
+                    <span class="menu-title">Master Skill Category</span>
+                </a>
+                </li>
+          @endif
           <li class="nav-item">
               <a class="nav-link" href="{{ route('Curriculum') }}">
                   <i class="icon-grid-2 menu-icon"></i>

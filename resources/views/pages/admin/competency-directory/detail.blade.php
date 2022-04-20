@@ -1,13 +1,13 @@
 <div class="row">
   <div class="col-md-6">
       <div class="form-group row mb-2">
-          <label class="col-sm-5">No. Training Module</label>
+          <label class="col-sm-5">No. Competency</label>
           <div class="col-sm-7">
               <input type="text" value="{{$curriculum->no_training_module}}" class="form-control form-control-sm" disabled="">
           </div>
       </div>
       <div class="form-group row mb-2">
-        <label class="col-sm-5">Training Module</label>
+        <label class="col-sm-5">Competency</label>
         <div class="col-sm-7">
             <input type="text" value="{{$curriculum->training_module}}" class="form-control form-control-sm" disabled="">
         </div>

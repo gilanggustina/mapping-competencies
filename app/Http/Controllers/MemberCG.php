@@ -41,7 +41,7 @@ class MemberCG extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'nik' => 'required',
             'password' => 'required',
             'peran_pengguna' => 'required',
@@ -54,36 +54,39 @@ class MemberCG extends Controller
             'department' => 'required',
             'sub_department' => 'required',
             'cg' => 'required',
-            'gambar' => 'required|image|mimes:jpg,png,jpeg|max:5000',
+            // 'gambar' => 'required|image|mimes:jpg,png,jpeg|max:5000',
         ]);
-        $data = [
-            'nik' => $request->nik,
-            'password' => $request->password,
-            'peran_pengguna' => $request->peran_pengguna,
-            'tgl_masuk' => date('Y-m-d', strtotime($request->tanggal)),
-            'nama_pengguna' => $request->nama_pengguna,
-            'email' => $request->email,
-            'id_divisi' => $request->divisi,
-            'id_job_title' => $request->job_title,
-            'id_level' => $request->level,
-            'id_department' => $request->department,
-            'id_sub_department' => $request->sub_department,
-            'id_cg' => $request->cg,
-        ];
-        if ($request->hasFile('gambar')) {
-            $file = $request->file('gambar');
-            $extension = $file->getClientOriginalExtension();
-            $filename = time() . '.' . $extension;
-            $file->move('assets/img/', $filename);
-            $data['gambar'] = $filename;
+        if ($validator->fails()) {
+            return response()->json(['code' => 422, 'message' => 'The given data was invalid.', 'data' => $validator->errors()], 422);
         } else {
-            $data['gambar'] = 'no_image.jpg';
+            $data = [
+                'nik' => $request->nik,
+                'password' => $request->password,
+                'peran_pengguna' => $request->peran_pengguna,
+                'tgl_masuk' => date('Y-m-d', strtotime($request->tanggal)),
+                'nama_pengguna' => $request->nama_pengguna,
+                'email' => $request->email,
+                'id_divisi' => $request->divisi,
+                'id_job_title' => $request->job_title,
+                'id_level' => $request->level,
+                'id_department' => $request->department,
+                'id_sub_department' => $request->sub_department,
+                'id_cg' => $request->cg,
+            ];
+            // if ($request->hasFile('gambar')) {
+            //     $file = $request->file('gambar');
+            //     $extension = $file->getClientOriginalExtension();
+            //     $filename = time() . '.' . $extension;
+            //     $file->move('assets/img/', $filename);
+            //     $data['gambar'] = $filename;
+            // } else {
+            //     $data['gambar'] = 'no_image.jpg';
+            // }
+            $data = User::create($data);
+            $data->save();
+            return redirect()->route('Member')->with('success', 'Berhasil menambah Berita!');
         }
-        $data = User::create($data);
-        $data->save();
-        return redirect()->route('Member')->with('success', 'Berhasil menambah Berita!');
     }
-
     
     public function edit(Request $request)
     {

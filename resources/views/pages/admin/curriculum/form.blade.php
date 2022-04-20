@@ -1,6 +1,6 @@
 <input type="hidden" name="id_curriculum" value="{{$curriculum->id_curriculum}}">
 <div class="form-group col-md">
-  <label for="noModule">No Training Module</label>
+  <label for="noModule">No Competency</label>
   <input type="text" class="form-control" id="no_training_module" name="no_training_module" placeholder="004/KMI/HRD-RT/SAL/004" value="{{$curriculum->no_training_module}}">
 </div>
 <div class="form-group col-md">
@@ -13,8 +13,8 @@
   </select>
 </div>
 <div class="form-group col-md">
-  <label for="training_module">Training Module</label>
-  <input type="text" class="form-control" value="{{$curriculum->training_module}}" id="training_module" name="training_module" placeholder="Masukan Training Module Name">
+  <label for="training_module">Competency</label>
+  <input type="text" class="form-control" value="{{$curriculum->training_module}}" id="training_module" name="training_module" placeholder="Masukan Competency Name">
 </div>
 <div class="form-group col-md">
   <label for="noModule">Level</label>
@@ -26,11 +26,11 @@
   </select>
 </div>
 <div class="form-group col-md">
-  <label for="training_module_group">Training Module Group</label>
+  <label for="training_module_group">Competency Group</label>
   <input type="text" class="form-control" id="training_module_group" name="training_module_group" value="{{$curriculum->training_module_group}}" placeholder="New Employee Orientation, Ext" >
 </div>
 <div class="form-group col-md">
-  <label for="noModule">Training Module Desc</label>
+  <label for="noModule">Competency Desc</label>
   <textarea class="form-control" id="training_module_desc" name="training_module_desc" rows="3">{!!$curriculum->training_module_desc!!}</textarea>
 </div>
 <div class="form-group col-md">
