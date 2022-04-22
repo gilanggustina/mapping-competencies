@@ -24,7 +24,7 @@
                                         <th>Actual</th>
                                         <th>Target</th>
                                         <th>Gap</th>
-                                        <th>Tagging Status</th>
+                                        <th style="width: max-content" class="text-center">Tagging Status</th>
                                         <th style="width: max-content" class="text-center">Action</th>
                                     </tr> 
                                 </thead>
@@ -311,10 +311,10 @@
                   data: 'actualTarget'
               },
               {
-                  data: 'tagingStatus'
+                 data: 'tagingStatus'
               },
               {
-                  data: 'action'
+                 data: 'action'
               }
           ]
       });

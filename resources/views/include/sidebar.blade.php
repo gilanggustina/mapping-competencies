@@ -12,26 +12,26 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('Member') }}">
                         <i class="icon-head menu-icon"></i>
-                        <span class="menu-title">Member CG</span>
+                        <span class="menu-title">Data Karyawan</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="{{ route('CG') }}">
-                    <i class="icon-head menu-icon"></i>
-                    <span class="menu-title">Master Liga CG</span>
-                </a>
+                    <a class="nav-link" href="{{ route('CG') }}">
+                        <i class="icon-head menu-icon"></i>
+                        <span class="menu-title">Master Circle Group</span>
+                    </a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="{{ route('Grade') }}">
-                    <i class="icon-head menu-icon"></i>
-                    <span class="menu-title">Master Grade</span>
-                </a>
+                    <a class="nav-link" href="{{ route('Grade') }}">
+                        <i class="icon-head menu-icon"></i>
+                        <span class="menu-title">Master Grade</span>
+                    </a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="{{ route('SkillCategory')  }}">
-                    <i class="icon-head menu-icon"></i>
-                    <span class="menu-title">Master Skill Category</span>
-                </a>
+                    <a class="nav-link" href="{{ route('SkillCategory')  }}">
+                        <i class="icon-head menu-icon"></i>
+                        <span class="menu-title">Master Skill Category</span>
+                    </a>
                 </li>
           @endif
           <li class="nav-item">

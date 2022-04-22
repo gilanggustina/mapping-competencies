@@ -29,8 +29,36 @@
                                 <tbody>
                                     @foreach($data as $data)
                                     <tr id="row_{{$data->id_grade}}"> 
-                                        <th scope="row">{{ $loop->iteration }}</th>
-                                        <td>{{ $data->name_grade  }}</td>
+                                        <th scope="row" class="text-center">{{ $loop->iteration }}</th>
+                                        <td>
+                                        @php
+                                            switch ($data->grade) {
+                                                case "Bronze":
+                                                    echo '<span class="badge badge-secondary">Bronze</span>';
+                                                    break;
+                                                case "Silver":
+                                                    echo '<span class="badge badge-secondary">Silver</span>';
+                                                    break;
+                                                case "Gold":
+                                                    echo '<span class="badge badge-warning">Gold</span>';
+                                                    break;
+                                                case "Platinum":
+                                                    echo '<span class="badge badge-warning">Platinum</span>';
+                                                    break;
+                                                case "Diamond":
+                                                    echo '<span class="badge badge-primary">Diamond</span>';
+                                                    break;
+                                                case "Elite":
+                                                    echo '<span class="badge badge-primary">Elite</span>';
+                                                    break;  
+                                                case "Master":
+                                                    echo '<span class="badge badge-success">Master</span>';
+                                                    break;  
+                                                default:
+                                                echo "Your favorite color is neither red, blue, nor green!";
+                                                }
+                                        @endphp
+                                        </td>
                                         <td>
                                             <button data-id="{{ $data->id_grade }}" onclick="editdata(this)" class="btn btn-inverse-success btn-icon delete-button mr-1 mr-1 Edit-button" data-toggle="modal" data-target="#modal-edit"><i class="icon-file menu-icon"></i></button>
                                             <button data-id="{{ $data->id_grade }}" class="btn btn-inverse-danger btn-icon mr-1 cr-hapus" data-toggle="modal" data-target="#modal-hapus">

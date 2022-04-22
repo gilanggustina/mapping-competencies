@@ -38,20 +38,44 @@ class Tagging extends Controller
                             ->get();
 
         return Datatables::of($data)
-                        ->addIndexColumn()
-                        ->addColumn('action', function ($row) {
-                            if(isset($row->id_taging_reason)){
-                                $btn = '<button white-tag-id="'.$row->id_white_tag.'" taging-reason-id="'.$row->id_taging_reason.'" onclick="formTaging(this)" class="button-add btn btn-inverse-success btn-icon mr-1" data-toggle="modal" data-target="#modal-tambah"><i class="icon-plus menu-icon"></i></button>';
-                                $btn = $btn . '<button type="button" onclick="detailTaging('.$row->id_taging_reason.')" class="btn btn-inverse-info btn-icon" data-toggle="modal" data-target="#modal-detail"><i class="ti-eye"></i></button>';
-                                return $btn;
-                            }else{
-                                $btn = '<button white-tag-id="'.$row->id_white_tag.'" taging-reason-id="'.$row->id_taging_reason.'" onclick="formTaging(this)" class="button-add btn btn-inverse-success btn-icon mr-1" data-toggle="modal" data-target="#modal-tambah"><i class="icon-plus menu-icon"></i></button>';
-                                return $btn;
-                            }
-                        })
-                        ->addIndexColumn()
-                        ->rawColumns(['action'])
-                        ->make(true);
+            ->addIndexColumn()
+            ->addColumn('action', function ($row) {
+            if (isset($row->id_taging_reason)) {
+                $btn = '<button white-tag-id="' . $row->id_white_tag . '" taging-reason-id="' . $row->id_taging_reason . '" onclick="formTaging(this)" class="button-add btn btn-inverse-success btn-icon mr-1" data-toggle="modal" data-target="#modal-tambah"><i class="icon-plus menu-icon"></i></button>';
+                $btn = $btn . '<button type="button" onclick="detailTaging(' . $row->id_taging_reason . ')" class="btn btn-inverse-info btn-icon" data-toggle="modal" data-target="#modal-detail"><i class="ti-eye"></i></button>';
+                return $btn;
+            } else {
+                $btn = '<button white-tag-id="' . $row->id_white_tag . '" taging-reason-id="' . $row->id_taging_reason . '" onclick="formTaging(this)" class="button-add btn btn-inverse-success btn-icon mr-1" data-toggle="modal" data-target="#modal-tambah"><i class="icon-plus menu-icon"></i></button>';
+                return $btn;
+            }
+        })
+            ->addColumn('tagingStatus', function ($row) {
+                if (isset($row->tagingStatus)) {
+                    if ($row->tagingStatus == 'Finished') {
+                        $label = '<span class="badge badge-success">' . $row->tagingStatus . '</span>';
+                        return $label;
+                    } else {
+                        $label = '<span class="badge badge-secondary text-white">' . $row->tagingStatus . '</span>';
+                        return $label;
+                    }
+
+                    // switch ($row->tagingStatus) {
+                    //     case "Finished":
+                    //         $label = '<span class="badge badge-success">"' . $row->tagingStatus . '"</span>';
+                    //         return $label;
+                    //         break;
+                    //     case "Follow Up":
+                    //         $label = '<span class="badge badge-secondary">"' . $row->tagingStatus . '"</span>';
+                    //         return $label;
+                    //         break;
+                    //     default:
+                    //         return '';
+                    // }
+                }
+            })
+            ->addIndexColumn()
+            ->rawColumns(['action', 'tagingStatus'])
+            ->make(true);
     }
 
     public function formTaggingList(Request $request)
