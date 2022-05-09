@@ -361,9 +361,6 @@
         getSubDepartment();
         getCG();
 
-        $('#table-cg').on('click','.delete-button', function () {
-            $('.modal-footer a').attr('href',"{{ route('Member.delete') }}/"+$(this).data('id'));
-        })
 
         $('.delete-button').on('click',function () {
             $('#modal-hapus').modal('show');

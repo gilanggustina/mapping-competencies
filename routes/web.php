@@ -12,11 +12,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard/get-card', 'Dashboard@card_profile')->name('Dashboard.card-profile');
     Route::get('/logout', 'AuthController@logout')->name('logout');
 
-    Route::get('/cg', 'MemberCG@index')->name('Member');
-    Route::get('/cg/cgJson', 'MemberCG@cgJson')->name('Member.get');
-    Route::post('/cg-post', 'MemberCG@store')->name('Member.post');
-    Route::post('/cg-edit', 'MemberCG@edit')->name('Member.edit');
-    Route::get('/cg-delete/{id}', 'MemberCG@delete')->name('Member.delete');
+    Route::get('/member', 'MemberCG@index')->name('Member');
+    Route::get('/member/cgJson', 'MemberCG@cgJson')->name('Member.get');
+    Route::post('/member-post', 'MemberCG@store')->name('Member.post');
+    Route::post('/member-edit', 'MemberCG@edit')->name('Member.edit');
+    Route::get('/member-delete/{id}', 'MemberCG@delete')->name('Member.delete');
 
     Route::get('/get-divisi', 'MemberCG@getDivisi')->name('get.divisi');
     Route::get('/get-jabatan', 'MemberCG@getJabatan')->name('get.jabatan');

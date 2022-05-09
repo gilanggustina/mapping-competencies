@@ -19,7 +19,7 @@ class MemberCG extends Controller
 {
     public function index(Request $request)
     {
-        return view('pages.admin.member-cg');
+        return view('pages.admin.member.index');
     }
 
     public function cgJson()
@@ -91,10 +91,10 @@ class MemberCG extends Controller
     
     public function edit(Request $request)
     {
-        $curriculum = CurriculumModel::where("id_curriculum", $request->id)->first();
-        $skills = SkillCategory::all();
-        $jabatans = Jabatan::all();
-        return view("pages.admin.curriculum.form", compact("curriculum", "skills", "jabatans"));
+        $user = User::where("id_user", $request->id)->first();
+        // $skills = SkillCategory::all();
+        // $jabatans = Jabatan::all();
+        return view("pages.admin.member.form", compact("user"));
     }
 
     public function update(Request $request)
