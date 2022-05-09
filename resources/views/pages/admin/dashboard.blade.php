@@ -94,7 +94,7 @@ h4 {
   <div class="row">
     <div class="col-md-6 grid-margin stretch-card">
       <div class="card tale-bg">
-        <div class="card-people mt-auto">
+        <div class="card-people mt-auto" style="padding-top: 0px !important">
           <img src="{{ asset('assets/images/dashboard/people.png')}}" alt="people">
           <div class="weather-info">
             <div class="d-flex">
