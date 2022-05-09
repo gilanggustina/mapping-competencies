@@ -16,7 +16,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/cg/cgJson', 'MemberCG@cgJson')->name('Member.get');
     Route::post('/cg-post', 'MemberCG@store')->name('Member.post');
     Route::post('/cg-edit', 'MemberCG@edit')->name('Member.edit');
-    Route::post('/cg-delete', 'MemberCG@delete')->name('Member.delete');
+    Route::get('/cg-delete/{id}', 'MemberCG@delete')->name('Member.delete');
 
     Route::get('/get-divisi', 'MemberCG@getDivisi')->name('get.divisi');
     Route::get('/get-jabatan', 'MemberCG@getJabatan')->name('get.jabatan');
@@ -91,7 +91,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::prefix("cg-master")->group(function () {
         Route::get('/', 'CGMaster@index')->name('CG');
-        // Route::post('/post', 'CGMaster@store')->name('CGMaster.post');
+        Route::post('/CG-post', 'CGMaster@store')->name('CG.post');
         // Route::get('/form-edit', 'CGMaster@FormEditCGMaster')->name('getFormEditCGMaster');
         // Route::post('/edit', 'CGMaster@editCGMaster')->name('editCGMaster');
         // Route::get('/delete/{id}', 'CGMaster@delete')->name('CGMaster.delete');

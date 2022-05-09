@@ -59,10 +59,15 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{!! route('Grade.post') !!}" method="POST" enctype="multipart/form-data">
+            <form action="{!! route('CG.post') !!}" method="POST" enctype="multipart/form-data">
                 @csrf
             <div class="modal-body">
-               
+                <div class="form-row">
+                    <div class="col-md-3 mb-3">
+                        <label>Nama CG</label>
+                        <input type="text" class="form-control form-control-sm" name="name_cg" placeholder="Nama Circle Group">
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -251,43 +256,48 @@ function createPost() {
       })
   }
 
-
-    // function initDatatable() {
-    //     var dtJson = $('#table-grade').DataTable({
-    //         ajax: "{{ route('Grade') }}",
-    //         autoWidth: false,
-    //         serverSide: true,
-    //         processing: true,
-    //         aaSorting: [
-    //             [0, "desc"]
-    //         ],
-    //         searching: true,
-    //         dom: '<"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
-    //         displayLength: 10,
-    //         lengthMenu: [10, 15, 20],
-    //         language: {
-    //             paginate: {
-    //                 // remove previous & next text from pagination
-    //                 previous: '&nbsp;',
-    //                 next: '&nbsp;'
-    //             }
-    //         },
-    //         scrollX: true,
-    //         columns: [
-    //             {
-    //                 data: 'DT_RowIndex', name: 'DT_RowIndex'
-    //             },
-    //             {
-    //                 data: 'id_grade'
-    //             },
-    //             {
-    //                 data: 'name_grade'
-    //             },
-    //             {
-    //                 data: 'action'
-    //             }
-    //         ],
-    //     })
-    // }
+    function createPost() {
+    let _url     = `{{ route('CG.post') }}`;
+    let _token   = $('meta[name="csrf-token"]').attr('content');
+    const data = $("#formCreate").serialize();
+      $.ajax({
+        url: _url,
+        type: "POST",
+        data: data,
+        cache:false,
+        success: function(response) {
+            if(response.code == 200) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Your work has been saved',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+            $('#no_training_module').val(''),
+            $('#id_skill_category').val(''), 
+            $('#training_module').val(''),
+            $('#level').val(''),
+            $('#training_module_group').val(''),
+            $('#training_module_desc').val(''),
+            $('#id_job_title').val(''),
+            $('#title').val('');
+            $('#description').val('');
+            $('#modal-tambah').modal('hide');
+            location.reload();
+        },
+        error: function(err) {
+            console.log(err)
+            Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: err.responseJSON.message,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+        }
+      });
+  }
 </script>
 @endpush

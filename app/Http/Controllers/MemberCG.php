@@ -12,6 +12,7 @@ use App\CG;
 use App\Level;
 use App\SubDepartment;
 use App\Department;
+use Validator;
 use Illuminate\Support\Facades\Auth;
 
 class MemberCG extends Controller
@@ -122,15 +123,15 @@ class MemberCG extends Controller
     
     public function delete($id)
     {
-        $berita = User::find($id);
-        $image_path = 'assets/img/' . $berita->gambar;
-        if (file_exists($image_path)) {
-            @unlink($image_path);
-        }
-        $berita->delete();
+        $membercg = User::find($id);
+        // $image_path = 'assets/img/' . $membercg->gambar;
+        // if (file_exists($image_path)) {
+        //     @unlink($image_path);
+        // }
+        $membercg->delete();
         return redirect()
-            ->route('manajemen-berita')
-            ->with('success', 'Berhasil menghapus Berita!');
+            ->route('Member')
+            ->with('success', 'Berhasil menghapus membercg!');
     }
 
     public function getDivisi()
