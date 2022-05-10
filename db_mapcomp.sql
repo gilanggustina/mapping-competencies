@@ -3,7 +3,7 @@ SQLyog Ultimate
 MySQL - 10.4.24-MariaDB : Database - db_mapcomp
 *********************************************************************
 */
-
+ 
 /*!40101 SET NAMES utf8 */;
 
 /*!40101 SET SQL_MODE=''*/;
