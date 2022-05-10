@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 09, 2022 at 03:51 AM
+-- Generation Time: May 10, 2022 at 03:32 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.0.15
 
@@ -1043,13 +1043,7 @@ INSERT INTO `users` (`id`, `nik`, `nama_pengguna`, `peran_pengguna`, `email`, `e
 (475, 'O220100016', 'SAMSUDIN', NULL, 'samsamsoel0@gmail.com', NULL, '$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC', '0000-00-00', 'JT-0106', NULL, NULL, 'DP-0008', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (476, 'O220100017', 'SURYANTO', NULL, 'suryanto1677@gmail.com', NULL, '$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC', '0000-00-00', 'JT-0106', NULL, NULL, 'DP-0008', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (477, 'O220100018', 'UMAR WIRANATA KUSUMA', NULL, 'umarwiranata88@gmail.com', NULL, '$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC', '0000-00-00', 'JT-0106', NULL, NULL, 'DP-0008', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(478, 'O220100019', 'ZULWISAL', NULL, 'zulwisal@gmail.com', NULL, '$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC', '0000-00-00', 'JT-0106', NULL, NULL, 'DP-0008', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(479, 'O220100020', 'TAUFIK HIDAYAT', NULL, 'taufikbaron6279@gmail.com', NULL, '$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC', '0000-00-00', 'JT-0106', NULL, NULL, 'DP-0008', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(480, 'O220100021', 'NUNUNG', NULL, 'noe.gatorz46@gmail.com', NULL, '$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC', '0000-00-00', 'JT-0106', NULL, NULL, 'DP-0008', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(481, 'O220100022', 'ASEP MUSDIONO', NULL, 'musdionoasep@gmail.com', NULL, '$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC', '0000-00-00', 'JT-0057', NULL, NULL, 'DP-0008', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (482, 'O220100023', 'EKA AMSORIH', NULL, 'ekaamsorih94@gmail.com', NULL, '$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC', '0000-00-00', 'JT-0014', NULL, NULL, 'DP-0008', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(483, 'O220200030', 'WASCA', NULL, 'rasyairma9@gmail.com', NULL, '$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC', '0000-00-00', 'JT-0014', NULL, NULL, 'DP-0008', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(484, 'O220200031', 'MUHAMAD NURHIDAYAT', NULL, 'muhamadnurhidayat1598@gmail.com', NULL, '$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC', '0000-00-00', 'JT-0014', NULL, NULL, 'DP-0008', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (485, '123', 'Admin', NULL, 'admin@gmail.com', NULL, 'admin', '1970-01-01', 'JT-0049', 'DV_0002', 'CG_0011', 'DP-0008', NULL, 'LV-0009', NULL, NULL, NULL, '2022-04-21 21:16:17', '2022-04-21 21:16:17');
 
 -- --------------------------------------------------------
@@ -1250,7 +1244,7 @@ ALTER TABLE `taging_reason`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=486;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=490;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
