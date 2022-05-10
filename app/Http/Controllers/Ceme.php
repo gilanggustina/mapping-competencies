@@ -6,6 +6,7 @@ use App\CemeModel;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\Facades\DataTables;
 
 class Ceme extends Controller
 {
@@ -25,10 +26,10 @@ class Ceme extends Controller
         })
             ->leftJoin('divisi', 'users.id_divisi', '=', 'divisi.id_divisi')
             ->get(['users.*', 'dp.nama_department', 'jt.nama_job_title', 'cg.nama_cg', 'divisi.nama_divisi']);
-        return Datatables::of($data)
+        return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
-                $btn = '<button data-id="' . $row->id . '" onclick="addCeme(' . $row->id . ')" class="button-add btn btn-inverse-success btn-icon mr-1" data-toggle="modal" data-target="#modal-tambah"><i class="icon-plus menu-icon"></i></button>';
+                $btn = '<button data-id="' . $row->id . '" class="button-add btn btn-inverse-success btnAddJobTitle btn-icon mr-1" data-userid="'.$row->id.'"><i class="icon-plus menu-icon"></i></button>';
                 $btn = $btn . '<button type="button" onclick="detailWhiteTag(' . $row->id . ')" class="btn btn-inverse-info btn-icon" data-toggle="modal" data-target="#modal-detail"><i class="ti-eye"></i></button>';
                 return $btn;
             })
