@@ -69,6 +69,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //CEME
     Route::get('/ceme', 'Ceme@index')->name('ceme');
+    Route::get('/ceme/json','Ceme@cgJson')->name('ceme.json');
     Route::post('/ceme-post', 'Ceme@actionCeme')->name('actionCeme');
 
 
@@ -96,5 +97,8 @@ Route::group(['middleware' => 'auth'], function () {
         // Route::post('/edit', 'CGMaster@editCGMaster')->name('editCGMaster');
         // Route::get('/delete/{id}', 'CGMaster@delete')->name('CGMaster.delete');
     });
+
+    // jabatan/job title
+    Route::get('jabatan/get','JabatanController@get')->name('jabatan.get');
 
 });
