@@ -1,9 +1,9 @@
 /*
-SQLyog Ultimate v13.1.1 (32 bit)
+SQLyog Ultimate
 MySQL - 10.4.24-MariaDB : Database - db_mapcomp
 *********************************************************************
 */
-
+ 
 /*!40101 SET NAMES utf8 */;
 
 /*!40101 SET SQL_MODE=''*/;
@@ -68,18 +68,56 @@ CREATE TABLE `competencies_directory` (
   `id_directory` int(11) NOT NULL AUTO_INCREMENT,
   `id_curriculum` int(11) NOT NULL,
   `id_job_title` char(8) NOT NULL,
-  `between_year` varchar(150) NOT NULL,
-  `target` int(6) NOT NULL DEFAULT 0,
+  `between_year` enum('0','1','2','3','4','5') NOT NULL,
+  `target` tinyint(6) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id_directory`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=210 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `competencies_directory` */
 
 insert  into `competencies_directory`(`id_directory`,`id_curriculum`,`id_job_title`,`between_year`,`target`) values 
-(1,1,'JT-0048','',4),
-(2,3,'JT-0049','',3),
-(3,4,'JT-0047','',5),
-(4,5,'JT-0047','',5);
+(132,3,'JT-0049','0',0),
+(133,3,'JT-0049','1',1),
+(134,3,'JT-0049','2',2),
+(135,3,'JT-0049','3',3),
+(136,3,'JT-0049','4',4),
+(137,3,'JT-0049','5',5),
+(138,3,'JT-0013','0',0),
+(139,3,'JT-0013','1',1),
+(140,3,'JT-0013','2',2),
+(141,3,'JT-0013','3',3),
+(142,3,'JT-0013','4',4),
+(143,3,'JT-0013','5',5),
+(144,3,'JT-0015','0',0),
+(145,3,'JT-0015','1',1),
+(146,3,'JT-0015','2',2),
+(147,3,'JT-0015','3',3),
+(148,3,'JT-0015','4',4),
+(149,3,'JT-0015','5',5),
+(150,7,'JT-0049','0',0),
+(151,7,'JT-0049','1',1),
+(152,7,'JT-0049','2',2),
+(153,7,'JT-0049','3',3),
+(154,7,'JT-0049','4',4),
+(155,7,'JT-0049','5',5),
+(156,6,'JT-0153','0',0),
+(157,6,'JT-0153','1',1),
+(158,6,'JT-0153','2',2),
+(159,6,'JT-0153','3',3),
+(160,6,'JT-0153','4',4),
+(161,6,'JT-0153','5',5),
+(198,36,'JT-0049','0',0),
+(199,36,'JT-0049','1',1),
+(200,36,'JT-0049','2',2),
+(201,36,'JT-0049','3',3),
+(202,36,'JT-0049','4',4),
+(203,36,'JT-0049','5',5),
+(204,36,'JT-0153','0',0),
+(205,36,'JT-0153','1',1),
+(206,36,'JT-0153','2',2),
+(207,36,'JT-0153','3',3),
+(208,36,'JT-0153','4',4),
+(209,36,'JT-0153','5',5);
 
 /*Table structure for table `curriculum` */
 
@@ -97,18 +135,37 @@ CREATE TABLE `curriculum` (
   `created_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
   `updated_At` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
   PRIMARY KEY (`id_curriculum`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `curriculum` */
 
 insert  into `curriculum`(`id_curriculum`,`no_training_module`,`id_skill_category`,`training_module`,`level`,`training_module_group`,`training_module_desc`,`id_job_title`,`created_at`,`updated_At`) values 
-(1,'001/KMI/HRD-RT/SAL/001',1,'Company Strategy','B','New Employee Orientation','Berisi penjelasan mengenai Sejarah Berdiri Perusahaan, Product Knowledge, Visi, Misi, Strategi & Core Value Perusahaan (3 Sun Credo)','JT-0048','2022-03-25 10:37:12','2022-03-25 10:37:12'),
-(3,'001/KMI/HRD-RT/SAL/002',1,'Orientation Department','B','New Employee Orientation','Berisi penjelasan mengenai tugas dan tanggung jawab dari masing-masing departemen dan struktur organisasi perusahaan','JT-0049','2022-03-26 09:03:07','2022-03-26 09:03:07'),
-(4,'001/KMI/HRD-RT/SAL/003',1,'KALBE Business Ethic','B','New Employee Orientation','Berisi tentang tata kelola etika bisnis di KALBE Group','JT-0047','2022-03-26 09:04:13','2022-03-26 09:04:13'),
-(5,'001/KMI/HRD-RT/SAL/004',1,'Company Regulation','B','New Employee Orientation','Berisi tentang informasi tambahan mengenai BPJS Ketenagakerjaan, BPJS Kesehatan & Paguyuban','JT-0047','2022-03-26 09:04:16','2022-03-26 09:04:16'),
-(6,'002/KMI/HRD-RT/SAL/001',5,'Organizational Design','B','Organizational Development','Berisi penjelasan mengenai Desain Organisasi','JT-0153','2022-03-26 09:13:28','2022-03-26 09:13:28'),
-(7,'002/KMI/HRD-RT/SAL/002',5,'Job analysis','I','Organizational Development','Berisi penjelasan mengenai analisa pekerjaan per jabatan','JT-0153','2022-03-26 09:13:44','2022-03-26 09:13:44'),
-(8,'011/KMI/HRD-RT/SAL/026',4,'BPJS Ketenagakerjaan ','B','Operational Procedure','Mengenai cara pelaporan kecelakaan kerja serta dokumen-dokumen yang dibutuhkan','JT-0153','2022-03-26 09:14:26','2022-03-26 09:14:26');
+(36,'004/SKN/PEL-9283/2022',1,'Example Training Module','B','Training Module Group','Deskripsi','','2022-04-06 16:47:39','2022-04-06 16:47:39'),
+(37,'005/IJIAJKS/OPP-2022',2,'Training Module General Skill','B','Training Group','Desc','','2022-04-06 16:53:40','2022-04-06 16:53:40');
+
+/*Table structure for table `curriculum_to_job` */
+
+DROP TABLE IF EXISTS `curriculum_to_job`;
+
+CREATE TABLE `curriculum_to_job` (
+  `id_ctb` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id_curriculum` int(11) NOT NULL,
+  `id_job_title` char(8) NOT NULL,
+  PRIMARY KEY (`id_ctb`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `curriculum_to_job` */
+
+insert  into `curriculum_to_job`(`id_ctb`,`id_curriculum`,`id_job_title`) values 
+(9,36,'JT-0001'),
+(10,36,'JT-0002'),
+(11,36,'JT-0003'),
+(12,36,'JT-0049'),
+(13,36,'JT-0153'),
+(14,37,'JT-0006'),
+(15,37,'JT-0007'),
+(16,37,'JT-0008'),
+(17,37,'JT-0009');
 
 /*Table structure for table `department` */
 
@@ -429,11 +486,8 @@ CREATE TABLE `skill_category` (
 /*Data for the table `skill_category` */
 
 insert  into `skill_category`(`id_skill_category`,`skill_category`) values 
-(1,'General Knowledge & Skills'),
-(2,'General Skills'),
-(3,'Soft Skills'),
-(4,'Technical Knowledge & Skills'),
-(5,'Technical Skills');
+(1,'Technical Skills'),
+(2,'General Skills');
 
 /*Table structure for table `sub_department` */
 
@@ -481,6 +535,39 @@ insert  into `sub_department`(`id_subdepartment`,`id_department`,`nama_subdepart
 ('SDP-0031','DP-0003','BDA-FA','2021-01-27 04:41:13','2021-01-27 04:41:13'),
 ('SDP-0032','DP-0009','MDP-IT subdept','2021-01-27 06:33:33','2021-01-27 06:33:33');
 
+/*Table structure for table `taging_reason` */
+
+DROP TABLE IF EXISTS `taging_reason`;
+
+CREATE TABLE `taging_reason` (
+  `id_taging_reason` int(255) unsigned NOT NULL AUTO_INCREMENT,
+  `id_white_tag` varchar(15) DEFAULT NULL,
+  `no_taging` varchar(25) DEFAULT NULL,
+  `year` year(4) DEFAULT NULL,
+  `period` varchar(20) DEFAULT NULL,
+  `date_open` date DEFAULT NULL,
+  `due_date` date DEFAULT NULL,
+  `learning_method` enum('0','1','2','3','4') DEFAULT NULL COMMENT '0:internal 1:external 2:inhouse 3:online 4:readbook',
+  `trainer` varchar(50) DEFAULT NULL,
+  `date_plan_implementation` date DEFAULT NULL,
+  `notes_learning_implementation` text DEFAULT NULL,
+  `date_closed` date DEFAULT NULL,
+  `start` time DEFAULT NULL,
+  `finish` time DEFAULT NULL,
+  `duration` varchar(100) DEFAULT NULL,
+  `date_verified` date DEFAULT NULL,
+  `id_verified_by` int(255) unsigned DEFAULT NULL,
+  `result_score` double DEFAULT NULL,
+  `notes_for_result` text DEFAULT NULL,
+  PRIMARY KEY (`id_taging_reason`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `taging_reason` */
+
+insert  into `taging_reason`(`id_taging_reason`,`id_white_tag`,`no_taging`,`year`,`period`,`date_open`,`due_date`,`learning_method`,`trainer`,`date_plan_implementation`,`notes_learning_implementation`,`date_closed`,`start`,`finish`,`duration`,`date_verified`,`id_verified_by`,`result_score`,`notes_for_result`) values 
+(15,'SWrxk1649384942','00001',2022,'April','2022-04-08','2022-04-08','0','Example','2022-04-09',NULL,'2022-04-10','16:03:00','04:03:00','12 Jam : 0 Menit','2022-04-08',1,5,NULL),
+(16,'jWCpk1650251559','00002',2022,'April','2022-04-18','2022-04-19','1','Example Pelatih','2022-04-19','Example Note','2022-04-17','11:23:00','02:22:00','9 Jam : 1 Menit','2022-04-18',1,3,'Example Note Reason');
+
 /*Table structure for table `users` */
 
 DROP TABLE IF EXISTS `users`;
@@ -512,8 +599,8 @@ CREATE TABLE `users` (
 /*Data for the table `users` */
 
 insert  into `users`(`id`,`nik`,`nama_pengguna`,`peran_pengguna`,`email`,`email_verified_at`,`password`,`tgl_masuk`,`id_job_title`,`id_divisi`,`id_cg`,`id_department`,`id_sub_department`,`id_level`,`status`,`gambar`,`remember_token`,`created_at`,`updated_at`) values 
-(1,'K210300063','Rezki Ramadhan','1','rramadhan1818@gmail.com','2022-03-01 16:58:33','$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','2022-03-01','JT-0049','DV_0002','CG_0011','DP-0008','SDP-0023','LV-0009',1,'',NULL,'2022-03-05 16:58:33','2022-03-05 16:58:33'),
-(2,'K200900257','Chandra Prawira','1','chandra@gmail.com','2022-03-01 16:58:33','$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','2022-03-11','JT-0049','DV_0002','CG_0011','DP-0008','SDP-0023','LV-0009',1,'',NULL,'2022-03-11 08:46:24','2022-03-11 08:46:24'),
+(1,'K210300063','Rezki Ramadhan','1','rramadhan1818@gmail.com','2022-03-01 16:58:33','$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','2020-03-01','JT-0049','DV_0002','CG_0011','DP-0008','SDP-0023','LV-0009',1,'',NULL,'2022-03-05 16:58:33','2022-03-05 16:58:33'),
+(2,'K200900257','Chandra Prawira','1','chandra@gmail.com','2022-03-01 16:58:33','$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','2019-03-11','JT-0049','DV_0002','CG_0011','DP-0008','SDP-0023','LV-0009',1,'',NULL,'2022-03-11 08:46:24','2022-03-11 08:46:24'),
 (3,'050700014','DIDIK BUDIARTO',NULL,'didik.budiarto@gmail.com',NULL,'$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','0000-00-00','JT-0149',NULL,NULL,'DP-0003',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (4,'051000017','I GEDE PUTU EKA PUTRA',NULL,'igedeputu.ekaputra@gmail.com',NULL,'$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','0000-00-00','JT-0076',NULL,NULL,'DP-0010',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (5,'060500014','YUDHA AGUS TRI BASUKI',NULL,'yud.agus@gmail.com',NULL,'$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','0000-00-00','JT-0062',NULL,NULL,'DP-0001',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
@@ -746,7 +833,7 @@ insert  into `users`(`id`,`nik`,`nama_pengguna`,`peran_pengguna`,`email`,`email_
 (232,'200700143','TENDI SOBARNANSYAH',NULL,'sobarnansyah@gmail.com',NULL,'$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','0000-00-00','JT-0064',NULL,NULL,'DP-0005',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (233,'200700144','MUHAMAD RIDWAN',NULL,'muhamadridwan133@gmail.com',NULL,'$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','0000-00-00','JT-0130',NULL,NULL,'DP-0006',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (234,'201200194','DENLEI DIYOROSSI',NULL,'diyorossi@gmail.com',NULL,'$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','0000-00-00','',NULL,NULL,'DP-0009',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(361,'210100004','SETYO DEWI UTARI',NULL,'setyod@gmail.com',NULL,'$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','0000-00-00','JT-0153',NULL,'CG_0011','DP-0008',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(361,'210100004','SETYO DEWI UTARI',NULL,'setyod@gmail.com',NULL,'$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','2022-04-06','JT-0153',NULL,'CG_0011','DP-0008',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (362,'210100024','SARI DIYAH PALUPY',NULL,'saridpha@gmail.com',NULL,'$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','0000-00-00','JT-0016',NULL,NULL,'DP-0002',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (363,'211200171','TOSHIHITO  ABE',NULL,'abe@gmail.com',NULL,'$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','0000-00-00','JT-0113',NULL,NULL,'DP-0001',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (364,'220100111','KUKUH GUMILANG',NULL,'kukuh_gumilDP-0001@yahoo.com',NULL,'$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','0000-00-00','JT-0033',NULL,NULL,'DP-0005',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
@@ -879,15 +966,18 @@ CREATE TABLE `white_tag` (
   `id_white_tag` varchar(15) NOT NULL,
   `id_directory` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
-  `start` char(2) NOT NULL,
-  `actual` char(2) NOT NULL,
+  `start` tinyint(2) NOT NULL,
+  `actual` tinyint(2) NOT NULL,
   PRIMARY KEY (`id_white_tag`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `white_tag` */
 
 insert  into `white_tag`(`id_white_tag`,`id_directory`,`id_user`,`start`,`actual`) values 
-('AQ7Hp1648285881',2,2,'3','3');
+('7eeXy1649145212',134,1,0,1),
+('jWCpk1650251559',201,2,0,3),
+('p2co41649145212',152,1,0,1),
+('SWrxk1649384942',200,1,0,5);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
