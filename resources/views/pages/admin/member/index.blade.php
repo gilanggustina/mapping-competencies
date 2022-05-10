@@ -152,7 +152,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <a href="" class="btn btn-danger">Hapus</a>
+                    <button class="btn btn-danger" id="btnHapus" onclick="deleteCurriculum(this)" data-id="">Hapus</a>
                 </div>
             </div>
         </form>
@@ -232,6 +232,37 @@
         });
     }
 
+    $('#table-cg').on('click','.member-hapus', function () {
+        var id = $(this).data('id');
+        $('#btnHapus').attr('data-id',id);
+    })
+
+    function deleteCurriculum(el) {
+        var id = $(el).attr("data-id");
+        var token = $("meta[name='csrf-token']").attr("content");
+        var rowid = '#row_'+id;
+        $.ajax({
+            url:"member-delete/"+id,
+            mehtod:"delete",
+            data: {
+                "id": id,
+                "_token": token,
+            },
+            success:function(res)
+            {
+                $("#modal-hapus").modal('hide');
+                window.location.reload();
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Data berhasil di hapus',
+                    showConfirmButton: true,
+                    timer: 1500
+                })
+            }
+        })
+    }
+    
     function getDivisi(){
         $.ajax({
             type: "GET",
@@ -361,9 +392,6 @@
         getSubDepartment();
         getCG();
 
-        $('#table-cg').on('click','.delete-button', function () {
-            $('.modal-footer a').attr('href',"{{ route('Member.delete') }}/"+$(this).data('id'));
-        })
 
         $('.delete-button').on('click',function () {
             $('#modal-hapus').modal('show');

@@ -23,6 +23,7 @@
                                     <tr>
                                         <th>No.</th>
                                         <th>Circle Group</th>
+                                        <th>Department</th>
                                         <th width="15%">Action</th>
                                     </tr> 
                                 </thead>
@@ -31,6 +32,7 @@
                                     <tr id="row_{{$data->id_cg}}"> 
                                         <th scope="row">{{ $loop->iteration }}</th>
                                         <td>{{ $data->nama_cg  }}</td>
+                                        <td>{{ $data->dp  }}</td>
                                         <td>
                                             <button data-id="{{ $data->id_cg }}" onclick="editdata(this)" class="btn btn-inverse-success btn-icon delete-button mr-1 mr-1 Edit-button" data-toggle="modal" data-target="#modal-edit"><i class="icon-file menu-icon"></i></button>
                                             <button data-id="{{ $data->id_cg }}" class="btn btn-inverse-danger btn-icon mr-1 cr-hapus" data-toggle="modal" data-target="#modal-hapus">
@@ -63,9 +65,17 @@
                 @csrf
             <div class="modal-body">
                 <div class="form-row">
-                    <div class="col-md-3 mb-3">
+                    <div class="col mb-3">
                         <label>Nama CG</label>
                         <input type="text" class="form-control form-control-sm" name="name_cg" placeholder="Nama Circle Group">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col">
+                        <label>Department</label>
+                        <select id="department" class="form-control form-control-sm" name="department">
+                            <option value="">Pilih Department</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -106,6 +116,8 @@
             plaGradent: "top",
             trigger: "hover focus"
         });
+
+        getDepartment();
     });
 
     
@@ -233,28 +245,25 @@ function createPost() {
   }
  
 
-  function getJabatan(){
-      $.ajax({
-          type: "GET",
-          url: "{{ route('get.jabatan') }}",
-          success: function(res) {
-              var option = "";
-              for (let i = 0; i < res.data.length; i++) {
-                  option += '<option value="'+res.data[i].id_job_title+'">'+res.data[i].nama_job_title+'</option>';
-              }
-              $("#id_job_title").html(option).selectpicker('refresh');
-          },
-          error: function (xhr, ajaxOptions, thrownError) {
-              Swal.fire({
-                  position: 'top-end',
-                  icon: 'error',
-                  title: response.responseJSON.errors,
-                  showConfirmButton: false,
-                  timer: 1500
-              })
-          }
-      })
-  }
+  function getDepartment(){
+        $.ajax({
+            type: "GET",
+            url: "{{ route('get.department') }}",
+            success: function(res) {
+                var option = "";
+                for (let i = 0; i < res.data.length; i++) {
+                    option += '<option value="'+res.data[i].id_department+'">'+res.data[i].nama_department+'</option>';
+                }
+                $('#department').html();
+                $('#department').append(option);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr);
+                alert(xhr.status);
+                alert(thrownError);
+            }
+        })
+    }
 
     function createPost() {
     let _url     = `{{ route('CG.post') }}`;

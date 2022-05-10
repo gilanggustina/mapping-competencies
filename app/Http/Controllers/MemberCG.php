@@ -19,7 +19,7 @@ class MemberCG extends Controller
 {
     public function index(Request $request)
     {
-        return view('pages.admin.member-cg');
+        return view('pages.admin.member.index');
     }
 
     public function cgJson()
@@ -31,7 +31,7 @@ class MemberCG extends Controller
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
             $btn = '<button data-id="' . $row->id . '" class="btn btn-inverse-success btn-icon mr-1" data-toggle="modal" data-target="#modal-tambah"><i class="icon-file menu-icon"></i></button>';
-            $btn = $btn . '<button data-id="' . $row->id . '" class="btn btn-inverse-danger btn-icon mr-1" data-toggle="modal" data-target="#modal-hapus"><i class="icon-trash"></i></button>';
+            $btn = $btn . '<button data-id="' . $row->id . '" class="btn btn-inverse-danger btn-icon member-hapus mr-1" data-toggle="modal" data-target="#modal-hapus"><i class="icon-trash"></i></button>';
             $btn = $btn . '<button type="button" class="btn btn-inverse-info btn-icon" data-toggle="modal" data-target="#modal-detail"><i class="ti-eye"></i></button>';
                 return $btn;
             })
@@ -85,16 +85,17 @@ class MemberCG extends Controller
             // }
             $data = User::create($data);
             $data->save();
+            // Alert::success('Congrats', 'Data Berhasil di tambahkan');
             return redirect()->route('Member')->with('success', 'Berhasil menambah Berita!');
         }
     }
     
     public function edit(Request $request)
     {
-        $curriculum = CurriculumModel::where("id_curriculum", $request->id)->first();
-        $skills = SkillCategory::all();
-        $jabatans = Jabatan::all();
-        return view("pages.admin.curriculum.form", compact("curriculum", "skills", "jabatans"));
+        $user = User::where("id_user", $request->id)->first();
+        // $skills = SkillCategory::all();
+        // $jabatans = Jabatan::all();
+        return view("pages.admin.member.form", compact("user"));
     }
 
     public function update(Request $request)
@@ -124,14 +125,10 @@ class MemberCG extends Controller
     public function delete($id)
     {
         $membercg = User::find($id);
-        // $image_path = 'assets/img/' . $membercg->gambar;
-        // if (file_exists($image_path)) {
-        //     @unlink($image_path);
-        // }
         $membercg->delete();
         return redirect()
             ->route('Member')
-            ->with('success', 'Berhasil menghapus membercg!');
+            ->with('success', 'Berhasil menghapus member!');
     }
 
     public function getDivisi()

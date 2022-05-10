@@ -43,7 +43,7 @@
           <li class="nav-item">
               <a class="nav-link" href="{{ route('CompetenciesDirectory') }}">
                   <i class="icon-book menu-icon"></i>
-                  <span class="menu-title">Competencies Directory</span>
+                  <span class="menu-title">Competencies Dictionary</span>
               </a>
           </li>
           {{-- <li class="nav-item">

@@ -90,7 +90,12 @@
             <form action="{!! route('Grade.post') !!}" method="POST" enctype="multipart/form-data">
                 @csrf
             <div class="modal-body">
-               
+                <div class="form-row">
+                    <div class="col mb-3">
+                        <label>Grade Name</label>
+                        <input type="text" class="form-control form-control-sm" name="grade" placeholder="Masukan nama grade">
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
