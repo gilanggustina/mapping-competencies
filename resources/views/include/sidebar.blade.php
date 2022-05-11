@@ -16,6 +16,21 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                      <i class="icon-layout menu-icon"></i>
+                      <span class="menu-title">Master</span>
+                      <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse" id="ui-basic">
+                      <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('CG') }}">Master Circle Group</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('Grade') }}">Grade</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('SkillCategory') }}">Skill Category</a></li>
+                      </ul>
+                    </div>
+                  </li>
+                  
+                {{-- <li class="nav-item">
                     <a class="nav-link" href="{{ route('CG') }}">
                         <i class="icon-head menu-icon"></i>
                         <span class="menu-title">Master Circle Group</span>
@@ -32,7 +47,7 @@
                         <i class="icon-head menu-icon"></i>
                         <span class="menu-title">Master Skill Category</span>
                     </a>
-                </li>
+                </li> --}}
           @endif
           <li class="nav-item">
               <a class="nav-link" href="{{ route('Curriculum') }}">
