@@ -23,7 +23,7 @@
                     </a>
                     <div class="collapse" id="ui-basic">
                       <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"> <a class="nav-link" href="{{ route('CG') }}">Master Circle Group</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('CG') }}">Circle Group</a></li>
                         <li class="nav-item"> <a class="nav-link" href="{{ route('Grade') }}">Grade</a></li>
                         <li class="nav-item"> <a class="nav-link" href="{{ route('SkillCategory') }}">Skill Category</a></li>
                       </ul>

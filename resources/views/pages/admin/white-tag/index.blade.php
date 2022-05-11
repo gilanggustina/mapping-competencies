@@ -31,10 +31,10 @@
     <div class="col-md-7 grid-margin stretch-card mb-0">
     <div id="accordion" class="accordion">
         <div class="card">
-            <div class="card-header card-title" data-toggle="collapse" href="#collapseOne">
+            <div class="card-header card-title collapsed" data-toggle="collapse" href="#collapseOne">
             Key Point General
             </div>
-            <div id="collapseOne" class="card-body collapse show" data-parent="#accordion" aria-expanded="true">
+            <div id="collapseOne" class="card-body collapse" data-parent="#accordion" aria-expanded="true">
                 <img src="{{ asset('assets/images/general.png') }}" alt="General" class="mt-2 p-3" style="width:100%;display: block;margin-left: auto;margin-right: auto; ">
                 {{-- <img src="{{ asset('assets/images/General.png') }}" alt="General" class="img-accordion"> --}}
             </div>
@@ -44,10 +44,10 @@
     <div class="col-md-5 grid-margin stretch-card mb-0 pl-0">
         <div id="accordion-gen" class="accordion">
         <div class="card">
-            <div class="card-header card-title" data-toggle="collapse" href="#graphgen">
+            <div class="card-header card-title collapsed" data-toggle="collapse" href="#graphgen">
                 Graphic White Tag General
                 </div>
-                <div id="graphgen" class="card-body collapse show" data-parent="#accordion-gen" aria-expanded="true">
+                <div id="graphgen" class="card-body collapse" data-parent="#accordion-gen" aria-expanded="true">
                     <canvas id="barChart" class="mb-2"></canvas>
                 </div>
 
