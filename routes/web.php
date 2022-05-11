@@ -38,7 +38,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/curriculum-edit', 'Curriculum@editCurriculum')->name('editCurriculum');
         Route::get('/curriculum-delete/{id}', 'Curriculum@delete')->name('Curriculum.delete');
     });
-    
+
     // Taging
     Route::prefix("tagging-list")->group(function () {
         Route::get('/', 'Tagging@index')->name('TagList');
@@ -57,7 +57,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/action','CompetenciesDirectory@storeCompetencyDirectory')->name('storeCompetencyDirectory');
         Route::get('/detail','CompetenciesDirectory@detail')->name("detailCompetencyDirectory");
     });
-    
+
     // White Tag
     Route::prefix("white-tag")->group(function () {
         Route::get('/', 'WhiteTag@index')->name('WhiteTag');
@@ -71,6 +71,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/ceme', 'Ceme@index')->name('ceme');
     Route::get('/ceme/json','Ceme@cgJson')->name('ceme.json');
     Route::post('/ceme-post', 'Ceme@actionCeme')->name('actionCeme');
+    Route::post('ceme/add-job-title','Ceme@addJobTitle')->name('ceme.addJobTitle');
+    Route::post('ceme/get-job-title','Ceme@getJobTitle')->name('ceme.getJobTitle');
+    Route::post('ceme/delete-job-title','Ceme@deleteJobTitle')->name('ceme.deleteJobTitle');
 
 
     Route::prefix("grade")->group(function () {

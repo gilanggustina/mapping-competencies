@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\CemeModel;
+use App\JobTitleUsers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
 class Ceme extends Controller
@@ -29,7 +31,7 @@ class Ceme extends Controller
         return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
-                $btn = '<button data-id="' . $row->id . '" class="button-add btn btn-inverse-success btnAddJobTitle btn-icon mr-1" data-userid="'.$row->id.'"><i class="icon-plus menu-icon"></i></button>';
+                $btn = '<button data-id="' . $row->id . '" class="button-add btn btn-inverse-success btnAddJobTitle btn-icon mr-1" data-nama="'.$row->nama_pengguna.'" data-userid="'.$row->id.'"><i class="icon-plus menu-icon"></i></button>';
                 $btn = $btn . '<button type="button" onclick="detailWhiteTag(' . $row->id . ')" class="btn btn-inverse-info btn-icon" data-toggle="modal" data-target="#modal-detail"><i class="ti-eye"></i></button>';
                 return $btn;
             })
@@ -146,5 +148,93 @@ class Ceme extends Controller
             'status' => 200,
             'success' => true,
         ]);
+    }
+
+    public function addJobTitle()
+    {
+        $id  = request('id');
+        if($id)
+        {
+            $validator = Validator::make(request()->all(),[
+                'id' => ['required'],
+                'job_title_edit' => ['required'],
+                'level_edit' => ['required','numeric']
+            ]);
+        }else{
+            $validator = Validator::make(request()->all(),[
+                'user_id' => ['required'],
+                'job_title' => ['required'],
+                'level' => ['required','numeric']
+            ]);
+        }
+
+        if($validator->fails())
+        {
+            return response()->json($validator->errors());
+        }
+
+        $userCheck = JobTitleUsers::where('user_id',request('user_id'))->where('job_title_id',request('job_title'))->count();
+        if($userCheck > 0)
+        {
+            $data = [
+                'status' => 'error',
+                'message' => 'Job title is already exist in user',
+                'data' => NULL
+            ];
+        }else{
+            if($id)
+            {
+                $jt = JobTitleUsers::find($id);
+                $jt2 = $jt->update([
+                    'job_title_id' => request('job_title_edit'),
+                    'value' => request('level_edit')
+                ]);
+                $data = [
+                    'status' => 'success',
+                    'message' => 'Job title from User Updated Successfully',
+                    'data' => $jt
+                ];
+            }else{
+
+                $jt = JobTitleUsers::create([
+                    'user_id' => request('user_id'),
+                    'job_title_id' => request('job_title'),
+                    'value' => request('level')
+                ]);
+                $data = [
+                    'status' => 'success',
+                    'message' => 'Job Title Added To User Successfully',
+                    'data' => $jt
+                ];
+            }
+        }
+
+        return response()->json($data);
+    }
+
+    public function getJobTitle()
+    {
+        $jt = JobTitleUsers::with('jobTitle')->where('user_id',request('id'))->get();
+        $data = [
+            'status' => 'success',
+            'message' => 'Get Job title from users',
+            'data' => $jt
+        ];
+
+        return response()->json($data);
+    }
+
+    public function deleteJobTitle()
+    {
+        $id = request('id');
+        $jt = JobTitleUsers::findOrFail($id);
+        $data = [
+            'status' => 'success',
+            'message' => 'Job Title Deleted Successfully',
+            'data' => $jt
+        ];
+        $jt->delete();
+
+        return response()->json($data);
     }
 }
