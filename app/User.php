@@ -26,4 +26,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(JobTitleUsers::class,'job_title_users','id_job_title','user_id');
     }
+
+    public function jobTitle()
+    {
+        return $this->belongsTo(Jabatan::class,'id_job_title','id_job_title');
+    }
 }

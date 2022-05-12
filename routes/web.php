@@ -69,7 +69,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     //CEME
     Route::get('/ceme', 'Ceme@index')->name('ceme');
+    Route::get('/ceme?q=all', 'Ceme@index')->name('ceme.all');
     Route::get('/ceme/json','Ceme@cgJson')->name('ceme.json');
+    Route::get('/ceme/json/all','Ceme@cgJsonAll')->name('ceme.json.all');
     Route::post('/ceme-post', 'Ceme@actionCeme')->name('actionCeme');
     Route::post('ceme/add-job-title','Ceme@addJobTitle')->name('ceme.addJobTitle');
     Route::post('ceme/get-job-title','Ceme@getJobTitle')->name('ceme.getJobTitle');

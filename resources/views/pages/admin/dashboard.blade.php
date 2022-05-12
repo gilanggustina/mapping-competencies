@@ -64,10 +64,10 @@ h4 {
           <span class="text-primary">
             @php
                 if(Auth::user()->peran_pengguna == 1){
-                  echo 'Admin'; 
+                  echo 'Admin';
                 }
                 else if(Auth::user()->peran_pengguna == 2){
-                  echo 'CG Leader';          
+                  echo 'CG Leader';
                 }
                 else{
                   echo 'Anggota';
@@ -156,7 +156,7 @@ h4 {
   <div class="row">
     <div class="col-12 col-sm-8 col-md-6 col-lg-4 stretch-card profile-card">
     </div>
-  </div>  
+  </div>
   <div class="row">
     <div class="col-md-12 grid-margin stretch-card">
       <div class="card position-relative">
@@ -171,7 +171,7 @@ h4 {
                       <h1 class="text-primary">$34040</h1>
                       <h3 class="font-weight-500 mb-xl-4 text-primary">North America</h3>
                       <p class="mb-2 mb-xl-0">The total number of sessions within the date range. It is the period time a user is actively engaged with your website, page or app, etc</p>
-                    </div>  
+                    </div>
                     </div>
                   <div class="col-md-12 col-xl-9">
                     <div class="row">
@@ -251,7 +251,7 @@ h4 {
                       <h1 class="text-primary">$34040</h1>
                       <h3 class="font-weight-500 mb-xl-4 text-primary">North America</h3>
                       <p class="mb-2 mb-xl-0">The total number of sessions within the date range. It is the period time a user is actively engaged with your website, page or app, etc</p>
-                    </div>  
+                    </div>
                     </div>
                   <div class="col-md-12 col-xl-9">
                     <div class="row">
@@ -351,7 +351,7 @@ function displayTime(){
   document.getElementById('clock').innerText = "Pukul   " + timeNow.toLocaleString('id-ID',{
     timeStyle:'medium'
   });
-  
+
   document.getElementById('date').innerText = timeNow.toLocaleString('id-ID',{
     dateStyle:'full'
   });
