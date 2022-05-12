@@ -3,7 +3,7 @@ SQLyog Ultimate
 MySQL - 10.4.24-MariaDB : Database - db_mapcomp
 *********************************************************************
 */
- 
+
 /*!40101 SET NAMES utf8 */;
 
 /*!40101 SET SQL_MODE=''*/;
@@ -576,7 +576,7 @@ CREATE TABLE `users` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `nik` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nama_pengguna` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `peran_pengguna` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `peran_pengguna` enum('1','2','3') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -594,12 +594,12 @@ CREATE TABLE `users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=485 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=504 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `users` */
 
 insert  into `users`(`id`,`nik`,`nama_pengguna`,`peran_pengguna`,`email`,`email_verified_at`,`password`,`tgl_masuk`,`id_job_title`,`id_divisi`,`id_cg`,`id_department`,`id_sub_department`,`id_level`,`status`,`gambar`,`remember_token`,`created_at`,`updated_at`) values 
-(1,'K210300063','Rezki Ramadhan','1','rramadhan1818@gmail.com','2022-03-01 16:58:33','$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','2020-03-01','JT-0049','DV_0002','CG_0011','DP-0008','SDP-0023','LV-0009',1,'',NULL,'2022-03-05 16:58:33','2022-03-05 16:58:33'),
+(1,'K210300063','Rezki Ramadhan','1','rramadhan1818@gmail.com','2022-03-01 16:58:33','$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','2020-03-01','JT-0049','DV_0002','CG_0011','DP-0008','SDP-0021','LV-0009',1,'BxBfqhJn1rhH7p3.png',NULL,'2022-03-05 16:58:33','2022-05-11 16:04:08'),
 (2,'K200900257','Chandra Prawira','1','chandra@gmail.com','2022-03-01 16:58:33','$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','2019-03-11','JT-0049','DV_0002','CG_0011','DP-0008','SDP-0023','LV-0009',1,'',NULL,'2022-03-11 08:46:24','2022-03-11 08:46:24'),
 (3,'050700014','DIDIK BUDIARTO',NULL,'didik.budiarto@gmail.com',NULL,'$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','0000-00-00','JT-0149',NULL,NULL,'DP-0003',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (4,'051000017','I GEDE PUTU EKA PUTRA',NULL,'igedeputu.ekaputra@gmail.com',NULL,'$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','0000-00-00','JT-0076',NULL,NULL,'DP-0010',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
@@ -956,7 +956,8 @@ insert  into `users`(`id`,`nik`,`nama_pengguna`,`peran_pengguna`,`email`,`email_
 (481,'O220100022','ASEP MUSDIONO',NULL,'musdionoasep@gmail.com',NULL,'$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','0000-00-00','JT-0057',NULL,NULL,'DP-0008',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (482,'O220100023','EKA AMSORIH',NULL,'ekaamsorih94@gmail.com',NULL,'$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','0000-00-00','JT-0014',NULL,NULL,'DP-0008',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (483,'O220200030','WASCA',NULL,'rasyairma9@gmail.com',NULL,'$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','0000-00-00','JT-0014',NULL,NULL,'DP-0008',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(484,'O220200031','MUHAMAD NURHIDAYAT',NULL,'muhamadnurhidayat1598@gmail.com',NULL,'$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','0000-00-00','JT-0014',NULL,NULL,'DP-0008',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+(484,'O220200031','MUHAMAD NURHIDAYAT','1','muhamadnurhidayat1598@gmail.com',NULL,'$2a$10$kQdT1DPvsC6WLFqc7gLOd.VNmc1bKPkhoL0.f97x13qzaaw3R8/VC','2022-05-10','JT-0014','DV_0001','CG_0013','DP-0008','SDP-0022','LV-0005',NULL,'Unqq2wu1IrSexW7.png',NULL,NULL,'2022-05-11 08:48:43'),
+(503,'83974578483','dr. Susi','1','susi@gmail.com',NULL,'admin','2022-05-02','JT-0003','DV_0003','CG_0003','DP-0003','SDP-0004','LV-0004',NULL,'WjJ2azHgoRlzMwV.png',NULL,NULL,NULL);
 
 /*Table structure for table `white_tag` */
 

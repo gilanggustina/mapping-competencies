@@ -71,7 +71,15 @@
               </li>
               <li class="nav-item nav-profile dropdown">
                   <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                      <img src="{{ Auth::user()->gambar ? Auth::user()->gambar : asset('assets/images/faces/face0.png' )}}" alt="profile" />
+                    @php
+                        $url = "../storage/app/public/".Auth::User()->gambar;
+                        if ((isset(Auth::User()->gambar) && Auth::User()->gambar != "") && file_exists($url)) {
+                                $url = "data:image/jpeg;base64,".base64_encode(file_get_contents($url));
+                        }else{
+                            $url = asset('assets/images/faces/face0.png');
+                        }
+                    @endphp
+                      <img src="{{$url}}" alt="profile" />
                   </a>
                   <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                       <a class="dropdown-item">

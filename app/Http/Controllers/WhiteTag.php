@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\WhiteTagModel;
+use App\Exports\WhiteTagExport;
+use Maatwebsite\Excel\Facades\Excel;
 use App\CompetenciesDirectoryModel;
 use Validator;
 use DB;
@@ -15,7 +17,7 @@ use Auth;
 
 class WhiteTag extends Controller
 {
-    public function cgJson(Request $request)
+    public function whiteTagJson(Request $request)
     {   
         $cgAuth = Auth::user()->id_cg;
         $data = User::leftJoin('department as dp', 'users.id_department', '=', 'dp.id_department')
@@ -36,6 +38,104 @@ class WhiteTag extends Controller
             ->addIndexColumn()
             ->rawColumns(['action'])
             ->make(true);
+    }
+
+    public function whiteTagAll(Request $request)
+    {
+        $select = [
+            "nama_pengguna","no_training_module","skill_category","training_module","level","training_module_group","start","actual","target"
+        ];
+        $data = WhiteTagModel::select($select)
+                ->join("users","users.id","white_tag.id_user")
+                ->join("competencies_directory AS cd","cd.id_directory","white_tag.id_directory")
+                ->join("curriculum AS crclm","crclm.id_curriculum","cd.id_curriculum")
+                ->join("skill_category AS sc","sc.id_skill_category","crclm.id_skill_category")
+                ->where("white_tag.actual",">=","cd.target")
+                ->get();
+        return Datatables::of($data)
+        ->addIndexColumn()
+        ->editColumn('start', function ($row) {
+            switch($row->start){
+                case 0:
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->start.'" class="mx-auto"><img class="img-thumbnail mx-auto tooltip-info" src="'.asset('assets/images/point/0.png').'"></div>';
+                break;
+                case 1:
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->start.'" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/1.png').'"></div>';
+                break;
+                case 2:
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->start.'" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/2.png').'"></div>';
+                break;
+                case 3:
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->start.'" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/3.png').'"></div>';
+                break;
+                case 4:
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->start.'" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/4.png').'"></div>';
+                break;
+                case 5:
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->start.'" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/5.png').'"></div>';
+                break;
+                    
+            }
+            return $icon;
+        })
+        ->editColumn('actual', function ($row) {
+            switch($row->actual){
+                case 0:
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->actual.'" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/0.png').'"></div>';
+                break;
+                case 1:
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->actual.'" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/1.png').'"></div>';
+                break;
+                case 2:
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->actual.'" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/2.png').'"></div>';
+                break;
+                case 3:
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->actual.'" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/3.png').'"></div>';
+                break;
+                case 4:
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->actual.'" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/4.png').'"></div>';
+                break;
+                case 5:
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->actual.'" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/5.png').'"></div>';
+                break;
+                    
+            }
+            return $icon;
+        })
+        ->editColumn('target', function ($row) {
+            switch($row->target){
+                case 0:
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->target.'" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/0.png').'"></div>';
+                break;
+                case 1:
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->target.'" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/1.png').'"></div>';
+                break;
+                case 2:
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->target.'" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/2.png').'"></div>';
+                break;
+                case 3:
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->target.'" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/3.png').'"></div>';
+                break;
+                case 4:
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->target.'" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/4.png').'"></div>';
+                break;
+                case 5:
+                    $icon = '<div style="width:50px;heigth:50px" title="'.$row->target.'" class="mx-auto"><img class="img-thumbnail mx-auto" src="'.asset('assets/images/point/5.png').'"></div>';
+                break;
+                    
+            }
+            return $icon;
+        })
+            
+        ->addIndexColumn()
+        ->rawColumns(['start','actual','target'])
+        ->make(true);
+    }
+
+    public function exportWhiteTagAll()
+    {
+        return Excel::download(new WhiteTagExport, 'white-tag.xlsx');
+        return redirect()->back();
     }
 
     public function index(Request $request)

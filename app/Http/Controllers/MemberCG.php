@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Yajra\Datatables\Datatables;
 use App\User;
 use App\Divisi;
@@ -30,9 +32,9 @@ class MemberCG extends Controller
         return Datatables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
-            $btn = '<button data-id="' . $row->id . '" class="btn btn-inverse-success btn-icon mr-1" data-toggle="modal" data-target="#modal-tambah"><i class="icon-file menu-icon"></i></button>';
+            $btn = '<button class="btn btn-inverse-success btn-icon mr-1" data-toggle="modal" onclick="formEdit('.$row->id.')" data-target="#modal-edit"><i class="icon-file menu-icon"></i></button>';
             $btn = $btn . '<button data-id="' . $row->id . '" class="btn btn-inverse-danger btn-icon member-hapus mr-1" data-toggle="modal" data-target="#modal-hapus"><i class="icon-trash"></i></button>';
-            $btn = $btn . '<button type="button" class="btn btn-inverse-info btn-icon" data-toggle="modal" data-target="#modal-detail"><i class="ti-eye"></i></button>';
+            $btn = $btn . '<button type="button" class="btn btn-inverse-info btn-icon member-hapus" data-id="'.$row->id.'" data-toggle="modal" data-target="#modal-detail"><i class="ti-eye"></i></button>';
                 return $btn;
             })
             ->addIndexColumn()
@@ -42,10 +44,12 @@ class MemberCG extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $request->validate([
+            'image' => 'nullable|image|mimes:jpg,png,jpeg|max:5000',
+            'base64' => 'nullable|string',
             'nik' => 'required',
             'password' => 'required',
-            'peran_pengguna' => 'required',
+            'peran_pengguna' => 'required|in:1,2,3',
             'tgl_masuk' => 'required',
             'nama_pengguna' => 'required',
             'email' => 'email|required',
@@ -54,17 +58,17 @@ class MemberCG extends Controller
             'level' => 'required',
             'department' => 'required',
             'sub_department' => 'required',
-            'cg' => 'required',
-            // 'gambar' => 'required|image|mimes:jpg,png,jpeg|max:5000',
+            'cg' => 'required'
         ]);
-        if ($validator->fails()) {
-            return response()->json(['code' => 422, 'message' => 'The given data was invalid.', 'data' => $validator->errors()], 422);
-        } else {
+
+        
+        DB::beginTransaction();
+        try {
             $data = [
                 'nik' => $request->nik,
                 'password' => $request->password,
                 'peran_pengguna' => $request->peran_pengguna,
-                'tgl_masuk' => date('Y-m-d', strtotime($request->tanggal)),
+                'tgl_masuk' => date('Y-m-d', strtotime($request->tgl_masuk)),
                 'nama_pengguna' => $request->nama_pengguna,
                 'email' => $request->email,
                 'id_divisi' => $request->divisi,
@@ -74,61 +78,90 @@ class MemberCG extends Controller
                 'id_sub_department' => $request->sub_department,
                 'id_cg' => $request->cg,
             ];
-            // if ($request->hasFile('gambar')) {
-            //     $file = $request->file('gambar');
-            //     $extension = $file->getClientOriginalExtension();
-            //     $filename = time() . '.' . $extension;
-            //     $file->move('assets/img/', $filename);
-            //     $data['gambar'] = $filename;
-            // } else {
-            //     $data['gambar'] = 'no_image.jpg';
-            // }
-            $data = User::create($data);
-            $data->save();
-            // Alert::success('Congrats', 'Data Berhasil di tambahkan');
-            return redirect()->route('Member')->with('success', 'Berhasil menambah Berita!');
+
+            if (isset($request->base64)) {
+                $filename = Str::random(15).'.png';
+                $contents = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '',$request->base64)); 
+                Storage::disk('public')->put($filename, $contents);
+                $data['gambar'] = $filename;
+            }
+            $data = User::insert($data);
+            DB::commit();
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            DB::rollback();
         }
+        return response()->json(['code' => 200, 'message' => 'Post successfully'], 200);
     }
     
     public function edit(Request $request)
     {
-        $user = User::where("id_user", $request->id)->first();
-        // $skills = SkillCategory::all();
-        // $jabatans = Jabatan::all();
-        return view("pages.admin.member.form", compact("user"));
+        $user = User::where("id", $request->id)->first();
+        $divisi = Divisi::all();
+        $jabatans = Jabatan::all();
+        $levels = Level::all();
+        $departments = Department::all();
+        $subDepartments = SubDepartment::where("id_department",$user->id_department)->get();
+        $cgMaster = CG::all();
+        return view("pages.admin.member.form-edit", compact("user","divisi","jabatans","levels","departments","subDepartments","cgMaster"));
     }
 
     public function update(Request $request)
     {
-        $request->validate([
-            'no_training_module' => 'required|max:100',
-            'id_skill_category' => 'required',
-            'training_module' => 'required',
-            'level' => 'required',
-            'training_module_group' => 'required',
-            'training_module_desc' => 'required',
-            'id_job_title' => 'required',
-        ]);
-        $post = CurriculumModel::updateOrCreate(['id_curriculum' => $request->id_curriculum], [
-            'no_training_module' => $request->no_training_module,
-            'id_skill_category' => $request->id_skill_category,
-            'training_module' => $request->training_module,
-            'level' => $request->level,
-            'training_module_group' => $request->training_module_group,
-            'training_module_desc' => $request->training_module_desc,
-            'id_job_title' => $request->id_job_title,
-        ]);
 
-        return response()->json(['code' => 200, 'message' => 'Post Created successfully', 'data' => $post], 200);
+        $request->validate([
+            "id"=>"required",
+            "base64" => "nullable|string",
+            "nik" => "required",
+            "peran_pengguna" => "required",
+            "tgl_masuk" => "required",
+            "nama_pengguna" => "required|string",
+            "email" => "required",
+            "divisi" => "required",
+            "job_title" => "required",
+            "level" => "required",
+            "department" => "required",
+            "sub_department" => "required",
+            "cg" => "required"
+        ]);
+        $user = User::where("id", $request->id)->first();
+
+        $data = [
+            'nik' => $request->nik,
+            'peran_pengguna' => $request->peran_pengguna,
+            'tgl_masuk' => date('Y-m-d', strtotime($request->tgl_masuk)),
+            'nama_pengguna' => $request->nama_pengguna,
+            'email' => $request->email,
+            'id_divisi' => $request->divisi,
+            'id_job_title' => $request->job_title,
+            'id_level' => $request->level,
+            'id_department' => $request->department,
+            'id_sub_department' => $request->sub_department,
+            'id_cg' => $request->cg,
+        ];
+        if(isset($request->base64)){
+            $url = "../storage/app/public/".$user->gambar;
+            if(file_exists($url) && (isset($user->gambar)) && $user->gambar != ""){
+                unlink($url);
+            }
+            $filename = Str::random(15).'.png';
+            $contents = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '',$request->base64)); 
+            Storage::disk('public')->put($filename, $contents);
+            $data['gambar'] = $filename;
+        }
+        User::where('id',$request->id)->update($data);
+        return response()->json(['code' => 200, 'message' => 'Post Updated successfully'], 200);
     }
     
-    public function delete($id)
+    public function deleteMember($id)
     {
-        $membercg = User::find($id);
-        $membercg->delete();
-        return redirect()
-            ->route('Member')
-            ->with('success', 'Berhasil menghapus member!');
+        $user = User::find($id);
+        $url = "../storage/app/public/".$user->gambar;
+        if(file_exists($url) && isset($user->gambar)){
+            unlink($url);
+        }
+        User::where('id', $id)->delete();
+        return redirect()->route('Member')->with(['success' => 'Curriculum Deleted successfully']);
     }
 
     public function getDivisi()
