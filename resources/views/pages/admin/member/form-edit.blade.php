@@ -144,7 +144,7 @@
         <select id="sub-department-edit" class="form-control form-control-sm" name="sub_department">
             <option value="">Pilih Sub Dept</option>
             @foreach ($subDepartments as $item)
-                <option value="{{$item->id_subdepartment}}" {{($user->id_subdepartment == $item->id_subdepartment) ? 'selected' : ''}} >{{$item->nama_subdepartment}}</option>
+                <option value="{{$item->id_subdepartment}}" {{($user->id_sub_department == $item->id_subdepartment) ? 'selected' : ''}} >{{$item->nama_subdepartment}}</option>
             @endforeach
         </select>
     </div>
@@ -197,7 +197,7 @@
             success: function(res) {
                 var option = "";
                 for (let i = 0; i < res.data.length; i++) {
-                    option += '<option value="'+res.data[i].id_subdepartment+'">'+res.data[i].nama_subdepartment+'</option>';
+                    option += '<option value="'+res.data[i].id_sub_department+'">'+res.data[i].nama_subdepartment+'</option>';
                 }
                 $('#sub-department-edit').html(option);
             },
