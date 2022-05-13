@@ -7,6 +7,8 @@ use DB;
 use Response;
 use Auth;
 use Validator;
+use App\Exports\TaggingListExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\Datatables\Datatables;
 
 
@@ -226,5 +228,28 @@ class Tagging extends Controller
                                 ->first();
             return view("pages.admin.taging-list.detail",compact("data"));
         }
+    }
+
+    public function exportTaggingList(Request $request)
+    {
+        $this->validate($request,[
+            "category"=>"required|in:0,1,2"
+        ]);
+
+        $dateTime = date("d-m-Y H:i");        
+        switch ($request->category) {
+            case '0':
+                $fileName = "Tagging List Semua (".$dateTime.").xlsx";
+            break;
+            case '1':
+                $fileName = "Tagging List Belum Finish (".$dateTime.").xlsx";
+            break;
+            case '2':
+                $fileName = "Tagging List Finish (".$dateTime.").xlsx";
+            break;
+        }
+
+        return Excel::download(new TaggingListExport($request->category), $fileName);
+        return redirect()->route('TagList');
     }
 }
