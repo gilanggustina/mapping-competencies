@@ -50,6 +50,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/action','Tagging@actionTagingList')->name('actionTagingList');
         Route::get('/detail','Tagging@detail')->name('tagingDetail');
         Route::get('/export-white-tag','Tagging@exportTaggingList')->name('exportTaggingList');
+        Route::get('/tagging-print','Tagging@taggingPrint')->name('taggingPrint');
     });
 
     // Competency Directory

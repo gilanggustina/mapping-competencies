@@ -92,7 +92,7 @@
 </div>
 
 <div class="modal fade m-auto"  id="modal-detail" tabindex="-1" role="dialog" aria-labelledby="modal-detailLabel" aria-hidden="true">
-    <div class="modal-md modal-dialog" role="document">
+    <div class="modal-lg modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header p-3">
                 <h5 class="modal-title m-auto text-center" id="modal-detailLabel">COMPETENCY TAG</h5>
@@ -103,7 +103,8 @@
             <div class="modal-body" id="body-detail" style="padding : 5px 25px !important;">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">OKE</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="btn-print" onclick="printCompetencyTag(this)" data-id="" class="btn btn-primary">Print</button>
             </div>
         </div>
     </div>
@@ -282,6 +283,7 @@
   }
 
   function detailTaging(id) {
+      $("#btn-print").attr("data-id",id);
       $.ajax({
           url:"{!!route('tagingDetail')!!}?id="+id,
           cache:false,
@@ -289,6 +291,14 @@
               $("#body-detail").html(html);
           }
       })
+  }
+
+  function printCompetencyTag(el) {
+    const id = $(el).attr("data-id");
+    window.open(
+        '{!!route("taggingPrint")!!}?id='+id,
+        '_blank'
+    );
   }
       
   function iniDatatable() {

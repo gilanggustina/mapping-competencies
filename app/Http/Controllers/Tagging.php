@@ -252,4 +252,49 @@ class Tagging extends Controller
         return Excel::download(new TaggingListExport($request->category), $fileName);
         return redirect()->route('TagList');
     }
+
+    public function taggingPrint(Request $request)
+    {
+        $this->validate($request,[
+            "id"=>"required"
+        ]);
+        $select = [
+            "taging_reason.no_taging as no_taging",
+            "taging_reason.year as year",
+            "taging_reason.period as period",
+            "member.nama_pengguna as name",
+            "curriculum.training_module_group as training_module_group",
+            "curriculum.training_module as training_module",
+            "wt.actual as actual",
+            "cd.target as target",
+            "taging_reason.date_open as date_open",
+            "taging_reason.due_date as due_date",
+            "taging_reason.date_plan_implementation as date_plan_implementation",
+            DB::raw("(CASE WHEN taging_reason.learning_method = '0' THEN 'Internal'
+                            WHEN taging_reason.learning_method = '1' THEN 'External'
+                            WHEN taging_reason.learning_method = '2' THEN 'Inhouse'
+                            WHEN taging_reason.learning_method = '3' THEN 'Online' 
+                            ELSE 'Readbook' END) as learning_method"),
+            "taging_reason.trainer as trainer",
+            "taging_reason.notes_learning_implementation as notes_learning_implementation",
+            "taging_reason.date_closed as date_closed",
+            DB::raw("TIME_FORMAT(taging_reason.start,'%H:%i') as start"),
+            DB::raw("TIME_FORMAT(taging_reason.finish,'%H:%i') as finish"),
+            "taging_reason.date_verified as date_verified",
+            "verified.nama_pengguna as verified_by",
+            "taging_reason.result_score as result_score",
+            "taging_reason.notes_for_result as notes_for_result"
+        ];
+        $data = TagingReason::select($select)
+                            ->join("users as verified",function ($join) use ($request){
+                                $join->on("verified.id","id_verified_by")
+                                        ->where("id_taging_reason",$request->id);
+                            })
+                            ->join("white_tag as wt","wt.id_white_tag","taging_reason.id_white_tag")
+                            ->join("users as member","member.id","wt.id_user")
+                            ->join("competencies_directory as cd","cd.id_directory","wt.id_directory")
+                            ->join("curriculum","curriculum.id_curriculum","cd.id_curriculum")
+                            ->first();
+        return view("pages.admin.taging-list.print-competency-tag",compact("data"));
+    }
 }
