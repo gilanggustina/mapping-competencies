@@ -588,8 +588,30 @@ img {
                 })
             }
         })
-
     })
+
+    $("#department").change(function () {
+        var value = $(this).val();
+        $('#sub-department').html();
+        if(value){
+            $.ajax({
+            type: "GET",
+            url: "{{ route('get.sub.department') }}?id_department="+value,
+            success: function(res) {
+                var option = "";
+                for (let i = 0; i < res.data.length; i++) {
+                    option += '<option value="'+res.data[i].id_subdepartment+'">'+res.data[i].nama_subdepartment+'</option>';
+                }
+                $('#sub-department').html(option);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr);
+                alert(xhr.status);
+                alert(thrownError);
+            }
+        })
+        }
+    });
 
     $(document).ready(function() {
         var $modal = $('#modal');
@@ -657,7 +679,7 @@ img {
         getJabatan();
         getLevel();
         getDepartment();
-        getSubDepartment();
+        // getSubDepartment();
         getCG();
 
 

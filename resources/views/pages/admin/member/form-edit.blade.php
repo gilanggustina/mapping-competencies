@@ -132,7 +132,7 @@
 <div class="form-row">
     <div class="col-md-4 mb-3">
         <label>Department</label>
-        <select id="department" class="form-control form-control-sm" name="department">
+        <select id="department-edit" class="form-control form-control-sm" name="department">
             <option value="">Pilih Department</option>
             @foreach ($departments as $item)
                 <option value="{{$item->id_department}}" {{($user->id_department == $item->id_department) ? 'selected' : ''}} >{{$item->nama_department}}</option>
@@ -141,7 +141,7 @@
     </div>
     <div class="col-md-4 mb-3">
         <label>Sub Department</label>
-        <select id="sub-department" class="form-control form-control-sm" name="sub_department">
+        <select id="sub-department-edit" class="form-control form-control-sm" name="sub_department">
             <option value="">Pilih Sub Dept</option>
             @foreach ($subDepartments as $item)
                 <option value="{{$item->id_subdepartment}}" {{($user->id_subdepartment == $item->id_subdepartment) ? 'selected' : ''}} >{{$item->nama_subdepartment}}</option>
@@ -187,6 +187,29 @@
     </div>
 </div>
 <script>
+    $("#department-edit").change(function () {
+        var value = $(this).val();
+        $('#sub-department-edit').html();
+        if(value){
+            $.ajax({
+            type: "GET",
+            url: "{{ route('get.sub.department') }}?id_department="+value,
+            success: function(res) {
+                var option = "";
+                for (let i = 0; i < res.data.length; i++) {
+                    option += '<option value="'+res.data[i].id_subdepartment+'">'+res.data[i].nama_subdepartment+'</option>';
+                }
+                $('#sub-department-edit').html(option);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr);
+                alert(xhr.status);
+                alert(thrownError);
+            }
+        })
+        }
+    });
+
     $(document).ready(function() {
         var $modal = $('#modal-edit-crop');
         var $modalEdit = $('#modal-edit');

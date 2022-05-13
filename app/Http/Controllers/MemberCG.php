@@ -205,9 +205,13 @@ class MemberCG extends Controller
         ]);
     }
 
-    public function getSubDepartment()
+    public function getSubDepartment(Request $request)
     {
-        $provinsi = SubDepartment::all();
+        if(isset($request->id_department)){
+            $provinsi = SubDepartment::where("id_department",$request->id_department)->get();
+        }else{
+            $provinsi = SubDepartment::all();
+        }
         return response()->json([
             'data' => $provinsi,
             'status' => 200,
