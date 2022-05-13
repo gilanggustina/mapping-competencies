@@ -49,8 +49,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/form','Tagging@formTaggingList')->name('tagingForm');
         Route::post('/action','Tagging@actionTagingList')->name('actionTagingList');
         Route::get('/detail','Tagging@detail')->name('tagingDetail');
-        Route::get('/export-white-tag','Tagging@exportTaggingList')->name('exportTaggingList');
-        Route::get('/tagging-print','Tagging@taggingPrint')->name('taggingPrint');
+        Route::get('/export-white-tag','Tagging@exportTaggingList')->middleware(['isAdmin'])->name('exportTaggingList');
+        Route::get('/tagging-print','Tagging@taggingPrint')->middleware(['isAdmin'])->name('taggingPrint');
     });
 
     // Competency Directory
@@ -68,7 +68,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/', 'WhiteTag@index')->name('WhiteTag');
         Route::get('/white-tag-json', 'WhiteTag@whiteTagJson')->name('memberJson');
         Route::get('/white-tag-all-json', 'WhiteTag@whiteTagAll')->name('whiteTagAll');
-        Route::get('/white-tag-all-export','WhiteTag@exportWhiteTagAll')->name('exportWhiteTagAll');
+        Route::get('/white-tag-all-export','WhiteTag@exportWhiteTagAll')->middleware(['isAdmin'])->name('exportWhiteTagAll');
         Route::get('/form','WhiteTag@formWhiteTag')->name("formWhiteTag");
         Route::post('/action','WhiteTag@actionWhiteTag')->name("actionWhiteTag");
         Route::get('/detail', 'WhiteTag@detailWhiteTag')->name('detailWhiteTag');

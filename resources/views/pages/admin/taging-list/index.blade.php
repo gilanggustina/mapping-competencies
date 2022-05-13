@@ -11,7 +11,9 @@
                 <p class="card-title">Tagging List</p>
                 <div class="row">
                     <div class="col-12">
-                        <button class="btn btn-inverse-info float-left mb-2" data-toggle="modal" data-target="#modal-export">Export</button>
+                        @if(Auth::user()->peran_pengguna == '1')
+                            <button class="btn btn-inverse-info float-left mb-2" data-toggle="modal" data-target="#modal-export">Export</button>
+                        @endif
                         <div class="table-responsive">
                             <table class="display nowrap expandable-table table-striped table-hover" id="table-taging-list" style="width:100%">
                                 <thead>

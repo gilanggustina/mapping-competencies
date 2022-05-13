@@ -92,7 +92,9 @@
                             </div>
                         </div>
                         <div class="tab-pane container fade" id="pills-profile">
-                            <a href="{!!route('exportWhiteTagAll')!!}" class="btn btn-inverse-info float-left mb-2">Export</a>
+                            @if(Auth::user()->peran_pengguna == '1')
+                                <a href="{!!route('exportWhiteTagAll')!!}" class="btn btn-inverse-info float-left mb-2">Export</a>
+                            @endif
                             <div class="table-responsive">
                                 <table class="display nowrap expandable-table table-striped table-hover" id="table-white-tag-all" style="width:100%">
                                     <thead>

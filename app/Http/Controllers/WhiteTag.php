@@ -135,7 +135,7 @@ class WhiteTag extends Controller
     public function exportWhiteTagAll()
     {
         $dateTime = date("d-m-Y H:i");        
-        $fileName = "White Tag (".$dateTime.")";
+        $fileName = "White Tag (".$dateTime.").xlsx";
         return Excel::download(new WhiteTagExport, $fileName);
         return redirect()->back();
     }
