@@ -26,10 +26,12 @@
                         <li class="nav-item"> <a class="nav-link" href="{{ route('CG') }}">Circle Group</a></li>
                         <li class="nav-item"> <a class="nav-link" href="{{ route('Grade') }}">Grade</a></li>
                         <li class="nav-item"> <a class="nav-link" href="{{ route('SkillCategory') }}">Skill Category</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('department.index') }}">Department</a></li>
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('divisi.index') }}">Divisi</a></li>
                       </ul>
                     </div>
                   </li>
-                  
+
                 {{-- <li class="nav-item">
                     <a class="nav-link" href="{{ route('CG') }}">
                         <i class="icon-head menu-icon"></i>

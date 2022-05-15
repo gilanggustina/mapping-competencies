@@ -89,7 +89,7 @@ class MemberCG extends Controller
             return redirect()->route('Member')->with('success', 'Berhasil menambah Berita!');
         }
     }
-    
+
     public function edit(Request $request)
     {
         $user = User::where("id_user", $request->id)->first();
@@ -121,7 +121,7 @@ class MemberCG extends Controller
 
         return response()->json(['code' => 200, 'message' => 'Post Created successfully', 'data' => $post], 200);
     }
-    
+
     public function delete($id)
     {
         $membercg = User::find($id);

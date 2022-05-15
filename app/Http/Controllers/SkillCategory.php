@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\SkillCategoryModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class SkillCategory extends Controller
 {
@@ -22,77 +23,64 @@ class SkillCategory extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'no_training_module' => 'required|max:100',
-            'id_skill_category' => 'required',
-            'training_module' => 'required',
-            'level' => 'required',
-            'training_module_group' => 'required',
-            'training_module_desc' => 'required',
-            'id_job_title' => 'required|array',
-            'id_job_title.*' => 'required|string'
+        $validator = Validator::make(request()->all(),[
+            'skill_category' => ['required']
         ]);
 
-        if ($validator->fails()) {
-            return response()->json(['code' => 422, 'message' => 'The given data was invalid.', 'data' => $validator->errors()], 422);
-        } else {
-            DB::beginTransaction();
-            try {
-                if (isset($request->id_job_title) && count($request->id_job_title) > 0) {
-                    $insert = [];
-                    for ($i = 0; $i < count($request->id_job_title); $i++) {
-                        $insert[$i] = [
-                            'no_training_module' => $request->no_training_module,
-                            'id_skill_category' => $request->id_skill_category,
-                            'training_module' => $request->training_module,
-                            'level' => $request->level,
-                            'training_module_group' => $request->training_module_group,
-                            'training_module_desc' => $request->training_module_desc,
-                            'id_job_title' => $request->id_job_title[$i]
-                        ];
-                    }
-                    SkillCategoryModel::insert($insert);
-                }
-                DB::commit();
-                return response()->json(['code' => 200, 'message' => 'Post Created successfully'], 200);
-            } catch (\Exception $e) {
-                return response()->json(['code' => 422, 'message' => $e->getMessage()], 422);
-            }
+        if($validator->fails())
+        {
+            return response()->json($validator->errors());
         }
+        $id  = request('id');
+
+       if($id)
+       {
+           $data = SkillCategoryModel::where('id_skill_category',$id)->update([
+               'skill_category' => request('skill_category')
+           ]);
+           $response = [
+                'code' => 200,
+                'status' => 'success',
+                'message' => 'Skill Category berhasil diupdate.',
+                'data' => $data
+            ];
+
+       }else{
+           $data = SkillCategoryModel::create([
+               'skill_category' => request('skill_category')
+           ]);
+            $response = [
+                'code' => 200,
+                'status' => 'success',
+                'message' => 'Skill Category berhasil ditambahkan.',
+                'data' => $data
+            ];
+       }
+
+
+
+        return response()->json($response);
     }
 
-    public function editSkillCategory(Request $request)
+    public function delete()
     {
-        $request->validate([
-            'no_training_module' => 'required|max:100',
-            'id_skill_category' => 'required',
-            'training_module' => 'required',
-            'level' => 'required',
-            'training_module_group' => 'required',
-            'training_module_desc' => 'required',
-            'id_job_title' => 'required',
-        ]);
-        $post = SkillCategoryModel::updateOrCreate(['id_skill_category' => $request->id_skill_category], [
-            'no_training_module' => $request->no_training_module,
-            'id_skill_category' => $request->id_skill_category,
-            'training_module' => $request->training_module,
-            'level' => $request->level,
-            'training_module_group' => $request->training_module_group,
-            'training_module_desc' => $request->training_module_desc,
-            'id_job_title' => $request->id_job_title,
+        $validator = Validator::make(request()->all(),[
+            'id' => ['required']
         ]);
 
-        return response()->json(['code' => 200, 'message' => 'Post Created successfully', 'data' => $post], 200);
-    }
+        if($validator->fails())
+        {
+            return response()->json($validator->errors());
+        }
 
-    // public function show($id)
-    // {
-    //     $post = skill_categoryModel::find($id);
-    //     return response()->json($post);
-    // }
-    public function delete($id)
-    {
-        $post = SkillCategoryModel::where('id_skill_category', $id)->delete();
-        return redirect()->route('skill_category')->with(['success' => 'skill_category Deleted successfully']);
+        $id = request('id');
+        $data = SkillCategoryModel::where('id_skill_category', $id)->delete();
+        $response = [
+            'code' => 200,
+            'status' => 'success',
+            'message' => 'Skill Category berhasil dihapus.',
+            'data' => $data
+        ];
+        return response()->json($response);
     }
 }
