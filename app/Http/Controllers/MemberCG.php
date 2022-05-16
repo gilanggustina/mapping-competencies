@@ -34,7 +34,7 @@ class MemberCG extends Controller
             ->addColumn('action', function ($row) {
             $btn = '<button class="btn btn-inverse-success btn-icon mr-1" data-toggle="modal" onclick="formEdit('.$row->id.')" data-target="#modal-edit"><i class="icon-file menu-icon"></i></button>';
             $btn = $btn . '<button data-id="' . $row->id . '" class="btn btn-inverse-danger btn-icon member-hapus mr-1" data-toggle="modal" data-target="#modal-hapus"><i class="icon-trash"></i></button>';
-            $btn = $btn . '<button type="button" class="btn btn-inverse-info btn-icon member-hapus" data-id="'.$row->id.'" data-toggle="modal" data-target="#modal-detail"><i class="ti-eye"></i></button>';
+            $btn = $btn . '<button type="button" onclick="detail('.$row->id.')" class="btn btn-inverse-info btn-icon" data-toggle="modal" data-target="#modal-detail"><i class="ti-eye"></i></button>';
                 return $btn;
             })
             ->addIndexColumn()
@@ -162,6 +162,27 @@ class MemberCG extends Controller
         }
         User::where('id', $id)->delete();
         return redirect()->route('Member')->with(['success' => 'Curriculum Deleted successfully']);
+    }
+
+    public function detail(Request $request)
+    {
+        $this->validate($request,[
+            "id"=>"required|numeric"
+        ]);
+        $select = [
+            "nama_pengguna","nik","email","gambar",DB::raw("DATE_FORMAT(tgl_masuk,'%d-%m-%y') AS tgl_masuk"),"jt.nama_job_title","divisi.nama_divisi","dprtm.nama_department","s_dprtm.nama_subdepartment","level.nama_level","nama_cg","role"
+        ];
+        $user = User::select($select)
+                    ->join("role","role.id_role","peran_pengguna")
+                    ->join("divisi","divisi.id_divisi","users.id_divisi")
+                    ->join("job_title as jt","jt.id_job_title","users.id_job_title")
+                    ->join("level","level.id_level","users.id_level")
+                    ->join("department as dprtm","dprtm.id_department","users.id_department")
+                    ->join("sub_department as s_dprtm","s_dprtm.id_subdepartment","users.id_sub_department")
+                    ->join("cg","cg.id_cg","users.id_cg")
+                    ->where("id",$request->id)
+                    ->first();
+        return view('pages.admin.member.detail',compact('user'));
     }
 
     public function getDivisi()

@@ -18,6 +18,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/member-post', 'MemberCG@store')->name('Member.post');
         Route::get('/form-member-edit', 'MemberCG@edit')->name('Member.edit');
         Route::post('/member-edit','MemberCG@update')->name('Member.update');
+        Route::get('/member-detail', 'MemberCG@detail')->name('Member.detail');
         Route::get('/member-delete/{id}', 'MemberCG@deleteMember')->name('Member.delete');
     });
 

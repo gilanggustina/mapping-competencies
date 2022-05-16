@@ -276,22 +276,16 @@ img {
 </div>
 
 <div class="modal fade" id="modal-detail" tabindex="-1" role="dialog" aria-labelledby="modal-detail" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel17">Modal Detail</h4>
+                    <h4 class="modal-title" id="myModalLabel17">Detail Karyawan</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <label for="upload_image">
-                        <img src="upload/user.png" id="uploaded_image" class="img-responsive img-circle" />
-                        <div class="overlay">
-                            <div class="text">Click to Change Profile Image</div>
-                        </div>
-                        <input type="file" name="image" class="image" id="upload_image" style="display:none" />
-                    </label>
+                <div class="modal-body" id="bodyDetail" style="padding: 20px 26px">
+                    
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -516,6 +510,18 @@ img {
             type:"get",
             success: function(html) {
                 $("#form-edit").html(html);
+            }
+        })
+    }
+
+    function detail(id) {
+        const url = "{!! route('Member.detail') !!}?id="+id;
+        $.ajax({
+            type:"get",
+            url:url,
+            cache:false,
+            success:function(html){
+                $("#bodyDetail").html(html);
             }
         })
     }
