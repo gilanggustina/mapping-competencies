@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-4">
     @isset($curriculum)
       <input type="hidden" value="{{$curriculum->id_curriculum}}" name="id_curriculum">  
     @endisset
@@ -17,9 +17,9 @@
         </div>
     </div>
     @else
-      <div class="form-group ml-0 mb-1">
+        <div class="form-group ml-0 mb-1">
           <label class="col-sm-5">Competency</label>
-          <div class="col-sm-7">
+          <div class="col-sm-12">
             <select name="id_curriculum" onchange="changeTraining(this)" class="form-control form-control-sm" id="" required>
               <option value="">Pilih Competency</option>
               @foreach($competencies as $competency)
@@ -30,9 +30,16 @@
       </div>
     @endif
   </div>
+  <div class="col-md-8">
+      <a id="show-image" class="btn btn-sm btn-primary">General Key Information</a>
+      <a id="show-func" class="btn btn-sm btn-primary">Functional Key Information</a>
+      <div id="myView">
+        <img src="{{ asset('assets/images/general.png') }}" alt="General" class="img-accordion mt-2">
+      </div>
+  </div>
 </div>
 <div class="row">
-  <div class="col-md-12 mb-3">
+  <div class="col-md-12 mb-3 mt-3">
       <div class="col-sm mb-2">
           <button class="btn btn-success float-right" id="btnAddRowJobTitle" {{isset($curriculum) ? '' : 'disabled'}} curriculum-id="{{isset($curriculum) ? $curriculum->id_curriculum : ''}}" type="button" onclick="addRow(this)">
               <i class="icon-plus"></i> Add Row Job Title
@@ -96,6 +103,13 @@
   </div>
 </div>
 <script>
+
+$(document).ready(function(){
+$('#show-image').on("click", function(){
+  $('#myView').toggle('slow');
+  });
+});
+
   function changeTraining(el) {
     var val = $(el).val();
     if(val){

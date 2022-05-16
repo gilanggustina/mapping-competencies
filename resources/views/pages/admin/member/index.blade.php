@@ -372,10 +372,10 @@ img {
                 initDatatable();
                 $("#modal-hapus").modal('hide');
                 Swal.fire({
-                    position: 'center',
+                    position: 'top-end',
                     icon: 'success',
-                    title: 'Data berhasil di hapus',
-                    showConfirmButton: true,
+                    title: 'Data Berhasil Dihapus',
+                    showConfirmButton: false,
                     timer: 1500
                 })
             }

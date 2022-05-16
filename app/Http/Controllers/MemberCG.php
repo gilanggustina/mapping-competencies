@@ -94,7 +94,7 @@ class MemberCG extends Controller
         }
         return response()->json(['code' => 200, 'message' => 'Post successfully'], 200);
     }
-    
+
     public function edit(Request $request)
     {
         $user = User::where("id", $request->id)->first();

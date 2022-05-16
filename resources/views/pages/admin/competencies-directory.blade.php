@@ -20,7 +20,7 @@
 </style>
 @endpush
 @section('content')
- <div class="row">
+ {{-- <div class="row">
     <div class="col-md-6 grid-margin stretch-card mb-0">
     <div id="accordion" class="accordion ">
         <div class="card">
@@ -29,7 +29,6 @@
             </div>
             <div id="collapseOne" class="card-body collapse show" data-parent="#accordion" aria-expanded="true">
                 <img src="{{ asset('assets/images/general.png') }}" alt="General" class="img-accordion mt-4">
-                {{-- <img src="{{ asset('assets/images/functional.png') }}" alt="General" class="img-accordion"> --}}
             </div>
         </div>
     </div>
@@ -42,12 +41,11 @@
                 </div>
                 <div id="collapseOne" class="card-body collapse show" data-parent="#accordion" aria-expanded="true">
                     <img src="{{ asset('assets/images/functional.png') }}" alt="General" class="img-accordion mt-4">
-                    {{-- <img src="{{ asset('assets/images/functional.png') }}" alt="General" class="img-accordion"> --}}
                 </div>
             </div>
         </div>
         </div>
- </div>
+ </div> --}}
 <div class="row">
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
