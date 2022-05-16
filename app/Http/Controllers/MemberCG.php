@@ -14,6 +14,7 @@ use App\CG;
 use App\Level;
 use App\SubDepartment;
 use App\Department;
+use App\WhiteTagModel;
 use Validator;
 use Illuminate\Support\Facades\Auth;
 
@@ -182,7 +183,20 @@ class MemberCG extends Controller
                     ->join("cg","cg.id_cg","users.id_cg")
                     ->where("id",$request->id)
                     ->first();
-        return view('pages.admin.member.detail',compact('user'));
+        $counting = WhiteTagModel::select(DB::raw("COUNT(level) as cnt"),"level")
+                                 ->join("users",function ($join) use ($request){
+                                     $join->on("users.id","white_tag.id_user")
+                                        ->where([
+                                            ["white_tag.id_user",$request->id],
+                                            ["white_tag.actual",">=","cd.target"]
+                                        ]);
+                                 })
+                                 ->join("competencies_directory as cd","cd.id_directory","white_tag.id_directory")
+                                 ->join("curriculum as crclm","crclm.id_curriculum","cd.id_curriculum")
+                                 ->groupBy("level")
+                                 ->get();
+
+        return view('pages.admin.member.detail',compact('user','counting'));
     }
 
     public function getDivisi()

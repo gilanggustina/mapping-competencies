@@ -337,6 +337,14 @@ h4 {
       </div>
     </div>
   </div>
+  @php
+      $url = "../storage/app/public/".Auth::User()->gambar;
+      if ((isset(Auth::User()->gambar) && Auth::User()->gambar != "") && file_exists($url)) {
+              $url = "data:image/jpeg;base64,".base64_encode(file_get_contents($url));
+      }else{
+          $url = asset('assets/images/faces/face0.png');
+      }
+  @endphp
 <!-- END: Content-->
 @endsection
 @push('script')

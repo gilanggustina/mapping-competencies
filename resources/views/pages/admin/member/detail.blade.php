@@ -99,5 +99,62 @@
           </div>
         </div>
       </div>
+      @php
+        $a = 0;
+        $b = 0;
+        $c = 0;
+        $total = 0;
+        for ($i=0; $i < count($counting) ; $i++) { 
+          $total += $counting[$i]->cnt; 
+          if ($counting[$i]->level == "A") {
+            $a = $counting[$i]->cnt;
+          }elseif ($counting[$i]->level == "B") {
+            $b = $counting[$i]->cnt;
+          }elseif($counting[$i]->level == "I"){
+            $c = $counting[$i]->cnt;
+          }
+        }
+          $total
+      @endphp
+      <div class="col-md-3 flex p-2">
+        <div class="px-1">
+          <div class="col-12 font-weight-bold">
+            Level A
+          </div>
+          <div class="col-12 font-weight-400">
+            <p>{{$a}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 flex p-2">
+        <div class="px-1">
+          <div class="col-12 font-weight-bold">
+            Level B
+          </div>
+          <div class="col-12 font-weight-400">
+            <p>{{$b}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 flex p-2">
+        <div class="px-1">
+          <div class="col-12 font-weight-bold">
+            Level I
+          </div>
+          <div class="col-12 font-weight-400">
+            <p>{{$c}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 flex p-2">
+        <div class="px-1">
+          <div class="col-12 font-weight-bold">
+            Total
+          </div>
+          <div class="col-12 font-weight-400">
+            <p>{{$total}}</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
