@@ -1,17 +1,15 @@
 <style>
-  input[type="number"] 
-{
+  input[type="number"] {
     font-weight:0.7rem;
-}
-
-input[type="text"] 
-{
-  font-weight:0.7rem;
-}
+  }
+  input[type="text"] 
+  {
+    font-weight:0.7rem;
+  }
 </style>
 <div class="row">
   <div class="col-md-12">
-    <div class="row">
+    <div class="row p-3">
       <div class="col-md-4 d-flex">
           <img src="{{ asset('assets/images/tpm.png') }}" alt="Logo TPM" class="m-auto img-thumbnail">
       </div>
@@ -36,7 +34,7 @@ input[type="text"]
           </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row p-3">
       <div class="col-sm-12">
           <div class="row mb-0">
               <label class="col-sm-3 col-form-label">Name</label>
@@ -65,8 +63,8 @@ input[type="text"]
                   <div class="col-md-6">
                       <div class="my-2">
                           <div class="col-sm-12 rounded border border-dark d-flex p-1">
-                              <label class="col-md-10 col-form-label">Existing</label>
-                              <div class="col-md-2 px-0">
+                              <label class="col-md-11 col-form-label">Existing</label>
+                              <div class="col-md-1 px-0">
                                   @php
                                       switch($data->actual){
                                         case 0:
@@ -92,14 +90,14 @@ input[type="text"]
                                         break;
                                       }
                                   @endphp
-                                  <img class="img-thumbnail" src="{{$existingUrl}}" alt="">
+                                  <img class="img-thumbnail" style="width: 46px;height:46px" src="{{$existingUrl}}" alt="">
                               </div>
                           </div>
                       </div>
                       <div class="my-2">
                           <div class="col-sm-12 rounded border border-dark p-1 d-flex">
-                              <label class="col-md-10 col-form-label">Target</label>
-                              <div class="col-md-2 px-0">
+                              <label class="col-md-11 col-form-label">Target</label>
+                              <div class="col-md-1 px-0">
                                 @php
                                   switch($data->target){
                                     case 0:
@@ -125,7 +123,7 @@ input[type="text"]
                                     break;
                                   }
                                 @endphp
-                                  <img class="img-thumbnail" src="{{$targetUrl}}" alt="">
+                                  <img class="img-thumbnail" style="width: 46px;height:46px" src="{{$targetUrl}}" alt="">
                               </div>
                           </div>
                       </div>
@@ -154,54 +152,53 @@ input[type="text"]
     </div>
     <div class="row">
       <div class="position-relative container px-3 mt-1">
-          <div class="col-sm-12 rounded border border-dark">
-                  <div class="row mb-0 mx-2 d-flex">
-                      <label class="col-sm-3 col-form-label">Learning Method</label>
-                      <div class="col-sm-9 m-auto">
-                          <input type="text" value="{{$data->learning_method}}" class="form-control form-control-sm"  placeholder="0" disabled>
-                      </div>
-                  </div>
-                  <div class="row mb-0 mx-2 d-flex">
-                      <label class="col-sm-3 col-form-label">Trainer</label>
-                      <div class="col-sm-9 m-auto">
-                          <input type="text" value="{{$data->trainer}}" class="form-control form-control-sm"  placeholder="0" disabled>
-                      </div>
-                  </div>
-                  <div class="row mb-0 mx-2 d-flex">
-                      <label class="col-sm-3 col-form-label">Date Plan Implementation</label>
-                      <div class="col-sm-9 m-auto">
-                          <input type="text" value="{{$data->date_plan_implementation}}" class="form-control form-control-sm"  placeholder="0" disabled>
-                      </div>
-                  </div>
-                  <div class="row mb-0 mx-2 d-flex">
-                      <label class="col-sm-3 col-form-label">Notes Learning Implementation</label>
-                      <div class="col-sm-9 m-auto">
-                        <textarea class="form-control form-control-sm" rows="5" disabled>{!!$data->notes_learning_implementation!!}</textarea>
-                      </div>
-                  </div>
-                  <div class="row mb-0 mx-2 d-flex">
-                      <label class="col-sm-3 col-form-label">Date Closed</label>
-                      <div class="col-sm-9 m-auto">
-                          <input type="text" value="{{$data->date_closed}}" class="form-control form-control-sm"  placeholder="0" disabled>
-                      </div>
-                  </div>
-                  <div class="row mb-0 mx-2 d-flex">
-                      <label class="col-sm-3 col-form-label">Training Hours</label>
-                      <div class="col-sm-4 m-auto">
-                          <input type="text" value="{{$data->start}}" class="form-control form-control-sm"  placeholder="0" disabled>
-                      </div>
-                      <div class="col-sm-1 m-auto px-0 text-center">
-                          -
-                      </div>
-                      <div class="col-sm-4 m-auto">
-                          <input type="text" value="{{$data->finish}}" class="form-control form-control-sm"  placeholder="0" disabled>
-                      </div>
-                  </div>
-              
+        <div class="col-sm-12 py-2 rounded border border-dark">
+          <div class="row mb-0 mx-2 d-flex">
+              <label class="col-sm-3 col-form-label">Learning Method</label>
+              <div class="col-sm-9 m-auto">
+                  <input type="text" value="{{$data->learning_method}}" class="form-control form-control-sm"  placeholder="0" disabled>
+              </div>
           </div>
+          <div class="row mb-0 mx-2 d-flex">
+              <label class="col-sm-3 col-form-label">Trainer</label>
+              <div class="col-sm-9 m-auto">
+                  <input type="text" value="{{$data->trainer}}" class="form-control form-control-sm"  placeholder="0" disabled>
+              </div>
+          </div>
+          <div class="row mb-0 mx-2 d-flex">
+              <label class="col-sm-3 col-form-label">Date Plan Implementation</label>
+              <div class="col-sm-9 m-auto">
+                  <input type="text" value="{{$data->date_plan_implementation}}" class="form-control form-control-sm"  placeholder="0" disabled>
+              </div>
+          </div>
+          <div class="row mb-0 mx-2 d-flex">
+              <label class="col-sm-3 col-form-label">Notes Learning Implementation</label>
+              <div class="col-sm-9 m-auto">
+                <textarea class="form-control form-control-sm" rows="5" disabled>{!!$data->notes_learning_implementation!!}</textarea>
+              </div>
+          </div>
+          <div class="row mb-0 mx-2 d-flex">
+              <label class="col-sm-3 col-form-label">Date Closed</label>
+              <div class="col-sm-9 m-auto">
+                  <input type="text" value="{{$data->date_closed}}" class="form-control form-control-sm"  placeholder="0" disabled>
+              </div>
+          </div>
+          <div class="row mb-0 mx-2 d-flex">
+              <label class="col-sm-3 col-form-label">Training Hours</label>
+              <div class="col-sm-4 m-auto">
+                  <input type="text" value="{{$data->start}}" class="form-control form-control-sm"  placeholder="0" disabled>
+              </div>
+              <div class="col-sm-1 m-auto px-0 text-center">
+                  -
+              </div>
+              <div class="col-sm-4 m-auto">
+                  <input type="text" value="{{$data->finish}}" class="form-control form-control-sm"  placeholder="0" disabled>
+              </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row p-3">
       <div class="col-sm-12">
           <div class="row mb-0">
               <label class="col-sm-3 col-form-label">Date Verified</label>
@@ -254,8 +251,5 @@ input[type="text"]
           </div>
       </div>
     </div> 
-  
   </div>
-  {{-- <div class="col-md-4">
-  </div> --}}
 </div>

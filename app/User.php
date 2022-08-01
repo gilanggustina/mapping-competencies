@@ -12,7 +12,7 @@ class User extends Authenticatable
 
     protected $table = 'users';
     protected $fillable = [
-        'nik', 'password', 'nama_pengguna', 'email', 'tgl_masuk', 'id_job_title', 'id_divisi', 'id_cg', 'id_department', 'id_subdepartment', 'id_level', 'gambar'
+        'nik', 'password', 'nama_pengguna', 'peran_pengguna', 'email', 'tgl_masuk', 'id_job_title', 'id_divisi', 'id_cg', 'id_department', 'id_subdepartment', 'id_level', 'gambar'
     ];
     protected $hidden = [
         'password', 'remember_token',
@@ -21,4 +21,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function jobTitles()
+    {
+        return $this->belongsToMany(JobTitleUsers::class,'job_title_users','id_job_title','user_id');
+    }
+
+    public function jobTitle()
+    {
+        return $this->belongsTo(Jabatan::class,'id_job_title','id_job_title');
+    }
 }

@@ -12,11 +12,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard/get-card', 'Dashboard@card_profile')->name('Dashboard.card-profile');
     Route::get('/logout', 'AuthController@logout')->name('logout');
 
-    Route::get('/member', 'MemberCG@index')->name('Member');
-    Route::get('/member/cgJson', 'MemberCG@cgJson')->name('Member.get');
-    Route::post('/member-post', 'MemberCG@store')->name('Member.post');
-    Route::post('/member-edit', 'MemberCG@edit')->name('Member.edit');
-    Route::get('/member-delete/{id}', 'MemberCG@delete')->name('Member.delete');
+    Route::prefix("member")->group(function(){
+        Route::get('/', 'MemberCG@index')->name('Member');
+        Route::get('/member/cgJson', 'MemberCG@cgJson')->name('Member.get');
+        Route::post('/member-post', 'MemberCG@store')->name('Member.post');
+        Route::get('/form-member-edit', 'MemberCG@edit')->name('Member.edit');
+        Route::post('/member-edit','MemberCG@update')->name('Member.update');
+        Route::get('/member-detail', 'MemberCG@detail')->name('Member.detail');
+        Route::get('/member-delete/{id}', 'MemberCG@deleteMember')->name('Member.delete');
+    });
 
     Route::get('/get-divisi', 'MemberCG@getDivisi')->name('get.divisi');
     Route::get('/get-jabatan', 'MemberCG@getJabatan')->name('get.jabatan');
@@ -38,7 +42,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/curriculum-edit', 'Curriculum@editCurriculum')->name('editCurriculum');
         Route::get('/curriculum-delete/{id}', 'Curriculum@delete')->name('Curriculum.delete');
     });
-    
+
     // Taging
     Route::prefix("tagging-list")->group(function () {
         Route::get('/', 'Tagging@index')->name('TagList');
@@ -46,6 +50,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/form','Tagging@formTaggingList')->name('tagingForm');
         Route::post('/action','Tagging@actionTagingList')->name('actionTagingList');
         Route::get('/detail','Tagging@detail')->name('tagingDetail');
+        Route::get('/export-white-tag','Tagging@exportTaggingList')->middleware(['isAdmin'])->name('exportTaggingList');
+        Route::get('/tagging-print','Tagging@taggingPrint')->middleware(['isAdmin'])->name('taggingPrint');
     });
 
     // Competency Directory
@@ -57,11 +63,13 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/action','CompetenciesDirectory@storeCompetencyDirectory')->name('storeCompetencyDirectory');
         Route::get('/detail','CompetenciesDirectory@detail')->name("detailCompetencyDirectory");
     });
-    
+
     // White Tag
     Route::prefix("white-tag")->group(function () {
         Route::get('/', 'WhiteTag@index')->name('WhiteTag');
-        Route::get('/member-json', 'WhiteTag@cgJson')->name('memberJson');
+        Route::get('/white-tag-json', 'WhiteTag@whiteTagJson')->name('memberJson');
+        Route::get('/white-tag-all-json', 'WhiteTag@whiteTagAll')->name('whiteTagAll');
+        Route::get('/white-tag-all-export','WhiteTag@exportWhiteTagAll')->middleware(['isAdmin'])->name('exportWhiteTagAll');
         Route::get('/form','WhiteTag@formWhiteTag')->name("formWhiteTag");
         Route::post('/action','WhiteTag@actionWhiteTag')->name("actionWhiteTag");
         Route::get('/detail', 'WhiteTag@detailWhiteTag')->name('detailWhiteTag');
@@ -69,8 +77,13 @@ Route::group(['middleware' => 'auth'], function () {
 
     //CEME
     Route::get('/ceme', 'Ceme@index')->name('ceme');
+    Route::get('/ceme?q=all', 'Ceme@index')->name('ceme.all');
     Route::get('/ceme/json','Ceme@cgJson')->name('ceme.json');
+    Route::get('/ceme/json/all','Ceme@cgJsonAll')->name('ceme.json.all');
     Route::post('/ceme-post', 'Ceme@actionCeme')->name('actionCeme');
+    Route::post('ceme/add-job-title','Ceme@addJobTitle')->name('ceme.addJobTitle');
+    Route::post('ceme/get-job-title','Ceme@getJobTitle')->name('ceme.getJobTitle');
+    Route::post('ceme/delete-job-title','Ceme@deleteJobTitle')->name('ceme.deleteJobTitle');
 
 
     Route::prefix("grade")->group(function () {
@@ -84,15 +97,14 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::prefix("skill-categoty")->group(function () {
         Route::get('/', 'SkillCategory@index')->name('SkillCategory');
-        Route::post('/post', 'SkillCategory@store')->name('SkillCategory.post');
-        Route::get('/form-edit', 'SkillCategory@FormEditSkillCategory')->name('getFormEditSkillCategory');
-        Route::post('/edit', 'SkillCategory@editSkillCategory')->name('editSkillCategory');
-        Route::get('/delete/{id}', 'SkillCategory@delete')->name('SkillCategory.delete');
+        Route::post('/create','SkillCategory@store')->name('SkillCategory.store');
+        Route::post('/delete', 'SkillCategory@delete')->name('SkillCategory.delete');
     });
 
     Route::prefix("cg-master")->group(function () {
         Route::get('/', 'CGMaster@index')->name('CG');
-        Route::post('/CG-post', 'CGMaster@store')->name('CG.post');
+        Route::post('/create', 'CGMaster@store')->name('CG.post');
+        Route::post('/delete','CGMaster@destroy')->name('CG.destroy');
         // Route::get('/form-edit', 'CGMaster@FormEditCGMaster')->name('getFormEditCGMaster');
         // Route::post('/edit', 'CGMaster@editCGMaster')->name('editCGMaster');
         // Route::get('/delete/{id}', 'CGMaster@delete')->name('CGMaster.delete');
@@ -100,5 +112,19 @@ Route::group(['middleware' => 'auth'], function () {
 
     // jabatan/job title
     Route::get('jabatan/get','JabatanController@get')->name('jabatan.get');
+
+    // department
+    Route::prefix("department")->group(function () {
+        Route::get('/', 'DepartmentController@index')->name('department.index');
+        Route::post('/create', 'DepartmentController@store')->name('department.store');
+        Route::post('/delete','DepartmentController@destroy')->name('department.destroy');
+    });
+
+    // divisi
+    Route::prefix("divisi")->group(function () {
+        Route::get('/', 'DivisiController@index')->name('divisi.index');
+        Route::post('/create', 'DivisiController@store')->name('divisi.store');
+        Route::post('/delete','DivisiController@destroy')->name('divisi.destroy');
+    });
 
 });

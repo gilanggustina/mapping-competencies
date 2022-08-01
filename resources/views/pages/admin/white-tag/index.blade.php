@@ -31,10 +31,10 @@
     <div class="col-md-7 grid-margin stretch-card mb-0">
     <div id="accordion" class="accordion">
         <div class="card">
-            <div class="card-header card-title" data-toggle="collapse" href="#collapseOne">
+            <div class="card-header card-title collapsed" data-toggle="collapse" href="#collapseOne">
             Key Point General
             </div>
-            <div id="collapseOne" class="card-body collapse show" data-parent="#accordion" aria-expanded="true">
+            <div id="collapseOne" class="card-body collapse" data-parent="#accordion" aria-expanded="true">
                 <img src="{{ asset('assets/images/general.png') }}" alt="General" class="mt-2 p-3" style="width:100%;display: block;margin-left: auto;margin-right: auto; ">
                 {{-- <img src="{{ asset('assets/images/General.png') }}" alt="General" class="img-accordion"> --}}
             </div>
@@ -44,10 +44,10 @@
     <div class="col-md-5 grid-margin stretch-card mb-0 pl-0">
         <div id="accordion-gen" class="accordion">
         <div class="card">
-            <div class="card-header card-title" data-toggle="collapse" href="#graphgen">
+            <div class="card-header card-title collapsed" data-toggle="collapse" href="#graphgen">
                 Graphic White Tag General
                 </div>
-                <div id="graphgen" class="card-body collapse show" data-parent="#accordion-gen" aria-expanded="true">
+                <div id="graphgen" class="card-body collapse" data-parent="#accordion-gen" aria-expanded="true">
                     <canvas id="barChart" class="mb-2"></canvas>
                 </div>
 
@@ -63,23 +63,57 @@
         <div class="card">
             <div class="card-body">
                 <p class="card-title">White Tag</p>
+                <ul class="nav nav-pills mb-3">
+                    <li class="nav-item active">
+                        <a class="nav-link active" data-toggle="tab" href="#pills-home" type="button">Data Karyawan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#pills-profile" type="button">White Tag All</a>
+                    </li>
+                </ul>
                 <div class="row">
-                    <div class="col-12">
-                        <div class="table-responsive">
-                            <table class="display nowrap expandable-table table-striped table-hover" id="table-cg" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">No</th>
-                                        <th>Nama Anggota</th>
-                                        <th>Job Title</th>
-                                        <th>Dept</th>
-                                        <th>Divisi</th>
-                                        <th>Liga CG</th>
-                                        <th class="text-center">Action</th>
-                                    </tr> 
-                                </thead>
-                                <tbody></tbody>
-                            </table>
+                    <div class="col-12 flex">
+                        <div class="tab-pane container fade in active show" id="pills-home">
+                            <div class="table-responsive">
+                                <table class="display nowrap expandable-table table-striped table-hover" id="table-cg" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">No</th>
+                                            <th>Nama Anggota</th>
+                                            <th>Job Title</th>
+                                            <th>Dept</th>
+                                            <th>Divisi</th>
+                                            <th>Liga CG</th>
+                                            <th class="text-center">Action</th>
+                                        </tr> 
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane container fade" id="pills-profile">
+                            @if(Auth::user()->peran_pengguna == '1')
+                                <a href="{!!route('exportWhiteTagAll')!!}" class="btn btn-inverse-info float-left mb-2">Export</a>
+                            @endif
+                            <div class="table-responsive">
+                                <table class="display nowrap expandable-table table-striped table-hover" id="table-white-tag-all" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">No</th>
+                                            <th>Nama Anggota</th>
+                                            <th>No Competency</th>
+                                            <th>Skill Category</th>
+                                            <th>Competency</th>
+                                            <th>Level</th>
+                                            <th>Competency Group</th>
+                                            <th>Start</th>
+                                            <th>Actual</th>
+                                            <th>Target</th>
+                                        </tr> 
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -188,6 +222,20 @@
 @push('script')
 <script type="text/javascript">
   $(document).ready(function () {
+    $(".nav-pills a").click(function(){
+        $(this).tab('show');
+    });
+    $('.nav-pills a').on('show.bs.tab', function(){
+        $('.tab-pane').each(function(i,obj){
+            if(!$(this).hasClass("active")){
+                $(this).show()
+            }else{
+                $(this).hide()
+            }
+        });
+    })
+
+      whiteTagAllDataTable();
       initDatatable();
       $('[data-toggle="tooltip"]').tooltip({
           animation: true,
@@ -343,6 +391,62 @@
               },
               {
                   data: 'action'
+              }
+          ],
+      })
+  }
+
+  function whiteTagAllDataTable(){
+    var dtJson = $('#table-white-tag-all').DataTable({
+          ajax: "{{ route('whiteTagAll') }}",
+          autoWidth: false,
+          serverSide: true,
+          processing: true,
+          aaSorting: [
+              [0, "desc"]
+          ],
+          searching: true,
+          dom: '<"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+          displayLength: 10,
+          lengthMenu: [10, 15, 20],
+          language: {
+              paginate: {
+                  // remove previous & next text from pagination
+                  previous: '&nbsp;',
+                  next: '&nbsp;'
+              }
+          },
+          scrollX: true,
+          columns: [
+              {
+                  data: 'DT_RowIndex', name: 'DT_RowIndex'
+              },
+              {
+                  data: 'nama_pengguna'
+              },
+              {
+                  data: 'no_training_module'
+              },
+              {
+                  data: 'skill_category'
+              },
+              {
+                  data: 'training_module'
+              },
+              {
+                  data: 'level'
+              },
+              {
+                  data: 'training_module_group'
+              },
+              {
+                  data: 'start'
+              },
+              {
+                  data: 'actual'
+              },
+              {
+                  data:'target'
               }
           ],
       })

@@ -274,7 +274,6 @@
     function deleteCurriculum(el) {
         var id = $(el).attr("data-id");
         var token = $("meta[name='csrf-token']").attr("content");
-        var rowid = '#row_'+id;
         $.ajax({
             url:"curriculum/curriculum-delete/"+id,
             mehtod:"delete",
